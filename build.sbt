@@ -52,10 +52,14 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
     packageSummary := "Atom Workshop",
     packageDescription := """A single place for atoms of all types""",
 
-    riffRaffArtifactResources ++= Seq(
-      baseDirectory.value / "cloudformation" / "AtomWorkshop.yml" -> s"packages/cloudformation/AtomWorkshop.yml"
+    riffRaffArtifactResources := Seq(
+      (packageBin in Debian).value -> "atom-workshop/atom-workshop_1.0_all.deb",
+      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
+      baseDirectory.value / "fluentbit/td-agent-bit.conf" -> "atom-workshop/td-agent-bit.conf"
     ),
+
     javaOptions in Universal ++= Seq(
       "-Dpidfile.path=/dev/null"
     )
   )
+
