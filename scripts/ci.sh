@@ -15,7 +15,7 @@ globalJsDependencies() {
 }
 
 yarnSetup() {
-    yarn install --force
+    yarn install --force --frozen-lockfile
     yarn lint
     yarn test
     yarn build
