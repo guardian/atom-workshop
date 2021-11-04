@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - $default-branch
+      - master
 env:
   FINAL_TEAMCITY_BUILD: 1309
 jobs:
@@ -23,11 +23,7 @@ jobs:
     - uses: guardian/actions-assume-aws-role@v1
       with:
         awsRoleToAssume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-    - name: Get node version
-      run: echo NODE_VERSION=$(cat .nvmrc) >> $GITHUB_ENV
-    - uses: actions/setup-node@v2
-      with:
-          node-version: ${{ env.NODE_VERSION }}
+    - uses: guardian/actions-setup-node@v2.4.1
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
@@ -43,5 +39,5 @@ jobs:
     - name: CI for sbt-riffraff-artifact
       shell: bash
       run: |
-        export GITHUB_RUN_NUMBER=$(( $GITHUB_RUN_NUMBER + $FINAL_TEAMCITY_BUILD ))
+        export GITHUB_RUN_NUMBER=$(( $GITHUB_RUN_NUMBER + env.FINAL_TEAMCITY_BUILD ))
         sbt clean compile
