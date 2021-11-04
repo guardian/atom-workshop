@@ -55,7 +55,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
     riffRaffArtifactResources := Seq(
       (packageBin in Debian).value -> s"${name.value}/${name.value}.deb",
       baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
-      baseDirectory.value / "cloudformation" / "AtomWorkshop.yml" -> s"packages/cloudformation/AtomWorkshop.yml"
+      baseDirectory.value / "README.md" -> "README.md"
     ),
     javaOptions in Universal ++= Seq(
       "-Dpidfile.path=/dev/null"
