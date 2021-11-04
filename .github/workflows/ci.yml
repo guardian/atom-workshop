@@ -1,0 +1,49 @@
+name: CI for sbt-riffraff-artifact
+
+on:
+  pull_request:
+  # Manual invocation.
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+    permissions:
+      # required by guardian/actions-assume-aws-role
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+    - uses: guardian/actions-assume-aws-role@v1
+      with:
+        awsRoleToAssume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+    - uses: guardian/actions-setup-node@v2.4.1
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: 8
+        distribution: adopt
+    - name: Cache SBT
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.ivy2/cache
+          ~/.sbt
+        key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+    - name: CI yarn
+      shell: bash
+      run: | 
+        yarn install --force --frozen-lockfile
+        yarn lint
+        yarn test
+        yarn build
+    - name: CI for sbt-riffraff-artifact
+      shell: bash
+      run: |
+        FINAL_TEAMCITY_BUILD=1319
+        export GITHUB_RUN_NUMBER=$(( $GITHUB_RUN_NUMBER + $FINAL_TEAMCITY_BUILD ))
+        sbt clean compile riffRaffUpload
