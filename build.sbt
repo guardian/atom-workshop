@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "com.gu"                   %  "kinesis-logback-appender"     % "1.4.4",
   "com.gu"                   %% "pan-domain-auth-play_2-5"     % "0.4.1",
   "io.circe"                 %% "circe-parser"                 % "0.11.0",
-  "net.logstash.logback"     % "logstash-logback-encoder"      % "6.6",
+  "net.logstash.logback"     %  "logstash-logback-encoder"     % "6.6",
   "com.gu"                   %% "content-api-client-aws"       % "0.5",
   "com.gu"                   %% "content-api-client"           % "15.9"
 )
