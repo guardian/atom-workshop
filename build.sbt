@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "com.gu"                   %  "kinesis-logback-appender"     % "1.4.4",
   "com.gu"                   %% "pan-domain-auth-play_2-5"     % "0.4.1",
   "io.circe"                 %% "circe-parser"                 % "0.11.0",
-  "net.logstash.logback"     %  "logstash-logback-encoder"     % "4.2",
+  "net.logstash.logback"     %  "logstash-logback-encoder"     % "6.6",
   "com.gu"                   %% "content-api-client-aws"       % "0.5",
   "com.gu"                   %% "content-api-client"           % "15.9"
 )
@@ -52,10 +52,15 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
     packageSummary := "Atom Workshop",
     packageDescription := """A single place for atoms of all types""",
 
-    riffRaffArtifactResources ++= Seq(
-      baseDirectory.value / "cloudformation" / "AtomWorkshop.yml" -> s"packages/cloudformation/AtomWorkshop.yml"
+    riffRaffArtifactResources := Seq(
+      (packageBin in Debian).value -> "atom-workshop/atom-workshop_1.0_all.deb",
+      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
+      baseDirectory.value / "fluentbit/td-agent-bit.conf" -> "atom-workshop/fluentbit/td-agent-bit.conf",
+      baseDirectory.value / "fluentbit/parsers.conf" -> "atom-workshop/fluentbit/parsers.conf"
     ),
+
     javaOptions in Universal ++= Seq(
       "-Dpidfile.path=/dev/null"
     )
   )
+

@@ -1,5 +1,4 @@
 import com.gu.atom.play.ReindexController
-import config.LogConfig
 import config.Config.{config, permissions, dynamoDB, capiDynamoDB, capiLambdaClient}
 import controllers.ExplainerReindexController
 import db.AtomDataStores._
@@ -13,8 +12,6 @@ import router.Routes
 
 class AppComponents(context: Context)
   extends BuiltInComponentsFromContext(context) with AhcWSComponents {
-
-  val logger = new LogConfig
 
   lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
   lazy val assets = new controllers.Assets(httpErrorHandler)
