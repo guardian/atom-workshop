@@ -98,16 +98,19 @@ object Config extends AwsInstanceTags {
 
   val capiLambdaClient = AWSLambdaClientBuilder.standard()
     .withCredentials(capiReaderQuestionsCredentials)
+    .withRegion(region.getName)
     .build()
 
   val capiDynamoDB = AmazonDynamoDBClientBuilder.standard()
     .withCredentials(capiReaderQuestionsCredentials)
+    .withRegion(region.getName)
     .build()
 
   val atomEditorGutoolsDomain = config.getString("atom.editors.gutoolsDomain")
 
   val kinesisClient = AmazonKinesisClientBuilder.standard()
     .withCredentials(awsCredentialsProvider)
+    .withRegion(region.getName)
     .build()
 
   // Not sure if we need a full config or if we can just inline the name
