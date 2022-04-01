@@ -17,7 +17,9 @@ import router.Routes
 class AppComponents(context: Context)
   extends BuiltInComponentsFromContext(context) with AhcWSComponents with AssetsComponents with HttpFiltersComponents {
 
-  lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
+  override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
+  override lazy val httpFilters = super.httpFilters.filterNot(_ == allowedHostsFilter)
+
   lazy val appController = new controllers.App(wsClient, atomWorkshopDB, permissions, controllerComponents)
   lazy val loginController = new controllers.Login(wsClient, controllerComponents)
   lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
