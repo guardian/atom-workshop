@@ -8,7 +8,6 @@ import com.gu.pandomainauth.action.UserRequest
 import config.Config
 import db.AtomDataStores._
 import db.AtomWorkshopDBAPI
-import play.api.libs.concurrent.Execution.Implicits._
 import models._
 import play.api.Logger
 import play.api.libs.ws.WSClient
@@ -31,7 +30,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
   import io.circe._
   import io.circe.syntax._
 
-  override protected val executionContext = controllerComponents.executionContext
+  implicit val executionContext = controllerComponents.executionContext
 
   override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
 

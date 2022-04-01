@@ -32,7 +32,7 @@ class ExplainerReindexController(
 
   // Copy-pasted from the atom-maker library
   object ApiKeyAction extends ActionBuilder[Request, AnyContent] {
-    lazy val apiKey = config.getString("reindexApiKey").get
+    lazy val apiKey = config.get[String]("reindexApiKey")
 
     def invokeBlock[A](request: Request[A], block: (Request[A] => Future[Result])) = {
       if(request.getQueryString("api").contains(apiKey))

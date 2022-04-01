@@ -20,10 +20,10 @@ class AppComponents(context: Context)
   lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
   lazy val appController = new controllers.App(wsClient, atomWorkshopDB, permissions, controllerComponents)
   lazy val loginController = new controllers.Login(wsClient, controllerComponents)
-  lazy val healthcheckController = new controllers.Healthcheck()
+  lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
   lazy val supportController = new controllers.Support(wsClient, controllerComponents)
 
-  lazy val reindex = new ReindexController(previewDataStore, publishedDataStore, reindexPreview, reindexPublished, Configuration(config), actorSystem)
+  lazy val reindex = new ReindexController(previewDataStore, publishedDataStore, reindexPreview, reindexPublished, Configuration(config), controllerComponents, actorSystem)
 
   lazy val explainerReindex = new ExplainerReindexController(
     wsClient,
