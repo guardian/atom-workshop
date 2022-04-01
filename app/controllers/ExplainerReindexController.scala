@@ -5,10 +5,10 @@ import com.gu.atom.publish.{AtomReindexer, PreviewAtomReindexer, PublishedAtomRe
 import db.ExplainerDBAPI
 import play.api.Configuration
 import play.api.libs.ws.WSClient
-import play.api.mvc.{ Action, ActionBuilder, AnyContent, Controller, Result, Request }
+import play.api.mvc.{Action, ActionBuilder, AnyContent, BaseController, BodyParser, ControllerComponents, Request, Result}
 import com.gu.contentatom.thrift.{ContentAtomEvent, EventType}
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{ Failure, Success, Try }
+import scala.util.{Failure, Success, Try}
 import play.api.libs.json.Json
 import play.api.Logger
 
@@ -19,14 +19,19 @@ class ExplainerReindexController(
   publishedDataStore: DynamoDataStore,
   previewReindexer: PreviewAtomReindexer,
   publishedReindexer: PublishedAtomReindexer,
-  config: Configuration
-)(implicit ec: ExecutionContext) extends Controller with PanDomainAuthActions {
+  config: Configuration,
+  val controllerComponents: ControllerComponents
+)(implicit ec: ExecutionContext) extends BaseController with PanDomainAuthActions {
 
   var lastPublished: Int = 0
   var lastPreview: Int = 0
 
+  override protected val executionContext = controllerComponents.executionContext
+
+  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
+
   // Copy-pasted from the atom-maker library
-  object ApiKeyAction extends ActionBuilder[Request] {
+  object ApiKeyAction extends ActionBuilder[Request, AnyContent] {
     lazy val apiKey = config.getString("reindexApiKey").get
 
     def invokeBlock[A](request: Request[A], block: (Request[A] => Future[Result])) = {
@@ -35,6 +40,10 @@ class ExplainerReindexController(
       else
         Future.successful(Unauthorized(""))
     }
+
+    override def parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
+
+    override protected def executionContext: ExecutionContext = controllerComponents.executionContext
   }
 
   def reindex(stack: String): Action[AnyContent] = ApiKeyAction.async { req => 

@@ -3,7 +3,7 @@ package util
 import play.api.mvc.{Action, BodyParser, Request, Result}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class CORSable[A](origins: String*)(action: Action[A]) extends Action[A] {
 
@@ -17,4 +17,6 @@ case class CORSable[A](origins: String*)(action: Action[A]) extends Action[A] {
   }
 
   lazy val parser: BodyParser[A] = action.parser
+
+  override def executionContext: ExecutionContext = action.executionContext
 }

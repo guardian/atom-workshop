@@ -5,12 +5,16 @@ import java.net.URI
 import com.gu.contentapi.client.IAMSigner
 import config.Config
 import play.api.libs.ws.WSClient
-import play.api.mvc.{ Controller, Result }
+import play.api.mvc.{AnyContent, BaseController, BodyParser, Controller, ControllerComponents, Result}
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.Logger
 import scala.concurrent.Future
 
-class Support(val wsClient: WSClient) extends Controller with PanDomainAuthActions {
+class Support(val wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
+
+  override protected val executionContext = controllerComponents.executionContext
+
+  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
 
   private val signer = new IAMSigner(
     credentialsProvider = Config.capiPreviewCredentials,
