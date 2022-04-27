@@ -58,6 +58,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
 
     javaOptions in Universal ++= Seq(
       "-Dpidfile.path=/dev/null"
-    )
+    ),
+
+    pipelineStages := Seq(digest)
   )
 
