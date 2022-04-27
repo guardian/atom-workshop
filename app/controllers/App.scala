@@ -20,6 +20,7 @@ import util.AtomUpdateOperations._
 import util.Parser._
 import util.CORSable
 import com.gu.pandomainauth.model.{User => PandaUser}
+import views.html.helper.CSRF
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -41,7 +42,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
     }
   }
   
-  def index(placeholder: String) = AuthAction.async { req =>
+  def index(placeholder: String) = AuthAction.async { implicit req =>
     Logger.info(s"I am the ${Config.appName}")
 
     permissions.getAll(req.user.email).map { permissions =>
@@ -78,7 +79,8 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         "Atom Workshop",
         jsLocation,
         presenceJsFile,
-        clientConfig.asJson.noSpaces)
+        clientConfig.asJson.noSpaces,
+        Some(CSRF.getToken.value))
       )
     }
   }

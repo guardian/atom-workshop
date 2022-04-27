@@ -38,7 +38,8 @@ export const createTarget = (targetObject) => {
       mode: 'cors',
       body: JSON.stringify(targetingObjectWithContentChange),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Csrf-Token': window.guardian.csrf.token
       }
     }
   );
