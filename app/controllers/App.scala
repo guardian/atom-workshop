@@ -80,8 +80,8 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         jsLocation,
         presenceJsFile,
         clientConfig.asJson.noSpaces,
-        Some(CSRF.getToken.value))
-      )
+        CSRF.getToken.value
+      ))
     }
   }
 
