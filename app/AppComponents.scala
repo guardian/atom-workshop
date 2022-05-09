@@ -1,26 +1,31 @@
 import com.gu.atom.play.ReindexController
-import config.Config.{config, permissions, dynamoDB, capiDynamoDB, capiLambdaClient}
+import com.typesafe.config.Config
+import config.Config.{capiDynamoDB, capiLambdaClient, config, dynamoDB, permissions}
 import controllers.ExplainerReindexController
 import db.AtomDataStores._
 import db.AtomWorkshopDB
 import db.ExplainerDB
 import db.ReindexDataStores._
+import play.api.Configuration
 import play.api.ApplicationLoader.Context
-import play.api._
+import play.api.BuiltInComponentsFromContext
 import play.api.libs.ws.ahc.AhcWSComponents
+import controllers.AssetsComponents
+import play.filters.HttpFiltersComponents
 import router.Routes
 
 class AppComponents(context: Context)
-  extends BuiltInComponentsFromContext(context) with AhcWSComponents {
+  extends BuiltInComponentsFromContext(context) with AhcWSComponents with AssetsComponents with HttpFiltersComponents {
 
-  lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
-  lazy val assets = new controllers.Assets(httpErrorHandler)
-  lazy val appController = new controllers.App(wsClient, atomWorkshopDB, permissions)
-  lazy val loginController = new controllers.Login(wsClient)
-  lazy val healthcheckController = new controllers.Healthcheck()
-  lazy val supportController = new controllers.Support(wsClient)
+  override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
+  override lazy val httpFilters = super.httpFilters.filterNot(_ == allowedHostsFilter)
 
-  lazy val reindex = new ReindexController(previewDataStore, publishedDataStore, reindexPreview, reindexPublished, Configuration(config), actorSystem)
+  lazy val appController = new controllers.App(wsClient, atomWorkshopDB, permissions, controllerComponents)
+  lazy val loginController = new controllers.Login(wsClient, controllerComponents)
+  lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
+  lazy val supportController = new controllers.Support(wsClient, controllerComponents)
+
+  lazy val reindex = new ReindexController(previewDataStore, publishedDataStore, reindexPreview, reindexPublished, Configuration(config), controllerComponents, actorSystem)
 
   lazy val explainerReindex = new ExplainerReindexController(
     wsClient,
@@ -29,7 +34,8 @@ class AppComponents(context: Context)
     explainerPublishedDataStore,
     reindexPreview,
     reindexPublished,
-    Configuration(config)
+    Configuration(config),
+    controllerComponents
   )(actorSystem.dispatcher)
 
   lazy val atomWorkshopDB = new AtomWorkshopDB()

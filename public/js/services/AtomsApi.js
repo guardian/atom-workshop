@@ -21,7 +21,8 @@ export default {
         credentials: 'same-origin',
         body: JSON.stringify(atomInfo),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Csrf-Token': window.guardian.csrf.token
         }
       }
     );
@@ -35,7 +36,8 @@ export default {
         credentials: 'same-origin',
         body: JSON.stringify(atom),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Csrf-Token': window.guardian.csrf.token
         }
       }
     );
@@ -77,7 +79,8 @@ export default {
         credentials: 'same-origin',
         body: JSON.stringify(atom),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Csrf-Token': window.guardian.csrf.token
         }
       }
     );

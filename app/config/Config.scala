@@ -1,15 +1,10 @@
 package config
 
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.amazonaws.auth.{
-  AWSCredentialsProvider, 
-  AWSCredentialsProviderChain, 
-  InstanceProfileCredentialsProvider, 
-  STSAssumeRoleSessionCredentialsProvider
-}
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
-import com.amazonaws.services.kinesis.AmazonKinesisClient
-import com.amazonaws.services.lambda.AWSLambdaClient
+import com.amazonaws.auth.{AWSCredentialsProvider, AWSCredentialsProviderChain, InstanceProfileCredentialsProvider, STSAssumeRoleSessionCredentialsProvider}
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
+import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder
+import com.amazonaws.services.lambda.AWSLambdaClientBuilder
 import com.gu.cm.{Mode, Configuration => ConfigurationMagic}
 import services.{AtomWorkshopPermissionsProvider, AwsInstanceTags}
 
@@ -52,11 +47,11 @@ object Config extends AwsInstanceTags {
   val pandaAuthCallback = config.getString("panda.authCallback")
   val pandaSystem = config.getString("panda.system")
 
-  val dynamoDB = region.createClient(
-    classOf[AmazonDynamoDBClient],
-    awsCredentialsProvider,
-    null
-  )
+  val dynamoDB = AmazonDynamoDBClientBuilder
+    .standard()
+    .withCredentials(awsCredentialsProvider)
+    .withRegion(region.getName)
+    .build()
 
   val previewDynamoTableName = config.getString("aws.dynamo.preview.tableName")
   val publishedDynamoTableName = config.getString("aws.dynamo.live.tableName")
@@ -101,25 +96,22 @@ object Config extends AwsInstanceTags {
     )
   }
 
-  val capiLambdaClient = region.createClient(
-    classOf[AWSLambdaClient],
-    capiReaderQuestionsCredentials,
-    null
-  )
+  val capiLambdaClient = AWSLambdaClientBuilder.standard()
+    .withCredentials(capiReaderQuestionsCredentials)
+    .withRegion(region.getName)
+    .build()
 
-  val capiDynamoDB = region.createClient(
-    classOf[AmazonDynamoDBClient],
-    capiReaderQuestionsCredentials,
-    null
-  )
+  val capiDynamoDB = AmazonDynamoDBClientBuilder.standard()
+    .withCredentials(capiReaderQuestionsCredentials)
+    .withRegion(region.getName)
+    .build()
 
   val atomEditorGutoolsDomain = config.getString("atom.editors.gutoolsDomain")
 
-  val kinesisClient = region.createClient(
-    classOf[AmazonKinesisClient],
-    awsCredentialsProvider,
-    null
-  )
+  val kinesisClient = AmazonKinesisClientBuilder.standard()
+    .withCredentials(awsCredentialsProvider)
+    .withRegion(region.getName)
+    .build()
 
   // Not sure if we need a full config or if we can just inline the name
   // of the function here

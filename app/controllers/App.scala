@@ -8,11 +8,10 @@ import com.gu.pandomainauth.action.UserRequest
 import config.Config
 import db.AtomDataStores._
 import db.AtomWorkshopDBAPI
-import play.api.libs.concurrent.Execution.Implicits._
 import models._
 import play.api.Logger
 import play.api.libs.ws.WSClient
-import play.api.mvc.{ActionBuilder, Controller, Request, Result}
+import play.api.mvc._
 import services.AtomPublishers._
 import services.AtomWorkshopPermissionsProvider
 import util.AtomElementBuilders
@@ -20,17 +19,21 @@ import util.AtomLogic._
 import util.AtomUpdateOperations._
 import util.Parser._
 import util.CORSable
-import play.api.mvc.Action
 import com.gu.pandomainauth.model.{User => PandaUser}
+import views.html.helper.CSRF
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
-          val permissions: AtomWorkshopPermissionsProvider) extends Controller with PanDomainAuthActions {
+          val permissions: AtomWorkshopPermissionsProvider, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
 
   // These are required even though IntelliJ thinks they are not
   import io.circe._
   import io.circe.syntax._
+
+  implicit val executionContext = controllerComponents.executionContext
+
+  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
 
   def allowCORSAccess(methods: String, args: Any*) = CORSable(Config.workflowUrl, Config.visualsUrl) {
     Action { implicit req =>
@@ -39,7 +42,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
     }
   }
   
-  def index(placeholder: String) = AuthAction.async { req =>
+  def index(placeholder: String) = AuthAction.async { implicit req =>
     Logger.info(s"I am the ${Config.appName}")
 
     permissions.getAll(req.user.email).map { permissions =>
@@ -76,8 +79,9 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         "Atom Workshop",
         jsLocation,
         presenceJsFile,
-        clientConfig.asJson.noSpaces)
-      )
+        clientConfig.asJson.noSpaces,
+        CSRF.getToken.value
+      ))
     }
   }
 
@@ -181,22 +185,6 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         atomType <- validateAtomType(atomType)
         result <- takedown(atomType, id, req.user)
       } yield result
-    }
-  }
-
-  class PermissionedAction(permission: Permission) extends ActionBuilder[UserRequest] {
-    override def invokeBlock[A](request: Request[A], block: UserRequest[A] => Future[Result]): Future[Result] = {
-      AuthAction.invokeBlock(request, { req: UserRequest[A] =>
-
-        permissions.get(permission)(PermissionsUser(req.user.email)).flatMap {
-          case PermissionGranted =>
-            block(req)
-
-          case _ =>
-            Future.successful(Unauthorized(s"User ${req.user.email} is not authorised for permission ${permission.name}"))
-
-        }
-      })
     }
   }
 

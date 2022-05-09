@@ -4,7 +4,7 @@ version := "1.0"
 scalaVersion := "2.11.12"
 
 lazy val awsVersion = "1.11.678"
-lazy val atomLibVersion = "1.2.3"
+lazy val atomLibVersion = "1.2.5"
 
 libraryDependencies ++= Seq(
   ws,
@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   "com.gu"                   %% "configuration-magic-core"     % "1.3.0",
   "com.gu"                   %% "fezziwig"                     % "1.2",
   "com.gu"                   %  "kinesis-logback-appender"     % "1.4.4",
-  "com.gu"                   %% "pan-domain-auth-play_2-5"     % "0.4.1",
+  "com.gu"                   %% "pan-domain-auth-play_2-6"     % "0.5.0",
   "io.circe"                 %% "circe-parser"                 % "0.11.0",
   "net.logstash.logback"     %  "logstash-logback-encoder"     % "6.6",
   "com.gu"                   %% "content-api-client-aws"       % "0.5",
@@ -32,10 +32,7 @@ resolvers ++= Seq(
 
 routesGenerator := InjectedRoutesGenerator
 
-import com.typesafe.sbt.packager.archetypes.ServerLoader.Systemd
-serverLoading in Debian := Systemd
-
-lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact, JDebPackaging)
+lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact, JDebPackaging, SystemdPlugin)
   .settings(Defaults.coreDefaultSettings: _*)
   .settings(
     name in Universal := normalizedName.value,
@@ -61,6 +58,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
 
     javaOptions in Universal ++= Seq(
       "-Dpidfile.path=/dev/null"
-    )
+    ),
+
+    pipelineStages := Seq(digest)
   )
 
