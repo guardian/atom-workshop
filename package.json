@@ -62,7 +62,7 @@
     "moment": "^2.18.0",
     "panda-session": "^0.1.6",
     "react": "^15.4.2",
-    "react-addons-shallow-compare": "^15.4.2",
+    "react-addons-shallow-compare": "^15.6.3",
     "react-dates": "^8.2.1",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
