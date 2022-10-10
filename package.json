@@ -4,8 +4,8 @@
   "description": "A tool for creating multiple atom types.",
   "main": "public/index.html",
   "scripts": {
-    "start": "webpack ./public/js/app.js ./public/build/app.js --config ./conf/webpack.conf.js --watch",
-    "build": "webpack -p ./public/js/app.js ./public/build/app.js --config ./conf/webpack.conf.js",
+    "start": "webpack --entry ./public/js/app.js --output-path ./public/build/ --config ./conf/webpack.conf.js --watch",
+    "build": "webpack --mode production --entry  ./public/js/app.js --output-path ./public/build/ --config ./conf/webpack.conf.js",
     "test": "jest",
     "lint": "eslint public/**"
   },
@@ -34,7 +34,7 @@
     "eslint": "^3.15.0",
     "eslint-plugin-react": "^6.9.0",
     "file-loader": "^3.0.1",
-    "jest": "^18.1.0",
+    "jest": "^24.9.0",
     "mini-css-extract-plugin": "^1.6.2",
     "react-addons-test-utils": "^15.4.2",
     "react-hot-loader": "^3.1.1",
@@ -47,7 +47,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "babel-plugin-transform-class-properties": "^6.22.0",
     "copy-to-clipboard": "^3.0.5",
     "date-fns": "^1.28.0",
     "enzyme-adapter-react-15": "^1.4.1",

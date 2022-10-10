@@ -5,6 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     devtool: 'cheap-module-source-map',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'app.js'
+    },
     module: {
         rules: [
             {
@@ -49,7 +53,6 @@ module.exports = {
             }
         ]
     },
-
     resolve: {
         modules: [
           path.join(__dirname, "src"),
@@ -57,7 +60,6 @@ module.exports = {
         ],
         extensions: ['.js', '.jsx', '.json']
     },
-
     plugins: [
         new MiniCssExtractPlugin({filename: 'main.css'}),
     ]
