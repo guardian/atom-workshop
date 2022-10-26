@@ -5,7 +5,7 @@ deployments:
   atom-workshop:
     type: autoscaling
     parameters:
-      bucketSsmLookup: true
+      bucket: composer-dist
     dependencies:
       - atom-workshop-ami-update
   atom-workshop-ami-update:
