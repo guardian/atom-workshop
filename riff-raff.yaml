@@ -4,8 +4,6 @@ stacks: [flexible]
 deployments:
   atom-workshop:
     type: autoscaling
-    parameters:
-      bucket: composer-dist
     dependencies:
       - atom-workshop-ami-update
   atom-workshop-ami-update:
