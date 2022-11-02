@@ -2,7 +2,6 @@ package controllers
 
 import cats.syntax.either._
 import com.gu.contentatom.thrift.{Atom, AtomType, EventType}
-import com.gu.editorial.permissions.client.{Permission, PermissionGranted, PermissionsUser}
 import com.gu.fezziwig.CirceScroogeMacros._
 import com.gu.pandomainauth.action.UserRequest
 import config.Config
@@ -13,7 +12,7 @@ import play.api.Logger
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.AtomPublishers._
-import services.AtomWorkshopPermissionsProvider
+import services.Permissions
 import util.AtomElementBuilders
 import util.AtomLogic._
 import util.AtomUpdateOperations._
@@ -22,10 +21,8 @@ import util.CORSable
 import com.gu.pandomainauth.model.{User => PandaUser}
 import views.html.helper.CSRF
 
-import scala.concurrent.{ExecutionContext, Future}
-
 class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
-          val permissions: AtomWorkshopPermissionsProvider, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
+          val permissions: Permissions, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
 
   // These are required even though IntelliJ thinks they are not
   import io.circe._
@@ -42,10 +39,9 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
     }
   }
   
-  def index(placeholder: String) = AuthAction.async { implicit req =>
+  def index(placeholder: String) = AuthAction { implicit req =>
     Logger.info(s"I am the ${Config.appName}")
 
-    permissions.getAll(req.user.email).map { permissions =>
       val clientConfig = ClientConfig(
         user = User(req.user.firstName, req.user.lastName, req.user.email),
         gridUrl = Config.gridUrl,
@@ -59,7 +55,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         atomEditorGutoolsDomain = Config.atomEditorGutoolsDomain,
         presenceEnabled = Config.presenceEnabled,
         presenceDomain = Config.presenceDomain,
-        permissions,
+        permissions.getAll(req.user.email),
         visualsUrl = Config.visualsUrl,
         stage = Config.stage
       )
@@ -82,7 +78,6 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         clientConfig.asJson.noSpaces,
         CSRF.getToken.value
       ))
-    }
   }
 
   def getAtom(atomType: String, id: String, version: String) = CORSable(Config.visualsUrl){

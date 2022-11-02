@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder
 import com.gu.cm.{Mode, Configuration => ConfigurationMagic}
-import services.{AtomWorkshopPermissionsProvider, AwsInstanceTags}
+import services.{AwsInstanceTags, Permissions}
 
 object Config extends AwsInstanceTags {
 
@@ -14,6 +14,8 @@ object Config extends AwsInstanceTags {
   val appName = readTag("App") getOrElse "atom-workshop"
   val stack = readTag("Stack") getOrElse "flexible"
   val region = services.EC2Client.region
+
+  val effectiveStage = if(stage == "PROD") "PROD" else "CODE"
 
   val awsCredentialsProvider = new AWSCredentialsProviderChain(
     new ProfileCredentialsProvider("composer"),
@@ -117,5 +119,5 @@ object Config extends AwsInstanceTags {
   // of the function here
   val lambdaFunctionName = config.getString("aws.lambda.notifications.name")
 
-  val permissions = new AtomWorkshopPermissionsProvider(stage, awsCredentialsProvider)
+  val permissions = new Permissions(effectiveStage, region.getName, awsCredentialsProvider)
 }
