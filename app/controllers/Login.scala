@@ -3,17 +3,14 @@ package controllers
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 
-class Login(val wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
+class Login(val controllerComponents: ControllerComponents, val wsClient: WSClient, val pandaAuthActions: PanDomainAuthActions) extends BaseController {
+  import pandaAuthActions.{AuthAction, processGoogleCallback}
 
-  override protected val executionContext = controllerComponents.executionContext
-
-  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
-
-  def reauth = AuthAction {
+  def reauth: Action[AnyContent] = AuthAction {
     Ok("auth ok")
   }
 
-  def oauthCallback = Action.async { implicit request =>
+  def oauthCallback: Action[AnyContent] = Action.async { implicit request =>
     processGoogleCallback()
   }
 }

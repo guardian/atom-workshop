@@ -3,19 +3,21 @@ version := "1.0"
 
 scalaVersion := "2.11.12"
 
-lazy val awsVersion = "1.11.678"
+lazy val awsVersion = "2.18.8"
+lazy val awsVersionV1 = "1.11.678"
 lazy val atomLibVersion = "1.3.0"
 
 libraryDependencies ++= Seq(
   ws,
-  "com.amazonaws"            %  "aws-java-sdk-core"            % awsVersion,
-  "com.amazonaws"            %  "aws-java-sdk-ec2"             % awsVersion,
-  "com.amazonaws"            %  "aws-java-sdk-lambda"          % awsVersion,
-  "com.amazonaws"            %  "aws-java-sdk-dynamodb"        % awsVersion,
+  "com.amazonaws"            %  "aws-java-sdk-core"            % awsVersionV1,
+  "com.amazonaws"            %  "aws-java-sdk-ec2"             % awsVersionV1,
+  "com.amazonaws"            %  "aws-java-sdk-lambda"          % awsVersionV1,
+  "com.amazonaws"            %  "aws-java-sdk-dynamodb"        % awsVersionV1,
+  "software.amazon.awssdk"   %  "auth"                         % awsVersion,
   "com.gu"                   %% "atom-manager-play"            % atomLibVersion,
   "com.gu"                   %% "atom-publisher-lib"           % atomLibVersion,
   "com.gu"                   %% "editorial-permissions-client" % "2.0",
-  "com.gu"                   %% "configuration-magic-core"     % "1.3.0",
+  "com.gu"                   %% "simple-configuration-ssm"     % "1.5.6",
   "com.gu"                   %% "fezziwig"                     % "1.2",
   "com.gu"                   %  "kinesis-logback-appender"     % "1.4.4",
   "com.gu"                   %% "pan-domain-auth-play_2-6"     % "0.5.0",

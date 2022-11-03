@@ -2,26 +2,24 @@ package db
 
 import com.gu.atom.data._
 import com.gu.atom.publish.{PreviewKinesisAtomReindexer, PublishedKinesisAtomReindexer}
-import config.Config._
+import config.Config
 import models.{Live, Preview, Version}
 
-object AtomDataStores {
+class AtomDataStores(config: Config) {
   def getDataStore(version: Version): DynamoDataStore = version match {
     case Live => publishedDataStore
     case Preview => previewDataStore
   }
 
-  val previewDataStore = new PreviewDynamoDataStore(dynamoDB, previewDynamoTableName)
-  val publishedDataStore = new PublishedDynamoDataStore(dynamoDB, publishedDynamoTableName)
+  val previewDataStore = new PreviewDynamoDataStore(config.dynamoDB, config.previewDynamoTableName)
+  val publishedDataStore = new PublishedDynamoDataStore(config.dynamoDB, config.publishedDynamoTableName)
   
-  val explainerPreviewDataStore = new PreviewDynamoDataStore(dynamoDB, explainerPreviewDynamoTableName)
-  val explainerPublishedDataStore = new PublishedDynamoDataStore(dynamoDB, explainerPublishedDynamoTableName)
-}
+  val explainerPreviewDataStore = new PreviewDynamoDataStore(config.dynamoDB, config.explainerPreviewDynamoTableName)
+  val explainerPublishedDataStore = new PublishedDynamoDataStore(config.dynamoDB, config.explainerPublishedDynamoTableName)
 
-object ReindexDataStores {
   val reindexPreview: PreviewKinesisAtomReindexer =
-    new PreviewKinesisAtomReindexer(previewReindexKinesisStreamName, kinesisClient)
+    new PreviewKinesisAtomReindexer(config.previewReindexKinesisStreamName, config.kinesisClient)
 
   val reindexPublished: PublishedKinesisAtomReindexer =
-    new PublishedKinesisAtomReindexer(liveReindexKinesisStreamName, kinesisClient)
+    new PublishedKinesisAtomReindexer(config.liveReindexKinesisStreamName, config.kinesisClient)
 }

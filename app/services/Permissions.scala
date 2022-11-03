@@ -2,6 +2,7 @@ package services
 
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
+
 class Permissions(stage: String, region: String, credsProvider: AWSCredentialsProvider) {
   private val app = "atom-maker"
 

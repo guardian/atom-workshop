@@ -5,32 +5,24 @@ import com.amazonaws.auth.{AWSCredentialsProvider, AWSCredentialsProviderChain, 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder
-import com.gu.cm.{Mode, Configuration => ConfigurationMagic}
-import services.{AwsInstanceTags, Permissions}
+import com.gu.{AppIdentity, AwsIdentity, DevIdentity}
+import play.api.Configuration
+import services.Permissions
 
-object Config extends AwsInstanceTags {
+class Config(initialConfiguration: Configuration, identity: AppIdentity) {
+  val config = initialConfiguration.underlying
 
-  val stage = readTag("Stage") getOrElse "DEV"
-  val appName = readTag("App") getOrElse "atom-workshop"
-  val stack = readTag("Stack") getOrElse "flexible"
-  val region = services.EC2Client.region
+  val (appName, stage, stack, region) = identity match {
+    case aws: AwsIdentity => (aws.app, aws.stage, aws.stack, aws.region)
+    case dev: DevIdentity => (dev.app, "DEV", "flexible", "eu-west-1")
+  }
 
-  val effectiveStage = if(stage == "PROD") "PROD" else "CODE"
+  val effectiveStage: String = if(stage == "PROD") "PROD" else "CODE"
 
   val awsCredentialsProvider = new AWSCredentialsProviderChain(
     new ProfileCredentialsProvider("composer"),
     new InstanceProfileCredentialsProvider(false)
   )
-
-  //CODE uses Configuration Mode PROD so that we can use dynamo to get config. Configuration Magic currently has no CODE mode SC 15/2/17
-  val configMagicMode = stage match {
-    case "DEV" => Mode.Dev
-    case "CODE" => Mode.Prod
-    case "PROD" => Mode.Prod
-    case _ => sys.error("invalid stage")
-  }
-  val config = ConfigurationMagic(appName, configMagicMode).load
-
   def getOptionalProperty[T](path: String, getVal: String => T): Option[T] = {
     if (config.hasPath(path)) Some(getVal(path))
     else None
@@ -52,7 +44,7 @@ object Config extends AwsInstanceTags {
   val dynamoDB = AmazonDynamoDBClientBuilder
     .standard()
     .withCredentials(awsCredentialsProvider)
-    .withRegion(region.getName)
+    .withRegion(region)
     .build()
 
   val previewDynamoTableName = config.getString("aws.dynamo.preview.tableName")
@@ -100,24 +92,26 @@ object Config extends AwsInstanceTags {
 
   val capiLambdaClient = AWSLambdaClientBuilder.standard()
     .withCredentials(capiReaderQuestionsCredentials)
-    .withRegion(region.getName)
+    .withRegion(region)
     .build()
 
   val capiDynamoDB = AmazonDynamoDBClientBuilder.standard()
     .withCredentials(capiReaderQuestionsCredentials)
-    .withRegion(region.getName)
+    .withRegion(region)
     .build()
 
   val atomEditorGutoolsDomain = config.getString("atom.editors.gutoolsDomain")
 
   val kinesisClient = AmazonKinesisClientBuilder.standard()
     .withCredentials(awsCredentialsProvider)
-    .withRegion(region.getName)
+    .withRegion(region)
     .build()
+
+  val reindexApiKey = config.getString("reindexApiKey")
 
   // Not sure if we need a full config or if we can just inline the name
   // of the function here
   val lambdaFunctionName = config.getString("aws.lambda.notifications.name")
 
-  val permissions = new Permissions(effectiveStage, region.getName, awsCredentialsProvider)
+  val permissions = new Permissions(effectiveStage, region, awsCredentialsProvider)
 }

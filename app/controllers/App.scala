@@ -3,61 +3,69 @@ package controllers
 import cats.syntax.either._
 import com.gu.contentatom.thrift.{Atom, AtomType, EventType}
 import com.gu.fezziwig.CirceScroogeMacros._
-import com.gu.pandomainauth.action.UserRequest
 import config.Config
-import db.AtomDataStores._
-import db.AtomWorkshopDBAPI
+import db.{AtomDataStores, AtomWorkshopDBAPI}
 import models._
 import play.api.Logger
-import play.api.libs.ws.WSClient
 import play.api.mvc._
-import services.AtomPublishers._
-import services.Permissions
 import util.AtomElementBuilders
 import util.AtomLogic._
 import util.AtomUpdateOperations._
 import util.Parser._
 import util.CORSable
 import com.gu.pandomainauth.model.{User => PandaUser}
+import services.AtomPublishers
 import views.html.helper.CSRF
 
-class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
-          val permissions: Permissions, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
+class App(
+           val controllerComponents: ControllerComponents,
+           val config: Config,
+           val pandaAuthActions: PanDomainAuthActions,
+           val atomWorkshopDB: AtomWorkshopDBAPI,
+           val atomDataStores: AtomDataStores,
+           val atomPublishers: AtomPublishers
+         ) extends BaseController {
 
   // These are required even though IntelliJ thinks they are not
   import io.circe._
   import io.circe.syntax._
 
+  import pandaAuthActions.AuthAction
+
   implicit val executionContext = controllerComponents.executionContext
 
-  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
+  private val previewDataStore = atomDataStores.getDataStore(Preview)
+  private val publishedDataStore = atomDataStores.getDataStore(Live)
 
-  def allowCORSAccess(methods: String, args: Any*) = CORSable(Config.workflowUrl, Config.visualsUrl) {
+  private val previewAtomPublisher = atomPublishers.previewAtomPublisher
+  private val liveAtomPublisher = atomPublishers.liveAtomPublisher
+
+  def allowCORSAccess(methods: String, args: Any*) = CORSable(config.workflowUrl, config.visualsUrl) {
     Action { implicit req =>
       val requestedHeaders = req.headers("Access-Control-Request-Headers")
       NoContent.withHeaders("Access-Control-Allow-Methods" -> methods, "Access-Control-Allow-Headers" -> requestedHeaders)
     }
   }
-  
+
   def index(placeholder: String) = AuthAction { implicit req =>
-    Logger.info(s"I am the ${Config.appName}")
+    Logger.info(s"I am the ${config.appName}")
 
       val clientConfig = ClientConfig(
         user = User(req.user.firstName, req.user.lastName, req.user.email),
-        gridUrl = Config.gridUrl,
-        composerUrl = Config.composerUrl,
-        viewerUrl = Config.viewerUrl,
-        capiLiveUrl = Config.capiLiveUrl,
-        targetingUrl = Config.targetingUrl,
-        workflowUrl = Config.workflowUrl,
+        gridUrl = config.gridUrl,
+        composerUrl = config.composerUrl,
+        viewerUrl = config.viewerUrl,
+        capiLiveUrl = config.capiLiveUrl,
+        targetingUrl = config.targetingUrl,
+        workflowUrl = config.workflowUrl,
         isEmbedded = req.queryString.get("embeddedMode").isDefined,
         embeddedMode = req.queryString.get("embeddedMode").map(_.head),
-        atomEditorGutoolsDomain = Config.atomEditorGutoolsDomain,
-        presenceEnabled = Config.presenceEnabled,
-        presenceDomain = Config.presenceDomain,
-        permissions.getAll(req.user.email),
-        visualsUrl = Config.visualsUrl,
-        stage = Config.stage
+        atomEditorGutoolsDomain = config.atomEditorGutoolsDomain,
+        presenceEnabled = config.presenceEnabled,
+        presenceDomain = config.presenceDomain,
+        config.permissions.getAll(req.user.email),
+        visualsUrl = config.visualsUrl,
+        stage = config.stage
       )
 
       val jsFileName = "build/app.js"
@@ -65,8 +73,8 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
       val jsLocation = sys.env.get("JS_ASSET_HOST").map(_ + jsFileName)
         .getOrElse(routes.Assets.versioned(jsFileName).toString)
 
-      val presenceJsFile = if (Config.presenceEnabled) {
-        Some(s"https://${Config.presenceDomain}/client/1/lib.js")
+      val presenceJsFile = if (config.presenceEnabled) {
+        Some(s"https://${config.presenceDomain}/client/1/lib.js")
       } else {
         None
       }
@@ -80,19 +88,19 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
       ))
   }
 
-  def getAtom(atomType: String, id: String, version: String) = CORSable(Config.visualsUrl){
+  def getAtom(atomType: String, id: String, version: String) = CORSable(config.visualsUrl){
     AuthAction {
       APIResponse {
         for {
           atomType <- validateAtomType(atomType)
-          ds = getDataStore(getVersion(version))
+          ds = atomDataStores.getDataStore(getVersion(version))
           atom <- atomWorkshopDB.getAtom(ds, atomType, id)
         } yield atom
       }
     }
   }
 
-  def createAtom(atomType: String) = CORSable(Config.workflowUrl) {
+  def createAtom(atomType: String) = CORSable(config.workflowUrl) {
     AuthAction { req =>
       APIResponse {
         for {
@@ -100,7 +108,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
           createAtomFields <- extractCreateAtomFields(req.body.asJson.map(_.toString))
           atomToCreate = AtomElementBuilders.buildDefaultAtom(atomType, req.user, createAtomFields)
           atom <- atomWorkshopDB.createAtom(previewDataStore, atomType, req.user, atomToCreate)
-          _ <- sendKinesisEvent(atom, previewAtomPublisher, EventType.Update)
+          _ <- atomPublishers.sendKinesisEvent(atom, previewAtomPublisher, EventType.Update)
         } yield atom
       }
     }
@@ -110,17 +118,17 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
     APIResponse {
       for {
         atomType <- validateAtomType(atomType)
-        previewDs = getDataStore(Preview)
+        previewDs = previewDataStore
         currentDraftAtom <- atomWorkshopDB.getAtom(previewDs, atomType, id)
         updatedAtom <- atomWorkshopDB.publishAtom(publishedDataStore, req.user, updateTopLevelFields(currentDraftAtom, req.user, publish=true))
         _ <- atomWorkshopDB.updateAtom(previewDs, updatedAtom)
-        _ <- sendKinesisEvent(updatedAtom, liveAtomPublisher, EventType.Update)
-        _ <- sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
+        _ <- atomPublishers.sendKinesisEvent(updatedAtom, liveAtomPublisher, EventType.Update)
+        _ <- atomPublishers.sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
       } yield updatedAtom
     }
   }
 
-  def updateEntireAtom(atomType: String, id: String) = CORSable(Config.visualsUrl) {
+  def updateEntireAtom(atomType: String, id: String) = CORSable(config.visualsUrl) {
     AuthAction { req =>
       APIResponse {
         for {
@@ -128,7 +136,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
           payload <- extractRequestBody(req.body.asJson.map(_.toString))
           newAtom <- stringToAtom(payload)
           updatedAtom <- atomWorkshopDB.updateAtom(previewDataStore, updateTopLevelFields(newAtom, req.user))
-          _ <- sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
+          _ <- atomPublishers.sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
         } yield updatedAtom
       }
     }
@@ -143,7 +151,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
         currentAtom <- atomWorkshopDB.getAtom(previewDataStore, atomType, id)
         newAtom <- updateAtomFromJson(currentAtom, newJson, req.user)
         updatedAtom <- atomWorkshopDB.updateAtom(previewDataStore, updateTopLevelFields(newAtom, req.user))
-        _ <- sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
+        _ <- atomPublishers.sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
       } yield updatedAtom
     }
   }
@@ -156,14 +164,14 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
             for {
               _ <- takedown(atomType, id, req.user)
               _ <- atomWorkshopDB.deleteAtom(previewDataStore, atomType, id)
-              _ <- sendKinesisEvent(publishedAtom, previewAtomPublisher, EventType.Takedown)
+              _ <- atomPublishers.sendKinesisEvent(publishedAtom, previewAtomPublisher, EventType.Takedown)
             } yield AtomWorkshopAPIResponse(s"Atom $atomType/$id taken down and deleted")
 
           case Left(UnknownAtomError(_, _)) =>
             atomWorkshopDB.getAtom(previewDataStore, atomType, id).flatMap { unpublishedAtom =>
               for {
                 _ <- atomWorkshopDB.deleteAtom(previewDataStore, atomType, id)
-                _ <- sendKinesisEvent(unpublishedAtom, previewAtomPublisher, EventType.Takedown)
+                _ <- atomPublishers.sendKinesisEvent(unpublishedAtom, previewAtomPublisher, EventType.Takedown)
               } yield AtomWorkshopAPIResponse(s"Atom $atomType/$id deleted")
             }
 
@@ -187,7 +195,7 @@ class App(val wsClient: WSClient, val atomWorkshopDB: AtomWorkshopDBAPI,
     atom <- atomWorkshopDB.getAtom(publishedDataStore, atomType, id)
     updatedAtom <- atomWorkshopDB.updateAtom(previewDataStore, updateTakenDownChangeRecord(atom, user))
     result <- atomWorkshopDB.deleteAtom(publishedDataStore, atomType, id)
-    _ <- sendKinesisEvent(updatedAtom, liveAtomPublisher, EventType.Takedown)
-    _ <- sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
+    _ <- atomPublishers.sendKinesisEvent(updatedAtom, liveAtomPublisher, EventType.Takedown)
+    _ <- atomPublishers.sendKinesisEvent(updatedAtom, previewAtomPublisher, EventType.Update)
   } yield updatedAtom
 }
