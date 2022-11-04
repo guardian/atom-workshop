@@ -10,9 +10,9 @@ class AppLoader extends ApplicationLoader {
   override def load(context: Context): Application = {
     startLogging(context)
 
-    val identity: AppIdentity = AppIdentity.whoAmI(defaultAppName, credentials)
+    val identity: AppIdentity = AppIdentity.whoAmI(defaultAppName, credentialsV2)
 
-    val loadedConfig = ConfigurationLoader.load(identity, credentials) {
+    val loadedConfig = ConfigurationLoader.load(identity, credentialsV2) {
       case identity: AwsIdentity => SSMConfigurationLocation.default(identity)
       case _: DevIdentity =>
         val home = System.getProperty("user.home")

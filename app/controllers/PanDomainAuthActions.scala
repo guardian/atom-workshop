@@ -16,6 +16,6 @@ trait PanDomainAuthActions extends AuthActions {
 
   override val system: String
 
-  override def awsCredentialsProvider: AWSCredentialsProvider = AWS.credentialsV1
+  override def awsCredentialsProvider: AWSCredentialsProvider = AWS.credentials
 
 }

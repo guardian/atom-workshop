@@ -14,7 +14,7 @@ import util.AtomUpdateOperations._
 import util.Parser._
 import util.CORSable
 import com.gu.pandomainauth.model.{User => PandaUser}
-import services.AtomPublishers
+import services.{AtomPublishers, Permissions}
 import views.html.helper.CSRF
 
 class App(
@@ -23,7 +23,8 @@ class App(
            val pandaAuthActions: PanDomainAuthActions,
            val atomWorkshopDB: AtomWorkshopDBAPI,
            val atomDataStores: AtomDataStores,
-           val atomPublishers: AtomPublishers
+           val atomPublishers: AtomPublishers,
+           val permissions: Permissions
          ) extends BaseController {
 
   // These are required even though IntelliJ thinks they are not
@@ -60,10 +61,10 @@ class App(
         workflowUrl = config.workflowUrl,
         isEmbedded = req.queryString.get("embeddedMode").isDefined,
         embeddedMode = req.queryString.get("embeddedMode").map(_.head),
-        atomEditorGutoolsDomain = config.atomEditorGutoolsDomain,
+        atomEditorGutoolsDomain = config.serviceDomain,
         presenceEnabled = config.presenceEnabled,
         presenceDomain = config.presenceDomain,
-        config.permissions.getAll(req.user.email),
+        permissions.getAll(req.user.email),
         visualsUrl = config.visualsUrl,
         stage = config.stage
       )

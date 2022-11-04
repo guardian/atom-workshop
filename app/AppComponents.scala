@@ -10,7 +10,7 @@ import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.mvc.{AnyContent, BodyParser}
 import play.filters.HttpFiltersComponents
 import router.Routes
-import services.AtomPublishers
+import services.{AtomPublishers, Permissions}
 
 import scala.concurrent.ExecutionContext
 
@@ -21,9 +21,6 @@ class AppComponents(context: Context, identity: AppIdentity)
 
   override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
   override lazy val httpFilters = super.httpFilters.filterNot(_ == allowedHostsFilter)
-
-  lazy val atomDataStores = new AtomDataStores(config)
-  lazy val atomPublishers = new AtomPublishers(config)
 
   private val pandaAuthActions = new PanDomainAuthActions {
     override def authCallbackUrl: String = config.pandaAuthCallback
@@ -38,7 +35,15 @@ class AppComponents(context: Context, identity: AppIdentity)
     override protected val executionContext: ExecutionContext = controllerComponents.executionContext
   }
 
-  lazy val appController = new controllers.App(controllerComponents, config, pandaAuthActions, atomWorkshopDB, atomDataStores, atomPublishers)
+  lazy val atomWorkshopDB = new AtomWorkshopDB()
+  lazy val explainerDB = new ExplainerDB()
+
+  lazy val atomDataStores = new AtomDataStores(config)
+  lazy val atomPublishers = new AtomPublishers(config)
+
+  lazy val permissions = new Permissions(config.effectiveStage)
+
+  lazy val appController = new controllers.App(controllerComponents, config, pandaAuthActions, atomWorkshopDB, atomDataStores, atomPublishers, permissions)
   lazy val loginController = new controllers.Login(controllerComponents, wsClient, pandaAuthActions)
   lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
   lazy val supportController = new controllers.Support(controllerComponents, wsClient, config, pandaAuthActions)
@@ -63,8 +68,4 @@ class AppComponents(context: Context, identity: AppIdentity)
     config,
     controllerComponents
   )(actorSystem.dispatcher)
-
-  lazy val atomWorkshopDB = new AtomWorkshopDB()
-
-  lazy val explainerDB = new ExplainerDB()
 }

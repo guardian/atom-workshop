@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.IAMSigner
-import config.Config
+import config.{AWS, Config}
 import play.api.Logger
 import play.api.libs.ws.WSClient
 import play.api.mvc.{BaseController, ControllerComponents, Result}
@@ -16,7 +16,7 @@ class Support(val controllerComponents: ControllerComponents, val wsClient: WSCl
 
   private val signer = new IAMSigner(
     credentialsProvider = config.capiPreviewCredentials,
-    awsRegion = config.region
+    awsRegion = AWS.region.getName
   )
 
   private def getHeaders(url: String): Seq[(String,String)] = signer.addIAMHeaders(headers = Map.empty, uri = URI.create(url)).toSeq
