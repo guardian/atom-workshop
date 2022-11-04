@@ -1,8 +1,8 @@
 import com.gu.conf.{ConfigurationLoader, FileConfigurationLocation, SSMConfigurationLocation}
 import com.gu.{AppIdentity, AwsIdentity, DevIdentity}
-import config.AWS._
 import play.api.ApplicationLoader.Context
 import play.api.{Application, ApplicationLoader, Configuration, LoggerConfigurator}
+import software.amazon.awssdk.auth.credentials.{AwsCredentialsProvider, DefaultCredentialsProvider, ProfileCredentialsProvider}
 
 import java.io.File
 
@@ -10,13 +10,20 @@ class AppLoader extends ApplicationLoader {
   override def load(context: Context): Application = {
     startLogging(context)
 
-    val identity: AppIdentity = AppIdentity.whoAmI(defaultAppName, credentialsV2)
+    val appName = "atom-workshop"
 
-    val loadedConfig = ConfigurationLoader.load(identity, credentialsV2) {
+    val identity: AppIdentity = AppIdentity.whoAmI(appName)
+
+    val credentials: AwsCredentialsProvider = identity match {
+      case _: DevIdentity => ProfileCredentialsProvider.create("composer")
+      case _ => DefaultCredentialsProvider.create()
+    }
+
+    val loadedConfig = ConfigurationLoader.load(identity, credentials) {
       case identity: AwsIdentity => SSMConfigurationLocation.default(identity)
       case _: DevIdentity =>
         val home = System.getProperty("user.home")
-        FileConfigurationLocation(new File(s"$home/.gu/$defaultAppName.conf"))
+        FileConfigurationLocation(new File(s"$home/.gu/$appName.conf"))
     }
 
     new AppComponents(context.copy(initialConfiguration = context.initialConfiguration ++ Configuration(loadedConfig)), identity).application
