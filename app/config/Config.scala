@@ -4,7 +4,6 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.auth.{AWSCredentialsProvider, AWSCredentialsProviderChain, InstanceProfileCredentialsProvider, STSAssumeRoleSessionCredentialsProvider}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder
-import com.amazonaws.services.lambda.AWSLambdaClientBuilder
 import com.gu.{AppIdentity, AwsIdentity, DevIdentity}
 import play.api.Configuration
 import services.Permissions
@@ -34,9 +33,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
 
   val kinesisEnabled = getOptionalProperty("aws.kinesis.publish.enabled", config.getBoolean).getOrElse(true)
 
-  val elkKinesisStream = getPropertyIfEnabled(kinesisEnabled, "elk.kinesis.stream")
-  val elkLoggingEnabled = getOptionalProperty("elk.logging.enabled", config.getBoolean).getOrElse(true)
-
   val pandaDomain = config.getString("panda.domain")
   val pandaAuthCallback = config.getString("panda.authCallback")
   val pandaSystem = config.getString("panda.system")
@@ -51,7 +47,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val publishedDynamoTableName = config.getString("aws.dynamo.live.tableName")
   val explainerPreviewDynamoTableName = getOptionalProperty("aws.dynamo.explainers.preview.tableName", config.getString).getOrElse("explain-maker-preview-DEV")
   val explainerPublishedDynamoTableName = getOptionalProperty("aws.dynamo.explainers.live.tableName", config.getString).getOrElse("explain-maker-live-DEV")
-  val notificationsDynamoTableName = config.getString("aws.dynamo.notifications.tableName")
 
   val gridUrl = config.getString("grid.url")
   val composerUrl = config.getString("composer.url")
@@ -82,24 +77,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
     )
   }
 
-  val capiReaderQuestionsRole = config.getString("capi.readerQuestionsRole")
-  val capiReaderQuestionsCredentials: AWSCredentialsProvider = {
-    new AWSCredentialsProviderChain(
-      capiCredentialsProvider,
-      new STSAssumeRoleSessionCredentialsProvider.Builder(capiReaderQuestionsRole, "capi-readerquestions").build()
-    )
-  }
-
-  val capiLambdaClient = AWSLambdaClientBuilder.standard()
-    .withCredentials(capiReaderQuestionsCredentials)
-    .withRegion(region)
-    .build()
-
-  val capiDynamoDB = AmazonDynamoDBClientBuilder.standard()
-    .withCredentials(capiReaderQuestionsCredentials)
-    .withRegion(region)
-    .build()
-
   val atomEditorGutoolsDomain = config.getString("atom.editors.gutoolsDomain")
 
   val kinesisClient = AmazonKinesisClientBuilder.standard()
@@ -108,10 +85,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
     .build()
 
   val reindexApiKey = config.getString("reindexApiKey")
-
-  // Not sure if we need a full config or if we can just inline the name
-  // of the function here
-  val lambdaFunctionName = config.getString("aws.lambda.notifications.name")
 
   val permissions = new Permissions(effectiveStage, region, awsCredentialsProvider)
 }
