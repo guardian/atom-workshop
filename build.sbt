@@ -4,7 +4,6 @@ version := "1.0"
 scalaVersion := "2.11.12"
 
 lazy val awsVersion = "1.11.678"
-lazy val awsVersionV2 = "2.18.8"
 lazy val atomLibVersion = "1.3.0"
 
 libraryDependencies ++= Seq(
@@ -13,7 +12,6 @@ libraryDependencies ++= Seq(
   "com.amazonaws"            %  "aws-java-sdk-ec2"             % awsVersion,
   "com.amazonaws"            %  "aws-java-sdk-lambda"          % awsVersion,
   "com.amazonaws"            %  "aws-java-sdk-dynamodb"        % awsVersion,
-  "software.amazon.awssdk"   %  "auth"                         % awsVersionV2,
   "com.gu"                   %% "atom-manager-play"            % atomLibVersion,
   "com.gu"                   %% "atom-publisher-lib"           % atomLibVersion,
   "com.gu"                   %% "editorial-permissions-client" % "2.0",
