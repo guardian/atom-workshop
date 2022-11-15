@@ -10,24 +10,21 @@ lazy val atomLibVersion = "1.3.0"
 
 libraryDependencies ++= dependencies
 
-resolvers ++= Seq(
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
-    Resolver.sonatypeRepo("snapshots")
-)
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 routesGenerator := InjectedRoutesGenerator
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact, JDebPackaging, SystemdPlugin)
   .settings(Defaults.coreDefaultSettings: _*)
   .settings(
-    name in Universal := normalizedName.value,
+    Universal / name := normalizedName.value,
     topLevelDirectory := Some(normalizedName.value),
     riffRaffPackageName := name.value,
     riffRaffManifestProjectName := s"editorial-tools:${name.value}",
     riffRaffUploadArtifactBucket := Option("riffraff-artifact"),
     riffRaffUploadManifestBucket := Option("riffraff-builds"),
 
-    riffRaffPackageType := (packageBin in Debian).value,
+    riffRaffPackageType := (Debian / packageBin).value,
 
     debianPackageDependencies := Seq("openjdk-8-jre-headless"),
     maintainer := "Editorial Tools <digitalcms.dev@guardian.co.uk>",
@@ -35,13 +32,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
     packageDescription := """A single place for atoms of all types""",
 
     riffRaffArtifactResources := Seq(
-      (packageBin in Debian).value -> "atom-workshop/atom-workshop_1.0_all.deb",
+      (Debian / packageBin).value -> "atom-workshop/atom-workshop_1.0_all.deb",
       baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
       baseDirectory.value / "fluentbit/td-agent-bit.conf" -> "atom-workshop/fluentbit/td-agent-bit.conf",
       baseDirectory.value / "fluentbit/parsers.conf" -> "atom-workshop/fluentbit/parsers.conf"
     ),
 
-    javaOptions in Universal ++= Seq(
+    Universal / javaOptions ++= Seq(
       "-Dpidfile.path=/dev/null"
     ),
 
