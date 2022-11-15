@@ -2,15 +2,16 @@ package controllers
 
 import com.gu.atom.data.DynamoDataStore
 import com.gu.atom.publish.{AtomReindexer, PreviewAtomReindexer, PublishedAtomReindexer}
-import db.ExplainerDBAPI
-import play.api.Configuration
-import play.api.libs.ws.WSClient
-import play.api.mvc.{Action, ActionBuilder, AnyContent, BaseController, BodyParser, ControllerComponents, Request, Result}
 import com.gu.contentatom.thrift.{ContentAtomEvent, EventType}
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success, Try}
-import play.api.libs.json.Json
+import config.Config
+import db.ExplainerDBAPI
 import play.api.Logger
+import play.api.libs.json.Json
+import play.api.libs.ws.WSClient
+import play.api.mvc._
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Success, Try}
 
 class ExplainerReindexController(
   val wsClient: WSClient,
@@ -19,20 +20,16 @@ class ExplainerReindexController(
   publishedDataStore: DynamoDataStore,
   previewReindexer: PreviewAtomReindexer,
   publishedReindexer: PublishedAtomReindexer,
-  config: Configuration,
+  config: Config,
   val controllerComponents: ControllerComponents
-)(implicit ec: ExecutionContext) extends BaseController with PanDomainAuthActions {
+)(implicit ec: ExecutionContext) extends BaseController {
 
   var lastPublished: Int = 0
   var lastPreview: Int = 0
 
-  override protected val executionContext = controllerComponents.executionContext
-
-  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
-
   // Copy-pasted from the atom-maker library
   object ApiKeyAction extends ActionBuilder[Request, AnyContent] {
-    lazy val apiKey = config.get[String]("reindexApiKey")
+    lazy val apiKey = config.reindexApiKey
 
     def invokeBlock[A](request: Request[A], block: (Request[A] => Future[Result])) = {
       if(request.getQueryString("api").contains(apiKey))

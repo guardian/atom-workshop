@@ -1,33 +1,32 @@
 package controllers
 
-import java.net.URI
-
 import com.gu.contentapi.client.IAMSigner
-import config.Config
-import play.api.libs.ws.WSClient
-import play.api.mvc.{AnyContent, BaseController, BodyParser, ControllerComponents, Result}
+import config.{AWS, Config}
 import play.api.Logger
+import play.api.libs.ws.WSClient
+import play.api.mvc.{BaseController, ControllerComponents, Result}
+
+import java.net.URI
 import scala.concurrent.Future
 
-class Support(val wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with PanDomainAuthActions {
+class Support(val controllerComponents: ControllerComponents, val wsClient: WSClient, config: Config, val pandaAuthActions: PanDomainAuthActions) extends BaseController {
+  import pandaAuthActions.APIAuthAction
 
   implicit val executionContext = controllerComponents.executionContext
 
-  override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
-
   private val signer = new IAMSigner(
-    credentialsProvider = Config.capiPreviewCredentials,
-    awsRegion = Config.region.getName
+    credentialsProvider = config.capiPreviewCredentials,
+    awsRegion = AWS.region.getName
   )
 
   private def getHeaders(url: String): Seq[(String,String)] = signer.addIAMHeaders(headers = Map.empty, uri = URI.create(url)).toSeq
 
   def capiProxy(path: String) = APIAuthAction.async { request =>
-    query(s"${Config.capiLiveUrl}/$path?api-key=${Config.capiApiKey}&${request.rawQueryString}", Seq.empty)
+    query(s"${config.capiLiveUrl}/$path?api-key=${config.capiApiKey}&${request.rawQueryString}", Seq.empty)
   }
 
   def previewCapiProxy(path: String) = APIAuthAction.async { request =>
-    val url = s"${Config.capiPreviewIAMUrl}/$path?${request.rawQueryString}"
+    val url = s"${config.capiPreviewIAMUrl}/$path?${request.rawQueryString}"
     query(url, getHeaders(url))
   }
 

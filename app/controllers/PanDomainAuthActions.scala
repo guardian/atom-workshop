@@ -3,19 +3,19 @@ package controllers
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
-import config.Config
+import config.AWS
 
 trait PanDomainAuthActions extends AuthActions {
 
   override def validateUser(authedUser: AuthenticatedUser): Boolean =
     (authedUser.user.email endsWith "@guardian.co.uk") && authedUser.multiFactor
 
-  override def authCallbackUrl: String = Config.pandaAuthCallback
+  override def authCallbackUrl: String
 
-  override def domain: String = Config.pandaDomain
+  override def domain: String
 
-  override lazy val system: String = Config.pandaSystem
+  override val system: String
 
-  override def awsCredentialsProvider: AWSCredentialsProvider = Config.awsCredentialsProvider
+  override def awsCredentialsProvider: AWSCredentialsProvider = AWS.credentials
 
 }

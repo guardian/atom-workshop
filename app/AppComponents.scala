@@ -1,44 +1,71 @@
+import com.gu.AppIdentity
 import com.gu.atom.play.ReindexController
-import com.typesafe.config.Config
-import config.Config.{capiDynamoDB, capiLambdaClient, config, dynamoDB, permissions}
-import controllers.ExplainerReindexController
-import db.AtomDataStores._
-import db.AtomWorkshopDB
-import db.ExplainerDB
-import db.ReindexDataStores._
-import play.api.Configuration
+import config.Config
+import controllers.{AssetsComponents, ExplainerReindexController, PanDomainAuthActions}
+import db.{AtomDataStores, AtomWorkshopDB, ExplainerDB}
 import play.api.ApplicationLoader.Context
-import play.api.BuiltInComponentsFromContext
+import play.api.{BuiltInComponentsFromContext, Configuration}
+import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSComponents
-import controllers.AssetsComponents
+import play.api.mvc.{AnyContent, BodyParser}
 import play.filters.HttpFiltersComponents
 import router.Routes
+import services.{AtomPublishers, Permissions}
 
-class AppComponents(context: Context)
+import scala.concurrent.ExecutionContext
+
+class AppComponents(context: Context, identity: AppIdentity)
   extends BuiltInComponentsFromContext(context) with AhcWSComponents with AssetsComponents with HttpFiltersComponents {
+
+  lazy val config = new Config(context.initialConfiguration, identity)
 
   override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
   override lazy val httpFilters = super.httpFilters.filterNot(_ == allowedHostsFilter)
 
-  lazy val appController = new controllers.App(wsClient, atomWorkshopDB, permissions, controllerComponents)
-  lazy val loginController = new controllers.Login(wsClient, controllerComponents)
-  lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
-  lazy val supportController = new controllers.Support(wsClient, controllerComponents)
+  private val pandaAuthActions = new PanDomainAuthActions {
+    override def authCallbackUrl: String = config.pandaAuthCallback
 
-  lazy val reindex = new ReindexController(previewDataStore, publishedDataStore, reindexPreview, reindexPublished, Configuration(config), controllerComponents, actorSystem)
+    override def domain: String = config.pandaDomain
+
+    override val system: String = config.pandaSystem
+
+    override def wsClient: WSClient = AppComponents.this.wsClient
+
+    override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
+    override protected val executionContext: ExecutionContext = controllerComponents.executionContext
+  }
+
+  lazy val atomWorkshopDB = new AtomWorkshopDB()
+  lazy val explainerDB = new ExplainerDB()
+
+  lazy val atomDataStores = new AtomDataStores(config)
+  lazy val atomPublishers = new AtomPublishers(config)
+
+  lazy val permissions = new Permissions(config.effectiveStage)
+
+  lazy val appController = new controllers.App(controllerComponents, config, pandaAuthActions, atomWorkshopDB, atomDataStores, atomPublishers, permissions)
+  lazy val loginController = new controllers.Login(controllerComponents, wsClient, pandaAuthActions)
+  lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
+  lazy val supportController = new controllers.Support(controllerComponents, wsClient, config, pandaAuthActions)
+
+  lazy val reindex = new ReindexController(
+    atomDataStores.previewDataStore,
+    atomDataStores.publishedDataStore,
+    atomDataStores.reindexPreview,
+    atomDataStores.reindexPublished,
+    Configuration(config.config),
+    controllerComponents,
+    actorSystem
+  )
 
   lazy val explainerReindex = new ExplainerReindexController(
     wsClient,
     explainerDB,
-    explainerPreviewDataStore,
-    explainerPublishedDataStore,
-    reindexPreview,
-    reindexPublished,
-    Configuration(config),
+    atomDataStores.explainerPreviewDataStore,
+    atomDataStores.explainerPublishedDataStore,
+    atomDataStores.reindexPreview,
+    atomDataStores.reindexPublished,
+    config,
     controllerComponents
   )(actorSystem.dispatcher)
-
-  lazy val atomWorkshopDB = new AtomWorkshopDB()
-
-  lazy val explainerDB = new ExplainerDB()
 }

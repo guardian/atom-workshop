@@ -2,19 +2,19 @@ package services
 
 import com.gu.atom.publish.{AtomPublisher, LiveKinesisAtomPublisher, PreviewKinesisAtomPublisher}
 import com.gu.contentatom.thrift.{Atom, ContentAtomEvent, EventType}
-import config.Config._
+import config.{AWS, Config}
 import models.{AtomAPIError, KinesisPublishingFailed}
 import org.joda.time.DateTime
 import play.api.Logger
 
 import scala.util.{Failure, Success}
 
-object AtomPublishers {
-  val liveAtomPublisher = new LiveKinesisAtomPublisher(liveKinesisStreamName, kinesisClient)
-  val previewAtomPublisher = new PreviewKinesisAtomPublisher(previewKinesisStreamName, kinesisClient)
+class AtomPublishers(config: Config) {
+  val liveAtomPublisher = new LiveKinesisAtomPublisher(config.liveKinesisStreamName, AWS.kinesisClient)
+  val previewAtomPublisher = new PreviewKinesisAtomPublisher(config.previewKinesisStreamName, AWS.kinesisClient)
 
   def sendKinesisEvent(atom: Atom, atomPublisher: AtomPublisher, eventType: EventType): Either[AtomAPIError, Unit] = {
-    if (kinesisEnabled) {
+    if (config.kinesisEnabled) {
       val event = ContentAtomEvent(atom, eventType, DateTime.now.getMillis)
       atomPublisher.publishAtomEvent(event) match {
         case Success(_) =>
