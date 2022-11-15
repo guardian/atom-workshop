@@ -5,9 +5,6 @@ version := "1.0"
 
 scalaVersion := "2.12.16"
 
-lazy val awsVersion = "1.11.678"
-lazy val atomLibVersion = "1.3.0"
-
 libraryDependencies ++= dependencies
 
 resolvers ++= Resolver.sonatypeOssRepos("snapshots")
