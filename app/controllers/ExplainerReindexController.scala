@@ -5,7 +5,7 @@ import com.gu.atom.publish.{AtomReindexer, PreviewAtomReindexer, PublishedAtomRe
 import com.gu.contentatom.thrift.{ContentAtomEvent, EventType}
 import config.Config
 import db.ExplainerDBAPI
-import play.api.Logger
+import play.api.Logging
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -22,7 +22,7 @@ class ExplainerReindexController(
   publishedReindexer: PublishedAtomReindexer,
   config: Config,
   val controllerComponents: ControllerComponents
-)(implicit ec: ExecutionContext) extends BaseController {
+)(implicit ec: ExecutionContext) extends BaseController with Logging {
 
   var lastPublished: Int = 0
   var lastPreview: Int = 0
@@ -79,7 +79,7 @@ class ExplainerReindexController(
 
   private def displayError(stack: String): PartialFunction[Throwable, Result] = {
     case x: Throwable => 
-      Logger.error(s"Failed to reindex $stack explainer atoms", x)
+      logger.error(s"Failed to reindex $stack explainer atoms", x)
       InternalServerError(Json.parse(s"""{ "status": "failed", "documentsIndexed": 0, "documentsExpected": 0 }"""))
   }
 }
