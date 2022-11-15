@@ -21,8 +21,8 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   // Service URLs
   val gridUrl = s"https://media.${if (!stage.contentEquals("PROD")) "test.dev-"}gutools.co.uk"
   val composerUrl = s"https://composer.$serviceDomain"
-  val viewerUrl = s"https://viewer.$serviceDomain"
-  val targetingUrl = s"https://targeting.$serviceDomain"
+  val viewerUrl = s"https://viewer.$serviceDomain/"
+  val targetingUrl = s"https://targeting.$serviceDomain/"
   val workflowUrl = s"https://workflow.$serviceDomain"
   val visualsUrl = s"https://charts.$domain"
 
