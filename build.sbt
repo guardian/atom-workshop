@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
 )
 
 resolvers ++= Seq(
-  "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
+  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
     Resolver.sonatypeRepo("snapshots")
 )
 

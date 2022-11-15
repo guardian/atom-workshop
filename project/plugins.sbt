@@ -8,4 +8,4 @@ addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.1.18")
 
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.1")
+addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
