@@ -19,7 +19,7 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val serviceDomain: String = domainFromStage(effectiveStage)
 
   // Service URLs
-  val gridUrl = s"https://media.${if (!stage.contentEquals("PROD")) "test.dev-"}gutools.co.uk"
+  val gridUrl = s"https://media.${if (!stage.contentEquals("PROD")) "test.dev-" else ""}gutools.co.uk"
   val composerUrl = s"https://composer.$serviceDomain"
   val viewerUrl = s"https://viewer.$serviceDomain/"
   val targetingUrl = s"https://targeting.$serviceDomain/"
