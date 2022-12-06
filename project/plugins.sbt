@@ -14,7 +14,7 @@ addDependencyTreePlugin
    Because scala-xml has not be updated to 2.x in sbt yet but has in sbt-native-packager
    See: https://github.com/scala/bug/issues/12632
 
-   This is effectively overrides the safeguards (early-semver) put in place by the library authors ensuring binary compatibility.
+   This effectively overrides the safeguards (early-semver) put in place by the library authors ensuring binary compatibility.
    We consider this a safe operation because it only affects the compilation of build.sbt, not of the application build itself
  */
 libraryDependencySchemes ++= Seq(
