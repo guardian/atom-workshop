@@ -10,10 +10,10 @@ import com.gu.pandomainauth.model.User
 import io.circe.generic.auto._
 import io.circe.{DecodingFailure, ParsingFailure, parser, _}
 import models._
-import play.api.Logger
+import play.api.Logging
 import util.AtomElementBuilders._
 
-object AtomLogic {
+object AtomLogic extends Logging {
 
   def buildKey(atomType: AtomType, id: String) = DynamoCompositeKey(atomType.name, Some(id))
 
@@ -34,7 +34,7 @@ object AtomLogic {
       case e: AmazonDynamoDBException => AmazonDynamoError(e.getMessage)
       case _ => UnexpectedExceptionError
     }
-    Logger.error(atomApiError.msg, exception)
+    logger.error(atomApiError.msg, exception)
     Left(atomApiError)
   }
 
@@ -54,7 +54,7 @@ object AtomLogic {
     atom.copy(contentChangeDetails = buildContentChangeDetails(user, Some(atom.contentChangeDetails), updateTakenDown = true))
 }
 
-object Parser {
+object Parser extends Logging {
   import AtomLogic._
 
   //These implicits speed up compilation
@@ -71,7 +71,7 @@ object Parser {
 
 
   def stringToAtom(atomString: String): Either[AtomAPIError, Atom] = {
-    Logger.info(s"Parsing atom json: $atomString")
+    logger.info(s"Parsing atom json: $atomString")
     for {
       json <- stringToJson(atomString)
       atom <- jsonToAtom(json)
@@ -79,12 +79,12 @@ object Parser {
   }
 
   def jsonToAtom(json: Json): Either[AtomAPIError, Atom] = {
-    Logger.info(s"Parsing json: $json")
+    logger.info(s"Parsing json: $json")
     json.as[Atom].fold(processException, m => Right(m))
   }
 
   def stringToJson(atomJson: String): Either[AtomAPIError, Json] = {
-    Logger.info(s"Parsing body to json: $atomJson")
+    logger.info(s"Parsing body to json: $atomJson")
     val parsingResult = for {
       parsedJson <- parser.parse(atomJson)
     } yield parsedJson

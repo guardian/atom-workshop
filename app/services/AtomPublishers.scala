@@ -5,11 +5,11 @@ import com.gu.contentatom.thrift.{Atom, ContentAtomEvent, EventType}
 import config.{AWS, Config}
 import models.{AtomAPIError, KinesisPublishingFailed}
 import org.joda.time.DateTime
-import play.api.Logger
+import play.api.Logging
 
 import scala.util.{Failure, Success}
 
-class AtomPublishers(config: Config) {
+class AtomPublishers(config: Config) extends Logging {
   val liveAtomPublisher = new LiveKinesisAtomPublisher(config.liveKinesisStreamName, AWS.kinesisClient)
   val previewAtomPublisher = new PreviewKinesisAtomPublisher(config.previewKinesisStreamName, AWS.kinesisClient)
 
@@ -18,10 +18,10 @@ class AtomPublishers(config: Config) {
       val event = ContentAtomEvent(atom, eventType, DateTime.now.getMillis)
       atomPublisher.publishAtomEvent(event) match {
         case Success(_) =>
-          Logger.info(s"Successfully published ${atom.id} to kinesis with $eventType")
+          logger.info(s"Successfully published ${atom.id} to kinesis with $eventType")
           Right(())
         case Failure(err) =>
-          Logger.error(s"Failed to publish ${atom.id} to kinesis with $eventType", err)
+          logger.error(s"Failed to publish ${atom.id} to kinesis with $eventType", err)
           Left(KinesisPublishingFailed)
       }
     } else {

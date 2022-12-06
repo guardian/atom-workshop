@@ -6,7 +6,7 @@ import com.gu.fezziwig.CirceScroogeMacros._
 import config.Config
 import db.{AtomDataStores, AtomWorkshopDBAPI}
 import models._
-import play.api.Logger
+import play.api.Logging
 import play.api.mvc._
 import util.AtomElementBuilders
 import util.AtomLogic._
@@ -25,7 +25,7 @@ class App(
            val atomDataStores: AtomDataStores,
            val atomPublishers: AtomPublishers,
            val permissions: Permissions
-         ) extends BaseController {
+         ) extends BaseController with Logging {
 
   // These are required even though IntelliJ thinks they are not
   import io.circe._
@@ -49,7 +49,7 @@ class App(
   }
 
   def index(placeholder: String) = AuthAction { implicit req =>
-    Logger.info(s"I am the ${config.appName}")
+    logger.info(s"I am the ${config.appName}")
 
       val clientConfig = ClientConfig(
         user = User(req.user.firstName, req.user.lastName, req.user.email),
