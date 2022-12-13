@@ -2,14 +2,14 @@ package controllers
 
 import com.gu.contentapi.client.IAMSigner
 import config.{AWS, Config}
-import play.api.Logger
+import play.api.Logging
 import play.api.libs.ws.WSClient
 import play.api.mvc.{BaseController, ControllerComponents, Result}
 
 import java.net.URI
 import scala.concurrent.Future
 
-class Support(val controllerComponents: ControllerComponents, val wsClient: WSClient, config: Config, val pandaAuthActions: PanDomainAuthActions) extends BaseController {
+class Support(val controllerComponents: ControllerComponents, val wsClient: WSClient, config: Config, val pandaAuthActions: PanDomainAuthActions) extends BaseController with Logging {
   import pandaAuthActions.APIAuthAction
 
   implicit val executionContext = controllerComponents.executionContext
@@ -39,7 +39,7 @@ class Support(val controllerComponents: ControllerComponents, val wsClient: WSCl
     req.map(response => response.status match {
       case 200 => Ok(response.json)
       case _ =>
-        Logger.warn(s"CAPI error response: ${response.status} / ${response.body}")
+        logger.warn(s"CAPI error response: ${response.status} / ${response.body}")
         BadGateway(s"CAPI returned error code ${response.status}")
     })
   }

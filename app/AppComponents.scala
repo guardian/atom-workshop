@@ -1,13 +1,14 @@
 import com.gu.AppIdentity
 import com.gu.atom.play.ReindexController
-import config.Config
+import com.gu.pandomainauth.PanDomainAuthSettingsRefresher
+import config.{AWS, Config}
 import controllers.{AssetsComponents, ExplainerReindexController, PanDomainAuthActions}
 import db.{AtomDataStores, AtomWorkshopDB, ExplainerDB}
 import play.api.ApplicationLoader.Context
 import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSComponents
-import play.api.mvc.{AnyContent, BodyParser}
+import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.filters.HttpFiltersComponents
 import router.Routes
 import services.{AtomPublishers, Permissions}
@@ -20,19 +21,22 @@ class AppComponents(context: Context, identity: AppIdentity)
   lazy val config = new Config(context.initialConfiguration, identity)
 
   override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
-  override lazy val httpFilters = super.httpFilters.filterNot(_ == allowedHostsFilter)
+  override lazy val httpFilters: Seq[EssentialFilter] = super.httpFilters.filterNot(_ == allowedHostsFilter)
 
   private val pandaAuthActions = new PanDomainAuthActions {
     override def authCallbackUrl: String = config.pandaAuthCallback
 
-    override def domain: String = config.pandaDomain
-
-    override val system: String = config.pandaSystem
-
     override def wsClient: WSClient = AppComponents.this.wsClient
 
-    override protected val parser: BodyParser[AnyContent] = controllerComponents.parsers.defaultBodyParser
-    override protected val executionContext: ExecutionContext = controllerComponents.executionContext
+    override def controllerComponents: ControllerComponents = AppComponents.this.controllerComponents
+
+    override def panDomainSettings: PanDomainAuthSettingsRefresher = new PanDomainAuthSettingsRefresher(
+      domain = config.pandaDomain,
+      system = config.pandaSystem,
+      bucketName = "pan-domain-auth-settings",
+      settingsFileKey = s"${config.pandaDomain}.settings",
+      s3Client = AWS.S3Client,
+    )
   }
 
   lazy val atomWorkshopDB = new AtomWorkshopDB()
