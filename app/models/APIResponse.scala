@@ -14,7 +14,7 @@ object AtomWorkshopAPIResponse{
 object APIResponse extends Results with Logging {
   def apiErrorToResult(e: AtomAPIError) = {
     logger.error(e.msg)
-    InternalServerError(AtomWorkshopAPIResponse(e.msg).asJson.noSpaces)
+    e.status(AtomWorkshopAPIResponse(e.msg).asJson.noSpaces)
   }
 
   def apply[T](result: Either[AtomAPIError, T])(implicit encoder: Encoder[T]): Result = {
