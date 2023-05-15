@@ -18,11 +18,11 @@ function receiveAtomUpdate(atom) {
   };
 }
 
-function errorUpdatingAtom(error) {
+function errorUpdatingAtom(error, message) {
   logError(error);
   return {
     type:       'SHOW_ERROR',
-    message:    'Could not update atom',
+    message:    message,
     error:      error,
     receivedAt: Date.now()
   };
@@ -34,7 +34,12 @@ function _updateAtom(dispatch, atom) {
         .then(atom => {
           dispatch(receiveAtomUpdate(atom));
         })
-        .catch(error => dispatch(errorUpdatingAtom(error)));
+        .catch(error => {
+          const defaultError = 'Could not update atom';
+          const conflictError = 'Could not apply updates as another user (or tab) is currently editing this atom';
+          const message = error.status === 409 ? conflictError : defaultError;
+          dispatch(errorUpdatingAtom(error, message));
+        });
 }
 
 const _debouncedUpdate = _debounce(500, _updateAtom);
