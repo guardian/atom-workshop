@@ -36,34 +36,3 @@ exports[`it should render 1`] = `
   </div>
 </div>
 `;
-
-exports[`test it should render 1`] = `
-<div>
-  <div
-    className="form__message">
-    <p
-      className="form__message__text form__message__text--error">
-      Error: 
-      test
-    </p>
-    <p
-      className="form__message__text form__message__text--error">
-      Message: 
-      This is a test
-    </p>
-  </div>
-  <div
-    className="form__message">
-    <p
-      className="form__message__text form__message__text--error">
-      Error: 
-      test2
-    </p>
-    <p
-      className="form__message__text form__message__text--error">
-      Message: 
-      This is a test
-    </p>
-  </div>
-</div>
-`;

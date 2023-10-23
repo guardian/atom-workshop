@@ -20,21 +20,3 @@ exports[`Should render 1`] = `
   />
 </div>
 `;
-
-exports[`test Should render 1`] = `
-<div
-  className="form__row">
-  <label
-    className="form__label"
-    htmlFor="test">
-    test
-  </label>
-  <input
-    className="form__field"
-    id="test"
-    onChange={[Function]}
-    placeholder=""
-    type="number"
-    value={1} />
-</div>
-`;

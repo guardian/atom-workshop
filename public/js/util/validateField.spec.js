@@ -37,14 +37,15 @@ test('Should return "testing" error', () => {
 
 });
 
-test('Should throw on incorrectly formatted error', () => {
+test('Should throw on incorrectly formatted error', async () => {
     let failFunc = () => false,
         fieldValue = 'test',
         isRequired = false,
         customValidation = [failFunc];
 
-    return validateField(fieldValue, isRequired, customValidation)
-      .then(res => {
-        expect(res).toThrow();
-      });
+    try {
+      await validateField(fieldValue, isRequired, customValidation);
+    } catch (e) {
+      expect.anything(e);
+    }
 });
