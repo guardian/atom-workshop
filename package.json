@@ -7,7 +7,7 @@
     "start": "webpack --mode development --config ./conf/webpack.conf.js --watch",
     "build": "webpack --mode production --config ./conf/webpack.conf.js",
     "test": "jest",
-    "lint": "eslint \"public/**.js\""
+    "lint": "public/js/** --ext .js --no-error-on-unmatched-pattern"
   },
   "repository": {
     "type": "git",
