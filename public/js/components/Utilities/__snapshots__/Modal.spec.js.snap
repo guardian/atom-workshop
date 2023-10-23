@@ -1,3 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render contents when open 1`] = `
+<div
+  className="modal"
+  onClick={[Function]}
+>
+  <div
+    className="modal__content"
+    onClick={[Function]}
+  >
+    <div
+      className="modal__content__header"
+    >
+      <button
+        className="i-cross modal__dismiss"
+        onClick={[Function]}
+      >
+        Close
+      </button>
+    </div>
+    <div>
+      Modal Contents
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should render null when closed 1`] = `null`;
+
 exports[`test Should render contents when open 1`] = `
 <div
   className="modal"

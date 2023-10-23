@@ -1,3 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render 1`] = `
+<div
+  className="form__row"
+>
+  <label
+    className="form__label"
+    htmlFor="test"
+  >
+    test
+  </label>
+  <div
+    className="form__ group form__group--checkbox--one"
+  >
+    <input
+      checked={true}
+      className="form__checkbox"
+      name="one"
+      onChange={[Function]}
+      type="checkbox"
+      value={true}
+    />
+    <span
+      className="form__label form__label--checkbox"
+    >
+      one
+    </span>
+  </div>
+  <div
+    className="form__ group form__group--checkbox--two"
+  >
+    <input
+      checked={true}
+      className="form__checkbox"
+      name="two"
+      onChange={[Function]}
+      type="checkbox"
+      value={true}
+    />
+    <span
+      className="form__label form__label--checkbox"
+    >
+      two
+    </span>
+  </div>
+  <div
+    className="form__ group form__group--checkbox--three"
+  >
+    <input
+      checked={false}
+      className="form__checkbox"
+      name="three"
+      onChange={[Function]}
+      type="checkbox"
+      value={false}
+    />
+    <span
+      className="form__label form__label--checkbox"
+    >
+      three
+    </span>
+  </div>
+</div>
+`;
+
 exports[`test Should render 1`] = `
 <div
   className="form__row">
