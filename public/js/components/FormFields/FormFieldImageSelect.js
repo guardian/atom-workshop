@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import filesize from 'filesize';
 import Modal from '../Utilities/Modal';
 import ShowErrors from '../Utilities/ShowErrors';

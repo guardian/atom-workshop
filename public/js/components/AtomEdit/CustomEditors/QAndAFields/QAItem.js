@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import {PropTypes} from "prop-types";
 import { ManagedForm, ManagedField } from "../../../ManagedEditor";
 import FormFieldsScribeEditor from "../../../FormFields/FormFieldScribeEditor";
 import { wordLimits, tooLongMsg } from "../../../../util/wordLimits";

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 import FormFieldRadioButtons from '../../../FormFields/FormFieldRadioButtons';
 import FormFieldNumericInput from '../../../FormFields/FormFieldNumericInput';

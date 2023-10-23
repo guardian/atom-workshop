@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import FormFieldImageSelect from '../../FormFields/FormFieldImageSelect';
 import {QAItem} from './QAndAFields/QAItem';
 import {ManagedField, ManagedForm} from '../../ManagedEditor';

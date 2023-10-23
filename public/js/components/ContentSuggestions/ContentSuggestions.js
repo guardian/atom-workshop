@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import CopyUrlButton from './CopyUrlButton';
 import {FrontendIcon, ComposerIcon, ViewerIcon} from '../../util/icons.js';
 import {SuggestedAtomsPropType} from '../../actions/AtomActions/getSuggestionsForLatestContent.js';

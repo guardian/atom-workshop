@@ -6,7 +6,7 @@
 //createUri - a lodash template that will be passed gutoolsDomain.
 //statsUrl - a lodash template that will be passed atomId, atomType
 
-import { PropTypes } from 'react';
+import { PropTypes } from 'prop-types';
 import _template from 'lodash/fp/template';
 import { logInfo } from '../util/logger';
 import { getStore } from '../util/storeAccessor';

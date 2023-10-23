@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import _isEqual from 'lodash/fp/isEqual';
 
 import {allAtomTypes} from '../../constants/atomData';
