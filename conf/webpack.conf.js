@@ -61,10 +61,6 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'main.css',
-        }),
-        new webpack.ProvidePlugin({
-            'Promise': 'es6-promise',
-            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
         })
     ]
 };
