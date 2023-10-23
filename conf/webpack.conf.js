@@ -48,23 +48,8 @@ module.exports = {
                 ]
             },
             {
-                test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            mimetype: "application/font-woff"
-                        }
-                    }
-                ],
-                type: 'javascript/auto'
-            },
-            {
-                test: /\.(ttf|eot|svg|gif|png)(\?v=[0-9].[0-9].[0-9])?$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]',
-                }
+                test: /\.(ttf|eot|svg|gif|png|woff(2))(\?v=[0-9].[0-9].[0-9])?$/,
+                type: 'asset/resource'
             }
         ]
     },
