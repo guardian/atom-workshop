@@ -7,7 +7,7 @@
     "start": "webpack ./public/js/app.js ./public/build/app.js --config ./conf/webpack.conf.js --watch",
     "build": "webpack -p ./public/js/app.js ./public/build/app.js --config ./conf/webpack.conf.js",
     "test": "jest",
-    "lint": "eslint public/**"
+    "lint": "eslint \"public/**.js\""
   },
   "repository": {
     "type": "git",
