@@ -41,13 +41,13 @@ class AtomStats extends React.Component {
           <div className="usages-list__links">
             <p className="usages-list__item__date">
               Created: {distanceInWordsToNow(usage.fields.creationDate, {addSuffix: true})}
-              <a className="usages-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank">
+              <a className="usages-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank" rel="noreferrer">
                 <FrontendIcon />
               </a>
-              <a className="usages-list__link" href={composerLink} title="Open in Composer" target="_blank">
+              <a className="usages-list__link" href={composerLink} title="Open in Composer" target="_blank" rel="noreferrer">
                 <ComposerIcon />
               </a>
-              <a className="usages-list__link" href={viewerLink} title="Open in Viewer" target="_blank">
+              <a className="usages-list__link" href={viewerLink} title="Open in Viewer" target="_blank" rel="noreferrer">
                 <ViewerIcon />
               </a></p>
           </div>

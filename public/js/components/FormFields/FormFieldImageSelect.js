@@ -102,7 +102,7 @@ class FormFieldImageSelect extends React.Component {
         </div>
         <div className="image-select__image-details">
           <div className="image-select__image-details__detail">
-            <a target="_blank" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
+            <a target="_blank" rel="noreferrer" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
           </div>
           <div className="image-select__image-details__detail">
             Size: {filesize(this.props.fieldValue.master.size)}

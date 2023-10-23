@@ -3,8 +3,8 @@ import {PropTypes} from 'prop-types';
 
 const List = ({ items }) => (
   <section className="list">
-    {items.map(({ title, body, type }) => (
-      <div className="list__item" data-type={type}>
+    {items.map(({ title, body, type }, i) => (
+      <div className="list__item" data-type={type} key={i}>
         <div className="list__item__title">{title}</div>
         {body && <p className="list__item__body">{body}</p>}
       </div>
