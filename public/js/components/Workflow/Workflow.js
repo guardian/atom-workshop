@@ -39,7 +39,7 @@ class Workflow extends React.Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     WorkflowApi.getTrackableAtomTypes()
     .then(atomTypes => {
       this.setState({

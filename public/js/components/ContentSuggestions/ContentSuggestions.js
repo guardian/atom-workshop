@@ -18,7 +18,7 @@ class ContentSuggestions extends React.Component {
     }).isRequired
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getSuggestionsForLatestContent();
   }
 

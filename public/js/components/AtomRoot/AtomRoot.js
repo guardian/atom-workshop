@@ -32,7 +32,7 @@ class AtomRoot extends React.Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getAtom(this.props.routeParams.atomType, this.props.routeParams.id)
     .then(() => {
       this.props.workflowActions.getWorkflowStatus(this.props.atom);

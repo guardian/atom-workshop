@@ -41,7 +41,7 @@ class AtomEdit extends React.Component {
     })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     subscribeToPresence(this.props.routeParams.atomType, this.props.routeParams.id);
   }
 

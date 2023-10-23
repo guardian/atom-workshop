@@ -12,7 +12,7 @@ class CommonsDivisions extends React.Component {
     }).isRequired
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getLatestCommonsDivisions();
   }
 

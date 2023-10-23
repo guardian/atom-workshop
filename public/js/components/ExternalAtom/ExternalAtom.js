@@ -17,7 +17,7 @@ class ExternalAtom extends React.Component {
     })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       this.props.externalAtomActions.getExternalAtom(this.props.routeParams.atomType, this.props.routeParams.id);
   }
 

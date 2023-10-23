@@ -25,7 +25,7 @@ class CreateTargetForm extends React.Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
     if (!this.state.currentTarget.title) {
       this.setState({

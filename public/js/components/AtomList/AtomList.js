@@ -45,7 +45,7 @@ class AtomList extends React.Component {
     this.triggerSearch();
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (!_isEqual(newProps.queryParams, this.props.queryParams)) {
       this.triggerSearch(Object.assign({}, searchParams, newProps.queryParams));
     }

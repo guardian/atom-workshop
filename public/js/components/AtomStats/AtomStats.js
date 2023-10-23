@@ -23,7 +23,7 @@ class AtomStats extends React.Component {
     }).isRequired
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getAtomUsages(this.props.routeParams.atomType, this.props.routeParams.id);
     this.props.atomActions.getSuggestedContent(this.props.routeParams.id, this.props.routeParams.atomType);
   }
