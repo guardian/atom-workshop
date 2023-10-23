@@ -59,7 +59,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.18.0",
     "panda-session": "^0.1.6",
-    "react": "15.4.2",
+    "react": "15.7.0",
     "react-addons-shallow-compare": "^15.4.2",
     "react-dates": "^8.2.1",
     "react-dom": "^15.4.2",
