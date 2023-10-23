@@ -2,6 +2,8 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import {Provider} from 'react-redux';
 import {Route, IndexRedirect, Router} from 'react-router';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 
 import Page from './components/Page';
 import {AtomCreateTypeSelect} from './components/AtomCreate/AtomCreateTypeSelect';
