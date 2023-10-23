@@ -70,7 +70,7 @@ class SearchSuggestions extends React.Component {
         <li onClick={this.onClick(i)} key={result.title}>{result.title}</li>
       );
       const noresult = this.props.results.length === 0 ?
-        <li className="disabled">No snippet found matching the word "{this.props.queryStr}"</li> : null;
+        <li className="disabled">No snippet found matching the word &quot;{this.props.queryStr}&quot;</li> : null;
 
       return (
         <ul>
