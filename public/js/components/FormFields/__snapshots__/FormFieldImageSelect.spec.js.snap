@@ -1,57 +1,74 @@
-exports[`test Should render no image when none provided 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render no image when none provided 1`] = `
 <div
-  className="form__row">
+  className="form__row"
+>
   <label
     className="form__label"
-    htmlFor="test field name">
+    htmlFor="test field name"
+  >
     test field label
   </label>
   <div
-    className="image-select">
+    className="image-select"
+  >
     <button
       className="image-select__button"
       onClick={[Function]}
-      type="button">
+      type="button"
+    >
       + Add Image from Grid
     </button>
   </div>
 </div>
 `;
 
-exports[`test Should render with image when provided 1`] = `
+exports[`Should render with image when provided 1`] = `
 <div
-  className="form__row">
+  className="form__row"
+>
   <label
     className="form__label"
-    htmlFor="test field name">
+    htmlFor="test field name"
+  >
     test field label
   </label>
   <div
-    className="image-select">
+    className="image-select"
+  >
     <div
-      className="image-select__image-display">
+      className="image-select__image-display"
+    >
       <div
-        className="image-select__image">
+        className="image-select__image"
+      >
         <img
-          src="https://s3-eu-west-1.amazonaws.com/media-origin.test.dev-guim.co.uk/5dfc898f6866c8bb4224b65b9aae89e6eb7af30f/783_0_2025_1215/1000.jpg" />
+          src="https://s3-eu-west-1.amazonaws.com/media-origin.test.dev-guim.co.uk/5dfc898f6866c8bb4224b65b9aae89e6eb7af30f/783_0_2025_1215/1000.jpg"
+        />
       </div>
       <div
-        className="image-select__image-details">
+        className="image-select__image-details"
+      >
         <div
-          className="image-select__image-details__detail">
+          className="image-select__image-details__detail"
+        >
           <a
             href="https://media.test.dev-gutools.co.uk/images/5dfc898f6866c8bb4224b65b9aae89e6eb7af30f"
-            target="_blank">
+            target="_blank"
+          >
             View image in the Grid
           </a>
         </div>
         <div
-          className="image-select__image-details__detail">
+          className="image-select__image-details__detail"
+        >
           Size: 
           957.37 KB
         </div>
         <div
-          className="image-select__image-details__detail">
+          className="image-select__image-details__detail"
+        >
           Dimensions: 
           2025
            x 
@@ -60,13 +77,15 @@ exports[`test Should render with image when provided 1`] = `
         <button
           className="image-select__button image-select__replace-button"
           onClick={[Function]}
-          type="button">
+          type="button"
+        >
           Replace Image
         </button>
         <button
           className="image-select__remove-button btn--red"
           onClick={[Function]}
-          type="button">
+          type="button"
+        >
           Remove Image
         </button>
       </div>

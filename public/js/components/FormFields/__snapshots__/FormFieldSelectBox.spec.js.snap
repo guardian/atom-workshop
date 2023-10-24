@@ -1,21 +1,28 @@
-exports[`test Should render 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render 1`] = `
 <div
-  className="form__row">
+  className="form__row"
+>
   <label
     className="form__label"
-    htmlFor="test">
+    htmlFor="test"
+  >
     test
   </label>
   <select
     className="form__field form__field--select"
     onChange={[Function]}
-    value="test">
+    value="test"
+  >
     <option
-      value="test">
+      value="test"
+    >
       test
     </option>
     <option
-      value="test1">
+      value="test1"
+    >
       test1
     </option>
   </select>
