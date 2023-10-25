@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {CTAEditor} from './CustomEditors/CTAEditor';
 import {RecipeEditor} from './CustomEditors/RecipeEditor';
 import {QAndAEditor} from './CustomEditors/QAndAEditor';
@@ -40,7 +41,7 @@ class AtomEdit extends React.Component {
     })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     subscribeToPresence(this.props.routeParams.atomType, this.props.routeParams.id);
   }
 

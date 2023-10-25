@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import { ManagedForm, ManagedField } from '../../../ManagedEditor';
 import FormFieldTextInput from '../../../FormFields/FormFieldTextInput';
 import FormFieldsScribeEditor from '../../../FormFields/FormFieldScribeEditor';

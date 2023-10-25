@@ -55,6 +55,7 @@ exports[`Should render with image when provided 1`] = `
         >
           <a
             href="https://media.test.dev-gutools.co.uk/images/5dfc898f6866c8bb4224b65b9aae89e6eb7af30f"
+            rel="noreferrer"
             target="_blank"
           >
             View image in the Grid

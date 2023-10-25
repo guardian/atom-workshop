@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {atomPropType} from '../../constants/atomPropType.js';
 import {WorkflowStatus} from '../../constants/workflow';
 import WorkflowApi from '../../services/WorkflowApi';
@@ -38,7 +39,7 @@ class Workflow extends React.Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     WorkflowApi.getTrackableAtomTypes()
     .then(atomTypes => {
       this.setState({
