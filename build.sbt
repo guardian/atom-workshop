@@ -30,9 +30,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
 
     riffRaffArtifactResources := Seq(
       (Debian / packageBin).value -> "atom-workshop/atom-workshop_1.0_all.deb",
-      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
-      baseDirectory.value / "fluentbit/td-agent-bit.conf" -> "atom-workshop/fluentbit/td-agent-bit.conf",
-      baseDirectory.value / "fluentbit/parsers.conf" -> "atom-workshop/fluentbit/parsers.conf"
+      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
     ),
 
     Universal / javaOptions ++= Seq(
