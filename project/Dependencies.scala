@@ -30,12 +30,12 @@ object Dependencies {
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
     "com.gu" %% "editorial-permissions-client" % "2.0",
     "com.gu" %% "simple-configuration-ssm" % "1.5.6",
-    "com.gu" %% "fezziwig" % "1.2",
+    "com.gu" %% "fezziwig" % "1.9",
     "com.gu" % "kinesis-logback-appender" % "1.4.4",
     "com.gu" %% "pan-domain-auth-play_2-8" % "1.2.0",
-    "io.circe" %% "circe-parser" % "0.11.0",
+    "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
-    "com.gu" %% "content-api-client-aws" % "0.5",
-    "com.gu" %% "content-api-client" % "19.5.0"
+    "com.gu" %% "content-api-client-aws" % "0.7",
+    "com.gu" %% "content-api-client" % "20.0.0"
   )
 }
