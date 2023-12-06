@@ -17,13 +17,6 @@ export const cta = {
   description: 'A call to action designed for use in GLabs Hosted Content',
 };
 
-export const recipe = {
-  type: 'recipe',
-  fullName: 'Recipe',
-  description:
-    'Structured recipes for better website presentation within articles',
-};
-
 export const quiz = {
   type: 'quiz',
   fullName: 'Quiz',
@@ -93,7 +86,6 @@ export const audio = {
 };
 
 export const allAtomTypes = [
-  recipe,
   qa,
   guide,
   profile,
@@ -107,7 +99,6 @@ export const allAtomTypes = [
   commonsDivision,
 ];
 export const workshopEditableAtomTypes = [
-  recipe,
   qa,
   guide,
   profile,
@@ -121,7 +112,7 @@ export const workshopEditableAtomTypes = [
 
 export const snippetAtomTypes = [qa, guide, profile, timeline];
 export const legacyAtomTypes = [explainer];
-export const experimentalAtomTypes = [commonsDivision, recipe];
+export const experimentalAtomTypes = [commonsDivision];
 
 export function getNonEditableAtomTypes() {
   return allAtomTypes.filter(atomType => {
