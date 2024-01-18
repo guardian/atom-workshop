@@ -9,10 +9,15 @@ for both the composer and capi AWS accounts from [janus](https://janus.gutools.c
 
 This project requires Node, so we recommend you use [node version manager](https://github.com/nvm-sh/nvm) `nvm`. Run `brew install nvm` if you do not have it. Run `nvm use` in the root of the project to ensure you are using the right version of node. The project's node version is set in the `.nvmrc` file.
 
-The project also requires Java version `1.8.0.232` (or lower). The easiest way to set this is with `jenv`:
-- `brew install jenv`
-- Download and install the appopriate Java version: [jdk8u232-b09](https://adoptopenjdk.net/archive.html)
-- `jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/`
+The project also requires Java 11. The [easiest](https://docs.google.com/document/d/1ZR-YnaXCT5_gLVmTCeGs0mWd3KPaAozPjQK8uUzHZ9w/edit#heading=h.kgqqi53p3ltt)
+way to install this is with `asdf install`, which will install the version of `java` specified in our
+[.tool-versions](.tool-versions) file:
+
+```shell
+$ brew install asdf
+$ asdf plugin add java
+$ asdf install
+```
 
 You will then need to:
 

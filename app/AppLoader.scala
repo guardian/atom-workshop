@@ -26,7 +26,7 @@ class AppLoader extends ApplicationLoader {
         FileConfigurationLocation(new File(s"$home/.gu/$appName.conf"))
     }
 
-    new AppComponents(context.copy(initialConfiguration = context.initialConfiguration ++ Configuration(loadedConfig)), identity).application
+    new AppComponents(context.copy(initialConfiguration = context.initialConfiguration.withFallback(Configuration(loadedConfig))), identity).application
   }
 
   private def startLogging(context: Context): Unit = {

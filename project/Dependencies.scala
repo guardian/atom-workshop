@@ -3,7 +3,7 @@ import sbt._
 
 object Dependencies {
   lazy val awsVersion = "1.11.678"
-  lazy val atomLibVersion = "1.4.0"
+  lazy val atomLibVersion = "2.0.0-PREVIEW.fix-tests-under-java-17.2024-01-18T1039.b4d55b3d"
   lazy val jacksonVersion = "2.13.4"
   lazy val jacksonDatabindVersion = "2.13.4.2"
 
@@ -30,9 +30,9 @@ object Dependencies {
     "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion,
     "com.gu" %% "atom-manager-play" % atomLibVersion,
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
-    "com.gu" %% "editorial-permissions-client" % "2.0",
+    "com.gu" %% "editorial-permissions-client" % "2.14",
     "com.gu" %% "simple-configuration-ssm" % "1.5.6",
-    "com.gu" %% "fezziwig" % "1.2",
+    "com.gu" %% "fezziwig" % "1.6",
     "com.gu" %% "pan-domain-auth-play_2-8" % "1.2.0",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",

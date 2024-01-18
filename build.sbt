@@ -3,7 +3,7 @@ import Dependencies._
 name := "atom-workshop"
 version := "1.0"
 
-scalaVersion := "2.12.16"
+scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
