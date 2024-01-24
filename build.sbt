@@ -22,7 +22,6 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
 
     riffRaffPackageType := (Debian / packageBin).value,
 
-    debianPackageDependencies := Seq("openjdk-8-jre-headless"),
     maintainer := "Editorial Tools <digitalcms.dev@guardian.co.uk>",
     packageSummary := "Atom Workshop",
     packageDescription := """A single place for atoms of all types""",
