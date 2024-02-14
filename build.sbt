@@ -3,7 +3,7 @@ import Dependencies._
 name := "atom-workshop"
 version := "1.0"
 
-scalaVersion := "2.12.16"
+scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
@@ -22,7 +22,6 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, RiffRaffArtifact
 
     riffRaffPackageType := (Debian / packageBin).value,
 
-    debianPackageDependencies := Seq("openjdk-8-jre-headless"),
     maintainer := "Editorial Tools <digitalcms.dev@guardian.co.uk>",
     packageSummary := "Atom Workshop",
     packageDescription := """A single place for atoms of all types""",
