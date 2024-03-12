@@ -7,7 +7,7 @@ scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers ++= Resolver.sonatypeOssRepos("releases")
 
 routesGenerator := InjectedRoutesGenerator
 
