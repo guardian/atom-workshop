@@ -32,7 +32,7 @@ object Dependencies {
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
     "com.gu" %% "editorial-permissions-client" % "2.15",
     "com.gu" %% "simple-configuration-ssm" % "1.5.6",
-    "com.gu" %% "fezziwig" % "1.6",
+    "com.gu" %% "fezziwig" % "1.9.2",
     "com.gu" %% "pan-domain-auth-play_2-9" % "3.0.1",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
