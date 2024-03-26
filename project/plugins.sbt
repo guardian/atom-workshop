@@ -6,7 +6,7 @@ addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.2")
 
 addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.1.18")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
+addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.4")
 
 addDependencyTreePlugin
 
