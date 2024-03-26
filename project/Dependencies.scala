@@ -5,7 +5,7 @@ object Dependencies {
   lazy val awsVersion = "1.11.678"
   lazy val atomLibVersion = "3.0.0"
   lazy val jacksonVersion = "2.13.5"
-  lazy val jacksonDatabindVersion = "2.13.4.2"
+  lazy val jacksonDatabindVersion = "2.13.5"
 
   // these Jackson dependencies are required to resolve issues in Play 2.8.x https://github.com/orgs/playframework/discussions/11222
   val jacksonOverrides = Seq(
