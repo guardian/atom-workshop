@@ -2,7 +2,7 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import { ManagedForm, ManagedField } from '../../../ManagedEditor';
 import FormFieldTextInput from '../../../FormFields/FormFieldTextInput';
-import FormFieldsScribeEditor from '../../../FormFields/FormFieldScribeEditor';
+import FormFieldsRichTextEditor from '../../../FormFields/FormFieldScribeEditor';
 import ShowErrors from '../../../Utilities/ShowErrors';
 import { errorPropType } from '../../../../constants/errorPropType';
 import { wordLimits, tooLongMsg } from '../../../../util/wordLimits';
@@ -42,7 +42,7 @@ export class ProfileItem extends React.Component {
             <FormFieldTextInput />
           </ManagedField>
           <ManagedField fieldLocation="body" name="Body" isRequired={true}>
-            <FormFieldsScribeEditor
+            <FormFieldsRichTextEditor
               showWordCount={true}
               showToolbar={true}
               suggestedLength={wordLimits.default}
