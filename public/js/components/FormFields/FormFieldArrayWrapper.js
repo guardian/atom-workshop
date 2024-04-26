@@ -83,6 +83,11 @@ export default class FormFieldArrayWrapper extends React.Component {
               this.props.onUpdateField(arr);
           }
           
+          // Atom Workshop used to use Scribe for its rich text editors, but we've now moved to ProseMirror. The app was built in
+          // the context described in the following paragraph. Our ProseMirror implementation should work without this workaround,
+          // but the logic doesn't degrade the experience in the application, so I'm leaving that logic undisturbed, along with
+          // this explanation:
+          //
           // When reordering array elements & the child is a scribe editor, we have no way of passing information
           // down to scribe to force a re-render, as scribe cannot handle update changes once it has been
           // initialised. To trigger the visual change without a browser refresh, we need to unmount
