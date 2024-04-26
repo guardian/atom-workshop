@@ -7,7 +7,7 @@ import { RichTextEditor, customMultiBlockTextConfig, transformToLegacyMarkup } f
 const config = customMultiBlockTextConfig({ 
   allowedNodes: ["text", "paragraph", "hard_break"],
   allowedMarks: ["strong", "em", "link"]
-})
+});
 
 export default class FormFieldsRichTextEditor extends React.Component {
 
