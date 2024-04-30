@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import { ManagedForm, ManagedField } from "../../../ManagedEditor";
 import FormFieldTextInput from "../../../FormFields/FormFieldTextInput";
-import FormFieldsRichTextEditor from "../../../FormFields/FormFieldScribeEditor";
+import FormFieldsRichTextEditor from "../../../FormFields/FormFieldRichTextEditor";
 import ShowErrors from "../../../Utilities/ShowErrors";
 import { errorPropType } from "../../../../constants/errorPropType";
 import { wordLimits, tooLongMsg } from "../../../../util/wordLimits";

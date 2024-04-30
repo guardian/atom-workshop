@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import { ManagedForm, ManagedField } from "../../../ManagedEditor";
-import FormFieldsRichTextEditor from "../../../FormFields/FormFieldScribeEditor";
+import FormFieldsRichTextEditor from "../../../FormFields/FormFieldRichTextEditor";
 import { wordLimits, tooLongMsg } from "../../../../util/wordLimits";
 
 export class QAItem extends React.Component {

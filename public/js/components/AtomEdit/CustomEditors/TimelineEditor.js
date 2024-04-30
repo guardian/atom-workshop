@@ -4,7 +4,7 @@ import FormFieldArrayWrapper from '../../FormFields/FormFieldArrayWrapper';
 import {TimelineItem} from './TimelineFields/TimelineItem';
 import {ManagedField, ManagedForm} from '../../ManagedEditor';
 import {atomPropType} from '../../../constants/atomPropType';
-import FormFieldsRichTextEditor from '../../FormFields/FormFieldScribeEditor';
+import FormFieldsRichTextEditor from '../../FormFields/FormFieldRichTextEditor';
 
 export class TimelineEditor extends React.Component {
 

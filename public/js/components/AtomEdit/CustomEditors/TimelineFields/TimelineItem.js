@@ -2,7 +2,7 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import { ManagedForm, ManagedField } from '../../../ManagedEditor';
 import FormFieldTextInput from '../../../FormFields/FormFieldTextInput';
-import FormFieldsRichTextEditor from '../../../FormFields/FormFieldScribeEditor';
+import FormFieldsRichTextEditor from '../../../FormFields/FormFieldRichTextEditor';
 import FormFieldDateTextInput from '../../../FormFields/FormFieldDateTextInput';
 import FormFieldSelectBox from '../../../FormFields/FormFieldSelectBox';
 // import FormFieldRadioButtons from '../../../FormFields/FormFieldRadioButtons';
