@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "@guardian/prosemirror-editor": "^0.2.0",
     "babel-eslint": "^10.1.0",
     "copy-to-clipboard": "^3.0.5",
     "date-fns": "^1.28.0",
@@ -68,11 +69,6 @@
     "react-router-redux": "^4.0.8",
     "redux": "^4.2.1",
     "redux-thunk": "^2.2.0",
-    "scribe-editor": "3.3.0",
-    "scribe-plugin-keyboard-shortcuts": "^0.1.1",
-    "scribe-plugin-link-prompt-command": "^1.0.0",
-    "scribe-plugin-sanitizer": "^0.1.10",
-    "scribe-plugin-toolbar": "^1.0.0",
     "uuid": "^3.0.1"
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import {ManagedForm, ManagedField} from '../../ManagedEditor';
 import FormFieldTextInput from '../../FormFields/FormFieldTextInput';
-import FormFieldsScribeEditor from '../../FormFields/FormFieldScribeEditor';
+import FormFieldsRichTextEditor from '../../FormFields/FormFieldRichTextEditor';
 import {atomPropType} from '../../../constants/atomPropType';
 
 export class ExplainerEditor extends React.Component {
@@ -19,7 +19,7 @@ export class ExplainerEditor extends React.Component {
         <FormFieldTextInput/>
       </ManagedField>
       <ManagedField fieldLocation="data.explainer.body" name="Body">
-        <FormFieldsScribeEditor showWordCount={true} suggestedLength={100}/>
+        <FormFieldsRichTextEditor showWordCount={true} suggestedLength={100}/>
       </ManagedField>
     </ManagedForm>);
   }

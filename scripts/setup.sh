@@ -11,7 +11,7 @@ fileExists() {
 
 echo "Running setup script"
 node_version=`cat .nvmrc`
-echo "This project requires Node version" $node_version " Run 'nvm use' to get the correct version"
+echo "This project requires Node version" $node_version " Run 'nvm use' or use another node version manager to get the correct version"
 
 brew bundle --file=${ROOT_DIR}/Brewfile
 

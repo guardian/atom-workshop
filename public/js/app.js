@@ -12,6 +12,7 @@ import {paramStringToObject} from './util/urlParameters';
 import {BaseApp} from './BaseApp.js';
 
 import '../styles/main.scss';
+import '@guardian/prosemirror-editor/dist/style.css';
 
 function extractConfigFromPage() {
   const configEl = document.getElementById('config');
