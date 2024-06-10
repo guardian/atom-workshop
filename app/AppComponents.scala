@@ -13,8 +13,6 @@ import play.filters.HttpFiltersComponents
 import router.Routes
 import services.{AtomPublishers, Permissions}
 
-import scala.concurrent.ExecutionContext
-
 class AppComponents(context: Context, identity: AppIdentity)
   extends BuiltInComponentsFromContext(context) with AhcWSComponents with AssetsComponents with HttpFiltersComponents {
 
@@ -22,6 +20,8 @@ class AppComponents(context: Context, identity: AppIdentity)
 
   override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
   override lazy val httpFilters: Seq[EssentialFilter] = super.httpFilters.filterNot(_ == allowedHostsFilter)
+
+  lazy val appPermissions = new Permissions(config.effectiveStage)
 
   private val pandaAuthActions = new PanDomainAuthActions {
     override def authCallbackUrl: String = config.pandaAuthCallback
@@ -37,6 +37,8 @@ class AppComponents(context: Context, identity: AppIdentity)
       settingsFileKey = s"${config.pandaDomain}.settings",
       s3Client = AWS.S3Client,
     )
+
+    override def permissions: Permissions = appPermissions
   }
 
   lazy val atomWorkshopDB = new AtomWorkshopDB()
@@ -45,9 +47,8 @@ class AppComponents(context: Context, identity: AppIdentity)
   lazy val atomDataStores = new AtomDataStores(config)
   lazy val atomPublishers = new AtomPublishers(config)
 
-  lazy val permissions = new Permissions(config.effectiveStage)
 
-  lazy val appController = new controllers.App(controllerComponents, config, pandaAuthActions, atomWorkshopDB, atomDataStores, atomPublishers, permissions)
+  lazy val appController = new controllers.App(controllerComponents, config, pandaAuthActions, atomWorkshopDB, atomDataStores, atomPublishers, appPermissions)
   lazy val loginController = new controllers.Login(controllerComponents, wsClient, pandaAuthActions)
   lazy val healthcheckController = new controllers.Healthcheck(controllerComponents)
   lazy val supportController = new controllers.Support(controllerComponents, wsClient, config, pandaAuthActions)
