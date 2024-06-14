@@ -16,7 +16,7 @@ trait PanDomainAuthActions extends AuthActions with Logging {
 
     if (!isValid) {
       logger.warn(s"User ${authedUser.user.email} is not valid")
-    } else if (!canAccess && ! canDeleteAtom) {
+    } else if (!canAccess && !canDeleteAtom) {
       logger.warn(s"User ${authedUser.user.email} has no atom workshop permissions")
     } else if (!canAccess) {
       logger.warn(s"User ${authedUser.user.email} does not have atom_workshop_access permission")
