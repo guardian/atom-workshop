@@ -22,7 +22,7 @@ trait PanDomainAuthActions extends AuthActions with Logging {
       logger.warn(s"User ${authedUser.user.email} does not have atom_workshop_access permission")
     }
 
-    isValid // TODO && canAccess
+    isValid && canAccess
   }
 
   override def authCallbackUrl: String
