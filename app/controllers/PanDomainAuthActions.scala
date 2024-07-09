@@ -5,6 +5,8 @@ import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import play.api.Logging
 import services.Permissions
+import play.api.mvc.{RequestHeader, Result}
+import play.api.mvc.Results.Forbidden
 
 trait PanDomainAuthActions extends AuthActions with Logging {
 
@@ -23,6 +25,10 @@ trait PanDomainAuthActions extends AuthActions with Logging {
     }
 
     isValid && canAccess
+  }
+
+  override def showUnauthedMessage(message: String)(implicit request: RequestHeader): Result = {
+    Forbidden(views.html.authError(message))
   }
 
   override def authCallbackUrl: String
