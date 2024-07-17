@@ -17,7 +17,7 @@ brew bundle --file=${ROOT_DIR}/Brewfile
 
 dev-nginx setup-app ${ROOT_DIR}/nginx/nginx-mapping.yml
 
-printf "\n\rSetting up client side dependancies... \n\r\n\r"
+printf "\n\rSetting up client side dependencies... \n\r\n\r"
 printf "\n\rInstalling NPM packages via yarn... \n\r\n\r"
 
 yarn
