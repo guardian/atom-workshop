@@ -30,7 +30,7 @@ class AppComponents(context: Context, identity: AppIdentity)
 
     override def controllerComponents: ControllerComponents = AppComponents.this.controllerComponents
 
-    override def panDomainSettings: PanDomainAuthSettingsRefresher = new PanDomainAuthSettingsRefresher(
+    override val panDomainSettings: PanDomainAuthSettingsRefresher = new PanDomainAuthSettingsRefresher(
       domain = config.pandaDomain,
       system = config.pandaSystem,
       bucketName = "pan-domain-auth-settings",
