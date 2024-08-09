@@ -33,7 +33,7 @@ object Dependencies {
     "com.gu" %% "editorial-permissions-client" % "2.15",
     "com.gu" %% "simple-configuration-ssm" % "1.5.6",
     "com.gu" %% "fezziwig" % "1.6",
-    "com.gu" %% "pan-domain-auth-play_3-0" % "5.0.0",
+    "com.gu" %% "pan-domain-auth-play_3-0" % "6.0.0-PREVIEW.update-settings-loading-and-parsing-code.2024-08-09T1450.4c87946a",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "0.7",
