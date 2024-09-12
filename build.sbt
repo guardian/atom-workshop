@@ -9,6 +9,8 @@ libraryDependencies ++= dependencies
 
 routesGenerator := InjectedRoutesGenerator
 
+resolvers ++= Resolver.sonatypeOssRepos("releases")
+
 lazy val root = (project in file(".")).enablePlugins(PlayScala, JDebPackaging, SystemdPlugin)
   .settings(Defaults.coreDefaultSettings: _*)
   .settings(
