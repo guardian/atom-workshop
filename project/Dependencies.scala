@@ -31,7 +31,7 @@ object Dependencies {
     "com.gu" %% "atom-manager-play" % atomLibVersion,
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
     "com.gu" %% "editorial-permissions-client" % "2.16.0",
-    "com.gu" %% "simple-configuration-ssm" % "1.5.6",
+    "com.gu" %% "simple-configuration-ssm" % "1.5.8",
     "com.gu" %% "fezziwig" % "1.9.2",
     "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
     "io.circe" %% "circe-parser" % "0.14.5",
