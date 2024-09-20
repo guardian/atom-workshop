@@ -1,6 +1,6 @@
 import com.gu.AppIdentity
 import com.gu.atom.play.ReindexController
-import com.gu.pandomainauth.PanDomainAuthSettingsRefresher
+import com.gu.pandomainauth.{PanDomainAuthSettingsRefresher, S3BucketLoader}
 import config.{AWS, Config}
 import controllers.{AssetsComponents, ExplainerReindexController, PanDomainAuthActions}
 import db.{AtomDataStores, AtomWorkshopDB, ExplainerDB}
@@ -30,12 +30,10 @@ class AppComponents(context: Context, identity: AppIdentity)
 
     override def controllerComponents: ControllerComponents = AppComponents.this.controllerComponents
 
-    override def panDomainSettings: PanDomainAuthSettingsRefresher = new PanDomainAuthSettingsRefresher(
+    override val panDomainSettings: PanDomainAuthSettingsRefresher = PanDomainAuthSettingsRefresher(
       domain = config.pandaDomain,
       system = config.pandaSystem,
-      bucketName = "pan-domain-auth-settings",
-      settingsFileKey = s"${config.pandaDomain}.settings",
-      s3Client = AWS.S3Client,
+      S3BucketLoader.forAwsSdkV1(AWS.S3Client, "pan-domain-auth-settings")
     )
 
     override def permissions: Permissions = appPermissions
