@@ -26,12 +26,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version-file: ".java-version"
-          distribution: "corretto"
-          cache: "sbt"
+      - uses: guardian/setup-scala@v1
 
       - name: Setup Node
         uses: actions/setup-node@v4
