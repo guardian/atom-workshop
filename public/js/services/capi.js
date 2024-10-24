@@ -1,11 +1,9 @@
 import { pandaFetch } from './pandaFetch';
 import { uriEncodeParams, sanitiseQuery } from '../util/uriEncodeParams';
 
-export const searchTags = (searchText, type = null) => {
+export const searchTags = (searchText) => {
   return pandaFetch(
-    `/support/capi/tags?page-size=100&internal-name=${searchText}${
-      type ? `&type=${type}` : ''
-    }`,
+    `/support/capi/tags?web-title=${searchText}&page-size=200`,
     {
       method: 'get',
       credentials: 'same-origin',

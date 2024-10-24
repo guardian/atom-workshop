@@ -8,14 +8,21 @@ import FieldError from '../constants/FieldError';
 
 export const isHttpsUrl = value => {
   const stringValue = typeof value === 'string' ? value : '';
-  if (
-    stringValue.match(
-      /^(https:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-    )
-  ) {
+
+  try {
+
+    const url = new URL(stringValue);
+
+    if (url.protocol !== "https:") {
+      const error = new FieldError('not-https', 'Not a HTTPS url');
+      return Promise.resolve(error);
+    }
+
     return Promise.resolve(true);
-  } else {
-    const error = new FieldError('not-https', 'Not a HTTPS url');
+
+  }
+  catch (e) {
+    const error = new FieldError('not-url', 'Not a valid url');
     return Promise.resolve(error);
   }
 };

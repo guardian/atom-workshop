@@ -1,19 +1,22 @@
 package db
 
 import cats.syntax.either._
-import com.gu.atom.data.{DataStoreResultUtil, DynamoDataStore, IDNotFound}
+import com.gu.atom.data.{DataStoreResultUtil, DynamoDataStore, IDNotFound, VersionConflictError}
 import com.gu.contentatom.thrift.{Atom, AtomType}
 import com.gu.pandomainauth.model.User
-import models.{AtomAPIError, AtomWorkshopDynamoDatastoreError, UnknownAtomError}
-import play.api.Logger
+import models.{AtomAPIError, AtomWorkshopDynamoConflictError, AtomWorkshopDynamoDatastoreError, UnknownAtomError}
+import play.api.Logging
 import util.AtomLogic._
 
-trait AtomWorkshopDBAPI {
+trait AtomWorkshopDBAPI extends Logging {
 
   def transformAtomLibResult[T](atomType: AtomType, id: String, result: DataStoreResultUtil.DataStoreResult[T]): Either[AtomAPIError, T] = result match {
     case Left(IDNotFound) => Left(UnknownAtomError(atomType, id))
+    case Left(VersionConflictError(_)) => Left(AtomWorkshopDynamoConflictError)
     case Left(e) => Left(AtomWorkshopDynamoDatastoreError(e.msg))
-    case Right(r) => Right(r)
+    case Right(r) =>
+      logger.info(s"Successfully updated atom of type ${atomType.name} with id $id")
+      Right(r)
   }
 
   def createAtom(datastore: DynamoDataStore, atomType: AtomType, user: User, atom: Atom): Either[AtomAPIError, Atom]
@@ -27,13 +30,13 @@ trait AtomWorkshopDBAPI {
   def deleteAtom(datastore: DynamoDataStore, atomType: AtomType, id: String): Either[AtomAPIError, Atom]
 }
 
-class AtomWorkshopDB() extends AtomWorkshopDBAPI {
+class AtomWorkshopDB() extends AtomWorkshopDBAPI with Logging {
 
   def createAtom(datastore: DynamoDataStore, atomType: AtomType, user: User, atom: Atom): Either[AtomAPIError, Atom] = {
-    Logger.info(s"Attempting to create atom of type ${atomType.name} with id ${atom.id}")
+    logger.info(s"Attempting to create atom of type ${atomType.name} with id ${atom.id}")
     try {
       val result = datastore.createAtom(buildKey(atomType, atom.id), atom)
-      Logger.info(s"Successfully created atom of type ${atomType.name} with id ${atom.id}")
+      logger.info(s"Successfully created atom of type ${atomType.name} with id ${atom.id}")
       transformAtomLibResult(atomType, atom.id, result)
     } catch {
       case e: Exception => processException(e)
@@ -46,7 +49,6 @@ class AtomWorkshopDB() extends AtomWorkshopDBAPI {
   def updateAtom(datastore: DynamoDataStore, atom: Atom): Either[AtomAPIError, Atom] = {
     try {
       val result = datastore.updateAtom(atom)
-      Logger.info(s"Successfully updated atom of type ${atom.atomType.name} with id ${atom.id}")
       transformAtomLibResult(atom.atomType, atom.id, result)
     } catch {
       case e: Exception => processException(e)

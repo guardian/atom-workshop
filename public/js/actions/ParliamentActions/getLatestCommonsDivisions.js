@@ -1,7 +1,7 @@
 import {latestCommonsDivisions} from '../../services/Parliament';
 import AtomsApi from '../../services/AtomsApi';
 import {logError} from '../../util/logger';
-import {PropTypes} from 'react';
+import {PropTypes} from 'prop-types';
 import {atomPropType} from '../../constants/atomPropType';
 
 const MPPropType = PropTypes.shape({

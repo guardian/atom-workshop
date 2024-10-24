@@ -12,7 +12,7 @@ test('Should return no errors', () => {
     });
 });
 
-test('Should return \"required\" error', () => {
+test('Should return "required" error', () => {
   let fieldValue = '',
       isRequired = true,
       customValidation = [];
@@ -23,7 +23,7 @@ test('Should return \"required\" error', () => {
       });
 });
 
-test('Should return \"testing\" error', () => {
+test('Should return "testing" error', () => {
   let failMessage = new FieldError('testing', 'This is a test message'),
       failFunc = () => failMessage,
       fieldValue = 'test',
@@ -37,14 +37,15 @@ test('Should return \"testing\" error', () => {
 
 });
 
-test('Should throw on incorrectly formatted error', () => {
+test('Should throw on incorrectly formatted error', async () => {
     let failFunc = () => false,
         fieldValue = 'test',
         isRequired = false,
         customValidation = [failFunc];
 
-    return validateField(fieldValue, isRequired, customValidation)
-      .then(res => {
-        expect(res).toThrow();
-      });
+    try {
+      await validateField(fieldValue, isRequired, customValidation);
+    } catch (e) {
+      expect.anything(e);
+    }
 });

@@ -6,7 +6,7 @@
 //createUri - a lodash template that will be passed gutoolsDomain.
 //statsUrl - a lodash template that will be passed atomId, atomType
 
-import { PropTypes } from 'react';
+import { PropTypes } from 'prop-types';
 import _template from 'lodash/fp/template';
 import { logInfo } from '../util/logger';
 import { getStore } from '../util/storeAccessor';
@@ -15,13 +15,6 @@ export const cta = {
   type: 'cta',
   fullName: 'Call To Action',
   description: 'A call to action designed for use in GLabs Hosted Content',
-};
-
-export const recipe = {
-  type: 'recipe',
-  fullName: 'Recipe',
-  description:
-    'Structured recipes for better website presentation within articles',
 };
 
 export const quiz = {
@@ -83,7 +76,7 @@ export const commonsDivision = {
 export const chart = {
   type: 'chart',
   fullName: 'Chart',
-  description: 'A simple chart of type: bar',
+  description: 'A simple chart of type bar, column or line',
 };
 
 export const audio = {
@@ -93,7 +86,6 @@ export const audio = {
 };
 
 export const allAtomTypes = [
-  recipe,
   qa,
   guide,
   profile,
@@ -107,7 +99,6 @@ export const allAtomTypes = [
   commonsDivision,
 ];
 export const workshopEditableAtomTypes = [
-  recipe,
   qa,
   guide,
   profile,
@@ -121,7 +112,7 @@ export const workshopEditableAtomTypes = [
 
 export const snippetAtomTypes = [qa, guide, profile, timeline];
 export const legacyAtomTypes = [explainer];
-export const experimentalAtomTypes = [commonsDivision, recipe];
+export const experimentalAtomTypes = [commonsDivision];
 
 export function getNonEditableAtomTypes() {
   return allAtomTypes.filter(atomType => {

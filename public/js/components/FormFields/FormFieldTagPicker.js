@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
 import {searchTags} from '../../services/capi';
@@ -14,7 +15,6 @@ export default class FormFieldTagPicker extends React.Component {
     fieldErrors: PropTypes.arrayOf(errorPropType),
     formRowClass: PropTypes.string,
     onUpdateField: PropTypes.func,
-    tagType: PropTypes.string
   };
 
   state = {
@@ -44,7 +44,7 @@ export default class FormFieldTagPicker extends React.Component {
         searchText: searchText
       });
     
-      searchTags(searchText, this.props.tagType).then((results) => {
+      searchTags(searchText).then((results) => {
         this.setState({
           suggestions: results
         });

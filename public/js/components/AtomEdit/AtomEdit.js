@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {CTAEditor} from './CustomEditors/CTAEditor';
-import {RecipeEditor} from './CustomEditors/RecipeEditor';
 import {QAndAEditor} from './CustomEditors/QAndAEditor';
 import {GuideEditor} from './CustomEditors/GuideEditor';
 import {ProfileEditor} from './CustomEditors/ProfileEditor';
@@ -40,7 +40,7 @@ class AtomEdit extends React.Component {
     })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     subscribeToPresence(this.props.routeParams.atomType, this.props.routeParams.id);
   }
 
@@ -55,10 +55,16 @@ class AtomEdit extends React.Component {
   }
 
   updateChartAtom = () => {
-    return AtomsApi.getAtom(this.props.routeParams.atomType, this.props.routeParams.id)
+    try {
+      enterPresence(this.props.routeParams.atomType, this.props.routeParams.id);
+    } catch (e) {
+      logError(e);
+    } finally {
+      AtomsApi.getAtom(this.props.routeParams.atomType, this.props.routeParams.id)
     .then(res => res.json()).then(atom => {
-      this.props.atomActions.updateAtom(atom);
-    });
+          this.props.atomActions.updateAtom(atom);
+        });
+    }
   }
 
   updateFormErrors = (errors) => {
@@ -73,8 +79,6 @@ class AtomEdit extends React.Component {
     switch (atomType) {
       case ("cta"):
         return <CTAEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("recipe"):
-        return <RecipeEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("qanda"):
         return <QAndAEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("guide"):

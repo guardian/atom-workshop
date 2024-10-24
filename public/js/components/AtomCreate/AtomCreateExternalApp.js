@@ -21,7 +21,7 @@ class AtomCreateExternalApp extends React.Component {
           Due to the complexity of this atom, it cannot be created from within the Atom Workshop directly.
         </div>
         <div className="center">
-          <a className="atom-editor__external" target="_blank" href={getCreateUrlFromAtomType(this.props.atomType)}>Open Dedicated Editor</a>
+          <a className="atom-editor__external" target="_blank" rel="noreferrer" href={getCreateUrlFromAtomType(this.props.atomType)}>Open Dedicated Editor</a>
         </div>
       </div>
     );

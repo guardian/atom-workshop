@@ -1,9 +1,13 @@
-exports[`test Should render 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render 1`] = `
 <div
-  className="form__row">
+  className="form__row"
+>
   <label
     className="form__label"
-    htmlFor="test">
+    htmlFor="test"
+  >
     test
   </label>
   <input
@@ -12,6 +16,7 @@ exports[`test Should render 1`] = `
     onChange={[Function]}
     placeholder=""
     type="number"
-    value={1} />
+    value={1}
+  />
 </div>
 `;

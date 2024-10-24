@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 export default class PresenceIndicator extends React.Component {
 
@@ -13,7 +14,7 @@ export default class PresenceIndicator extends React.Component {
   renderPresenceUser = (state) => {
     const user = state.clientId.person;
     return (
-      <li key="state.clientId.connId" className="presence-list__user">{this.getInitials(user.firstName, user.lastName)}</li>
+      <li key="state.clientId.connId" className="presence-list__user" title={user.firstName + " " + user.lastName}>{this.getInitials(user.firstName, user.lastName)}</li>
     );
   };
 

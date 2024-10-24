@@ -77,11 +77,16 @@
     }
 
     &__item {
+      display: block;
       background: transparent;
       padding: 10px;
 
       &:not(:last-child) {
         border-bottom: 1px solid $color300Grey;
+      }
+
+      &:hover {
+        background: $color300Grey;
       }
     }
 

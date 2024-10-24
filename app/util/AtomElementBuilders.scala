@@ -3,7 +3,6 @@ package util
 import com.gu.contentatom.thrift.AtomData.Chart
 import com.gu.contentatom.thrift.atom.chart._
 import com.gu.contentatom.thrift.atom.cta.CTAAtom
-import com.gu.contentatom.thrift.atom.recipe.{RecipeAtom, Tags => RecipeTags, Time => RecipeTime}
 import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
 import com.gu.contentatom.thrift.atom.profile.ProfileAtom
 import com.gu.contentatom.thrift.atom.guide.GuideAtom
@@ -45,7 +44,6 @@ object AtomElementBuilders {
 
     val defaultAtoms: Map[AtomType, AtomData] = Map(
       AtomType.Cta -> AtomData.Cta(CTAAtom("-")),
-      AtomType.Recipe -> AtomData.Recipe(RecipeAtom(title, RecipeTags(), RecipeTime())),
       AtomType.Explainer -> AtomData.Explainer(ExplainerAtom(title, "-", DisplayType.Flat)),
       AtomType.Qanda -> AtomData.Qanda(QAndAAtom(Some("Q&A"), None, QAndAItem(None, "Body"))),
       AtomType.Guide -> AtomData.Guide(GuideAtom(None, None, Nil)),
@@ -56,7 +54,7 @@ object AtomElementBuilders {
         chartType = ChartType.Bar,
         furniture = Furniture(headline = "headline", source = "source"),
         tabularData = TabularData(RowType.String),
-        displaySettings = DisplaySettings(true, true)
+        displaySettings = DisplaySettings(true, true, Some(true), Some(true))
       )),
       AtomType.Audio -> AtomData.Audio(AudioAtom(
         kicker = title,
