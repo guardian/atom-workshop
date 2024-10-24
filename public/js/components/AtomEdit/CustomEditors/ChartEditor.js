@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import Modal from '../../Utilities/Modal';
 import {atomPropType} from '../../../constants/atomPropType';
 import {logInfo, logError} from '../../../util/logger';

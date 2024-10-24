@@ -11,7 +11,6 @@ export function getTitleForAtom(atom) {
 
     switch(atom.atomType) {
         case ("cta"): return atom.data.cta.label;
-        case ("recipe"): return atom.data.recipe.title;
         case ("media"): return atom.data.media.title;
         case ("qanda"): return atom.title;
         case ("guide"): return atom.title;

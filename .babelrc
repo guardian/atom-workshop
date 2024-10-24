@@ -1,17 +1,17 @@
 // .babelrc
 {
   "presets": [
-    ["es2015", {"modules": false}],
-    "react"
-  ],
-  "plugins": [
-    "transform-object-assign",
-    "transform-class-properties",
-    "react-hot-loader/babel"
-  ],
-  "env": {
-    "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+          "useBuiltIns": "entry",
+          "corejs": "3.19",
+          "targets": {
+              "chrome": 75,
+              "ios": 12
+          }
+      }
+    ]
+  ]
 }

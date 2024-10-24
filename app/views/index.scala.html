@@ -1,4 +1,10 @@
-@(title: String, jsLocation: String, presenceJsLocation: Option[String], clientConfigJson: String)
+@(
+        title: String,
+        jsLocation: String,
+        presenceJsLocation: Option[String],
+        clientConfigJson: String,
+        csrf: String
+)
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +12,12 @@
         <meta charset="UTF-8">
         <title>Atom Workshop</title>
         <link rel="stylesheet" href="@routes.Assets.versioned("build/main.css")">
+        <script type="text/javascript">
+                window.guardian = window.guardian || {};
+                if(!window.guardian.csrf) {
+                    window.guardian.csrf = {token: "@csrf"}
+                }
+        </script>
     </head>
 
     <body>

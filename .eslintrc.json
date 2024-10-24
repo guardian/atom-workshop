@@ -21,5 +21,10 @@
     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "globals": {
         "Promise": false
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

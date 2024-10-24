@@ -3,7 +3,7 @@ package models
 import io.circe._
 import io.circe.generic.semiauto._
 import io.circe.syntax._
-import play.api.Logger
+import play.api.Logging
 import play.api.mvc._
 
 case class AtomWorkshopAPIResponse(message: String)
@@ -11,10 +11,10 @@ object AtomWorkshopAPIResponse{
   implicit val atomWorkshopApiResponseEncoder: Encoder[AtomWorkshopAPIResponse] = deriveEncoder[AtomWorkshopAPIResponse]
 }
 
-object APIResponse extends Results {
+object APIResponse extends Results with Logging {
   def apiErrorToResult(e: AtomAPIError) = {
-    Logger.error(e.msg)
-    InternalServerError(AtomWorkshopAPIResponse(e.msg).asJson.noSpaces)
+    logger.error(e.msg)
+    e.status(AtomWorkshopAPIResponse(e.msg).asJson.noSpaces)
   }
 
   def apply[T](result: Either[AtomAPIError, T])(implicit encoder: Encoder[T]): Result = {
