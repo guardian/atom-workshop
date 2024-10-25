@@ -22,7 +22,7 @@ export default class FormFieldsRichTextEditor extends React.Component {
     suggestedLength: PropTypes.number,
     showToolbar: PropTypes.bool,
     tooLongMsg: PropTypes.node
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ export default class FormFieldsRichTextEditor extends React.Component {
 
   state = {
     wordCount: 0
-  }
+  };
 
   wordCount = text => text.trim().replace(/<(?:.|\n)*?>/gm, '').split(/\s+/).filter(_ => _.length !== 0).length;
 
@@ -48,7 +48,7 @@ export default class FormFieldsRichTextEditor extends React.Component {
         {tooLong ? <div className="form__message__text"> {this.tooLongMsg}</div> : false}
       </div>
     );
-  }
+  };
 
 
   render() {

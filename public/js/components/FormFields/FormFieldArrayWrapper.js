@@ -17,19 +17,19 @@ export default class FormFieldArrayWrapper extends React.Component {
       PropTypes.element,
       PropTypes.arrayOf(PropTypes.element)
     ])
-  }
+  };
 
   //We store new items in state to avoid sending invalid items back to the server before they're ready
   state = {
     newItems: [],
     childrenVisible: true
-  }
+  };
 
   onAddClick = () => {
     this.setState({
       newItems: this.state.newItems.concat([undefined])
     });
-  }
+  };
 
   renderValue(value, i) {
 

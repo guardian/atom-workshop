@@ -15,11 +15,11 @@ export default class SearchTextInput extends React.Component {
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.value);
-  }
+  };
 
   onKeyUp = (e) => {
     this.props.onKeyUp(e.keyCode);
-  }
+  };
 
   render() {
     return (

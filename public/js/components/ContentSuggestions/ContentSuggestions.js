@@ -16,7 +16,7 @@ class ContentSuggestions extends React.Component {
       viewerUrl: PropTypes.string.isRequired,
       liveCapiUrl: PropTypes.string
     }).isRequired
-  }
+  };
 
   UNSAFE_componentWillMount() {
     this.props.atomActions.getSuggestionsForLatestContent();
@@ -35,7 +35,7 @@ class ContentSuggestions extends React.Component {
         </div>
       </li>
     );
-  }
+  };
 
   renderContent = content => {
     const composerLink = `${this.props.config.composerUrl}/content/${content.internalComposerCode}`;
@@ -61,7 +61,7 @@ class ContentSuggestions extends React.Component {
         </div>
       </div>
     );
-  }
+  };
 
   renderAtomsArray = (atomsArray) => {
     return (
@@ -72,7 +72,7 @@ class ContentSuggestions extends React.Component {
         </ul>
       </div>
     );
-  }
+  };
 
   renderContentAndSuggestions = (item, i) => {
     return (
@@ -81,7 +81,7 @@ class ContentSuggestions extends React.Component {
         { this.renderAtomsArray(item.atoms) }
       </li>
     );
-  }
+  };
 
   renderSuggestionsForLatestContent() {
     if (this.props.suggestionsForLatestContent) {

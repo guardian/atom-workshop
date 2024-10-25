@@ -15,7 +15,7 @@ class ExternalAtom extends React.Component {
     externalAtomActions: PropTypes.shape({
       getExternalAtom: PropTypes.func.isRequired
     })
-  }
+  };
 
   UNSAFE_componentWillMount() {
       this.props.externalAtomActions.getExternalAtom(this.props.routeParams.atomType, this.props.routeParams.id);
@@ -28,7 +28,7 @@ class ExternalAtom extends React.Component {
         <a target="_blank" rel="noreferrer" href={getAtomEditorUrl(atom)} className="link">Open dedicated {_capitalize(atom.atomType)} atom editor</a>
       </div>
     );
-  }
+  };
 
   render () {
 

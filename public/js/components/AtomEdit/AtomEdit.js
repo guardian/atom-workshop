@@ -38,7 +38,7 @@ class AtomEdit extends React.Component {
       embeddedMode: PropTypes.string,
       isEmbedded: PropTypes.bool.isRequired
     })
-  }
+  };
 
   UNSAFE_componentWillMount() {
     subscribeToPresence(this.props.routeParams.atomType, this.props.routeParams.id);
@@ -52,7 +52,7 @@ class AtomEdit extends React.Component {
     } finally {
         this.props.atomActions.updateAtom(newAtom);
     }
-  }
+  };
 
   updateChartAtom = () => {
     try {
@@ -65,11 +65,11 @@ class AtomEdit extends React.Component {
           this.props.atomActions.updateAtom(atom);
         });
     }
-  }
+  };
 
   updateFormErrors = (errors) => {
     this.props.formErrorActions.updateFormErrors(errors);
-  }
+  };
 
   renderSpecificEditor () {
 

@@ -5,7 +5,7 @@ export default class AppMessage extends React.Component {
 
   static propTypes = {
     error: PropTypes.string
-  }
+  };
 
   render() {
     return (

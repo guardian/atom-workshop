@@ -17,7 +17,7 @@ class Header extends React.Component {
     }),
     router: routerShape,
     isFindPage: PropTypes.bool.isRequired
-  }
+  };
 
   render () {
 

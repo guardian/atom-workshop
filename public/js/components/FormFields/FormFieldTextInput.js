@@ -18,7 +18,7 @@ export default class FormFieldTextInput extends React.Component {
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.value);
-  }
+  };
 
   render() {
 

@@ -5,7 +5,7 @@ export default class PresenceIndicator extends React.Component {
 
   static propTypes = {
     presence: PropTypes.object
-  }
+  };
 
   getInitials(firstName, lastName) {
     return `${firstName.slice(0, 1)}${lastName.slice(0,1)}`;

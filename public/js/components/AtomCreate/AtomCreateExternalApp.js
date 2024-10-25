@@ -7,7 +7,7 @@ class AtomCreateExternalApp extends React.Component {
 
   static propTypes = {
     atomType: AtomTypePropType
-  }
+  };
 
   render () {
     return (

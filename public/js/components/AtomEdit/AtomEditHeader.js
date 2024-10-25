@@ -14,7 +14,7 @@ export default class AtomEditHeader extends React.Component {
   static propTypes = {
     atom: atomPropType.isRequired,
     onUpdate: PropTypes.func
-  }
+  };
 
   renderDate(dateType) {
 
@@ -48,7 +48,7 @@ export default class AtomEditHeader extends React.Component {
     return (
       <h4 className="atom-card__subheading">Title: {getTitleForAtom(atom)}</h4>
     );
-  }
+  };
 
 
   render () {
