@@ -15,7 +15,7 @@ export class QAndAEditor extends React.Component {
     config: PropTypes.shape({
       gridUrl: PropTypes.string.isRequired
     }).isRequired
-  }
+  };
 
   render () {
     return (

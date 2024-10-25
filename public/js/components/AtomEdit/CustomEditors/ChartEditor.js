@@ -13,7 +13,7 @@ export class ChartEditor extends React.Component {
       stage: PropTypes.string.isRequired
     }).isRequired,
     onUpdate: PropTypes.func.isRequired
-  }
+  };
 
   state = {
     modalOpen: false

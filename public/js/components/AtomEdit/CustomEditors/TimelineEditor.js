@@ -12,7 +12,7 @@ export class TimelineEditor extends React.Component {
     atom: atomPropType.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFormErrorsUpdate: PropTypes.func
-  }
+  };
 
   render () {
 

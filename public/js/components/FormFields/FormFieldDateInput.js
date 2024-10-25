@@ -28,7 +28,7 @@ export default class FormFieldDateInput extends React.Component {
 
   onDateChange = (momentDate) => {
     this.props.onUpdateField(momentDate.valueOf());
-  }
+  };
 
   getPlaceholder = () => {
     if (this.props.fieldValue) {
@@ -39,7 +39,7 @@ export default class FormFieldDateInput extends React.Component {
     }
     return 'Pick Expiry Date';
 
-  }
+  };
 
   render() {
     return (

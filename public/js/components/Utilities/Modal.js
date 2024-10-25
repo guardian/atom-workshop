@@ -7,7 +7,7 @@ export default class Modal extends React.Component {
       isOpen: PropTypes.bool.isRequired,
       dismiss: PropTypes.func.isRequired,
       children: PropTypes.element.isRequired
-    }
+    };
 
     preventClosingClick (event) {
         event.stopPropagation();

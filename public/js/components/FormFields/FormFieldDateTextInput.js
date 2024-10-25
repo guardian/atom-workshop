@@ -30,7 +30,7 @@ export default class FormFieldDateTextInput extends React.Component {
             });
             this.props.onUpdateField(momentDate.valueOf());
         }
-    }
+    };
 
     render() {
         return (

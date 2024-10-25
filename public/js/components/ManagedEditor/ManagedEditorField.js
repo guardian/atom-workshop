@@ -49,7 +49,7 @@ export class ManagedField extends React.Component {
 
     this.runValidations(newValue);
     this.props.updateData(_set(this.props.fieldLocation, newValue, this.props.data));
-  }
+  };
 
   getLabel() {
       const fieldLabel = this.props.label ? this.props.label : this.props.name;
