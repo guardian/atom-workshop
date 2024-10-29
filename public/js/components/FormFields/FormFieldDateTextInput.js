@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
 import moment from 'moment';
@@ -29,7 +30,7 @@ export default class FormFieldDateTextInput extends React.Component {
             });
             this.props.onUpdateField(momentDate.valueOf());
         }
-    }
+    };
 
     render() {
         return (

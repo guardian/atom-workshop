@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
 
@@ -10,11 +11,11 @@ export default class FormFieldCheckbox extends React.Component {
     fieldValue: PropTypes.bool.isRequired,
     fieldErrors: PropTypes.arrayOf(errorPropType),
     onUpdateField: PropTypes.func.isRequired
-  }
+  };
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.checked);
-  }
+  };
 
   render() {
     return (

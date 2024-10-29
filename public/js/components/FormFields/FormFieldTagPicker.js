@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
 import {searchTags} from '../../services/capi';
@@ -28,11 +29,11 @@ export default class FormFieldTagPicker extends React.Component {
       suggestions: null,
       searchText: ""
     });
-  }
+  };
 
   resetTag = () => {
     this.props.onUpdateField(undefined);
-  }
+  };
 
   updateSearchSuggestions = (e) => {
 
@@ -60,7 +61,7 @@ export default class FormFieldTagPicker extends React.Component {
       });
     }
 
-  }
+  };
 
   renderSuggestions() {
     if (!this.state.suggestions) {
