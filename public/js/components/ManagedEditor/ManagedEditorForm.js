@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 export class ManagedForm extends React.Component {
 
@@ -28,7 +29,7 @@ export class ManagedForm extends React.Component {
 
     this.props.onFormErrorsUpdate && this.props.onFormErrorsUpdate(formErrors);
     this.props.onFormErrorStateUpdate && this.props.onFormErrorStateUpdate(this.hasFormErrors(formErrors));
-  }
+  };
 
 
   render() {

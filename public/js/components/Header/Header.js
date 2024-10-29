@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {Link} from 'react-router';
 import {routerShape} from 'react-router/lib/PropTypes';
 
@@ -16,7 +17,7 @@ class Header extends React.Component {
     }),
     router: routerShape,
     isFindPage: PropTypes.bool.isRequired
-  }
+  };
 
   render () {
 

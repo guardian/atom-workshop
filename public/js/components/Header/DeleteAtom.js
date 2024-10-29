@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import { getStore } from '../../util/storeAccessor';
 
 export default class DeleteAtom extends React.Component {
@@ -8,6 +9,7 @@ export default class DeleteAtom extends React.Component {
   };
 
   // the permissions are also validated on the server-side for each request
+  // TODO not currently true - must update server to actually do the validation!! ^
   permissions = getStore().getState().config.permissions;
   showActions = this.permissions.deleteAtom;
 

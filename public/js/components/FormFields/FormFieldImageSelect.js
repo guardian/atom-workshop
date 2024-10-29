@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import filesize from 'filesize';
 import Modal from '../Utilities/Modal';
 import ShowErrors from '../Utilities/ShowErrors';
@@ -37,25 +38,25 @@ class FormFieldImageSelect extends React.Component {
     fieldErrors: PropTypes.arrayOf(errorPropType),
     formRowClass: PropTypes.string,
     gridUrl: PropTypes.string.isRequired
-  }
+  };
 
   state = {
     modalOpen: false
-  }
+  };
 
   closeModal = () => {
     this.setState({ modalOpen: false });
     window.removeEventListener('message', this.onMessage, false);
-  }
+  };
 
   openModal = () => {
       this.setState({ modalOpen: true });
       window.addEventListener('message', this.onMessage, false);
-  }
+  };
 
   removeImage = () => {
     this.props.onUpdateField(null);
-  }
+  };
 
   validMessage(data) {
     return data && data.crop && data.crop.data && data.image && data.image.data;
@@ -82,7 +83,7 @@ class FormFieldImageSelect extends React.Component {
 
       this.closeModal();
       this.props.onUpdateField(parseImageFromGridCrop(data));
-  }
+  };
 
   renderWithoutImage() {
     return (
@@ -101,7 +102,7 @@ class FormFieldImageSelect extends React.Component {
         </div>
         <div className="image-select__image-details">
           <div className="image-select__image-details__detail">
-            <a target="_blank" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
+            <a target="_blank" rel="noreferrer" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
           </div>
           <div className="image-select__image-details__detail">
             Size: {filesize(this.props.fieldValue.master.size)}

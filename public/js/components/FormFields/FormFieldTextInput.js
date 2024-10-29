@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
 
@@ -17,7 +18,7 @@ export default class FormFieldTextInput extends React.Component {
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.value);
-  }
+  };
 
   render() {
 

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import Header from './Header/Header';
 import AppMessage from './AppMessage/AppMessage';
 
@@ -13,7 +14,7 @@ class Page extends React.Component {
     }),
     error: PropTypes.string,
     router: routerShape
-  }
+  };
 
   isFindPage() {
     return this.props.router.isActive("/find");

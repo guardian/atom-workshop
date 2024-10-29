@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {Link} from 'react-router';
 import {getAtomByType, isAtomTypeEditable} from '../../constants/atomData';
 import {AtomTypeCard} from '../AtomTypeCard/AtomTypeCard.js';
@@ -16,24 +17,24 @@ class AtomCreateGenericInfo extends React.Component {
     atomActions: PropTypes.shape({
       createAtom: PropTypes.func.isRequired
     }).isRequired
-  }
+  };
 
   state = {
     title: "",
     commissioningDesks: []
-  }
+  };
 
   updateTitle = (newTitle) => {
     this.setState({
       title: newTitle
     });
-  }
+  };
 
   updateTags = (tags) => {
     this.setState({
       commissioningDesks: tags
     });
-  }
+  };
 
   triggerAtomCreate = (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ class AtomCreateGenericInfo extends React.Component {
       title: this.state.title,
       commissioningDesks: this.state.commissioningDesks
     });
-  }
+  };
 
   shouldEnableCreateButton = () => {
     if (!this.state.title || !this.state.title.length) {
@@ -50,7 +51,7 @@ class AtomCreateGenericInfo extends React.Component {
     }
 
     return true;
-  }
+  };
 
   render () {
 

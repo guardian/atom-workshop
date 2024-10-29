@@ -4,7 +4,7 @@ import {fetchTargetsForTags} from '../../services/TargetingApi';
 import AtomsApi from '../../services/AtomsApi';
 import {atomPropType} from '../../constants/atomPropType.js';
 import {logError} from '../../util/logger';
-import {PropTypes} from 'react';
+import {PropTypes} from 'prop-types';
 
 function requestSuggestionsForLatestContent() {
   return {

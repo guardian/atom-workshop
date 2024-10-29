@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {atomPropType} from '../../constants/atomPropType.js';
 import {allAtomTypes} from '../../constants/atomData.js';
 
@@ -13,7 +14,7 @@ export default class AtomEditHeader extends React.Component {
   static propTypes = {
     atom: atomPropType.isRequired,
     onUpdate: PropTypes.func
-  }
+  };
 
   renderDate(dateType) {
 
@@ -47,7 +48,7 @@ export default class AtomEditHeader extends React.Component {
     return (
       <h4 className="atom-card__subheading">Title: {getTitleForAtom(atom)}</h4>
     );
-  }
+  };
 
 
   render () {

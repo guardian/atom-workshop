@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 import {ManagedForm, ManagedField} from '../../ManagedEditor';
 import FormFieldTextInput from '../../FormFields/FormFieldTextInput';
@@ -14,7 +15,7 @@ export class CTAEditor extends React.Component {
     }).isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFormErrorsUpdate: PropTypes.func
-  }
+  };
 
   render () {
 

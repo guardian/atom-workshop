@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {atomPropType} from '../../constants/atomPropType';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import {FrontendIcon, ComposerIcon, ViewerIcon} from '../../util/icons.js';
@@ -20,9 +21,9 @@ class AtomStats extends React.Component {
       composerUrl: PropTypes.string.isRequired,
       viewerUrl: PropTypes.string.isRequired
     }).isRequired
-  }
+  };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getAtomUsages(this.props.routeParams.atomType, this.props.routeParams.id);
     this.props.atomActions.getSuggestedContent(this.props.routeParams.id, this.props.routeParams.atomType);
   }
@@ -40,20 +41,20 @@ class AtomStats extends React.Component {
           <div className="usages-list__links">
             <p className="usages-list__item__date">
               Created: {distanceInWordsToNow(usage.fields.creationDate, {addSuffix: true})}
-              <a className="usages-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank">
+              <a className="usages-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank" rel="noreferrer">
                 <FrontendIcon />
               </a>
-              <a className="usages-list__link" href={composerLink} title="Open in Composer" target="_blank">
+              <a className="usages-list__link" href={composerLink} title="Open in Composer" target="_blank" rel="noreferrer">
                 <ComposerIcon />
               </a>
-              <a className="usages-list__link" href={viewerLink} title="Open in Viewer" target="_blank">
+              <a className="usages-list__link" href={viewerLink} title="Open in Viewer" target="_blank" rel="noreferrer">
                 <ViewerIcon />
               </a></p>
           </div>
         </li>
       );
     }
-  }
+  };
 
   renderAtomUsages = () => {
     if (this.props.atomUsages && this.props.atomUsages.length > 0) {
@@ -67,7 +68,7 @@ class AtomStats extends React.Component {
         <div>This atom is not currently used in any content.</div>
       );
     }
-  }
+  };
 
   renderSuggestedContent = () => {
     if (this.props.suggestedContent && this.props.suggestedContent.length > 0) {
@@ -81,7 +82,7 @@ class AtomStats extends React.Component {
         <div>No suggested content for the last 7 days.</div>
       );
     }
-  }
+  };
 
   render() {
     return (

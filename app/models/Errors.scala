@@ -1,8 +1,9 @@
 package models
 
 import com.gu.contentatom.thrift.AtomType
+import models.APIResponse.{Conflict, InternalServerError}
 
-sealed abstract class AtomAPIError(val msg: String)
+sealed abstract class AtomAPIError(val msg: String, val status: APIResponse.Status = InternalServerError)
 
 case object InvalidAtomTypeError extends AtomAPIError("Atom type not valid - did you make a typo? Correct examples: 'cta', 'media")
 case class UnknownAtomError(atomType: AtomType, id: String) extends AtomAPIError(s"Unknown atom $atomType/$id")
@@ -11,6 +12,7 @@ case object DeleteAtomFromPreviewError extends AtomAPIError("Could not delete at
 case class CreateAtomDynamoError(atomJson: String, message: String) extends AtomAPIError(s"Error thrown by Dynamo when attempting to create atom. JSON of atom: $atomJson, error message: $message")
 case class AmazonDynamoError(message: String) extends AtomAPIError(s"Error thrown by Dynamo: $message")
 case class AtomWorkshopDynamoDatastoreError(message: String) extends AtomAPIError(message)
+case object AtomWorkshopDynamoConflictError extends AtomAPIError("Could not apply update due to a version conflict", Conflict)
 case class ExplainerDynamoDatastoreError(message: String) extends AtomAPIError(message)
 case class AtomJsonParsingError(message: String) extends AtomAPIError(s"Failed to parse Json string with error: $message")
 case class AtomThriftDeserialisingError(message: String) extends AtomAPIError(s"Failed to deserialise JSON into thrift with error: $message")
