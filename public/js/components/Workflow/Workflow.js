@@ -29,7 +29,7 @@ class Workflow extends React.Component {
       status: PropTypes.string,
       scheduledLaunch: PropTypes.string
     })])
-  }
+  };
 
   state = {
     workflowSections: [],
@@ -37,7 +37,7 @@ class Workflow extends React.Component {
     atomWorkflowInfo: {
       section: ''
     }
-  }
+  };
 
   UNSAFE_componentWillMount() {
     WorkflowApi.getTrackableAtomTypes()
@@ -61,7 +61,7 @@ class Workflow extends React.Component {
     this.setState({
       atomWorkflowInfo: info
     });
-  }
+  };
 
   trackInWorkflow = () => {
     this.props.workflowActions.trackInWorkflow(
@@ -70,21 +70,21 @@ class Workflow extends React.Component {
         this.state.atomWorkflowInfo.scheduledLaunchDate
     )
     .then(() => this.props.workflowActions.getWorkflowStatus(this.props.atom));
-  }
+  };
 
   getWorkflowLink = () => {
     if (this.props.atom) {
       const workflowUrl = getStore().getState().config.workflowUrl;
       return `${workflowUrl}/dashboard?editorId=${this.props.atom.id}`;
     } return '';
-  }
+  };
 
   getScheduledLaunchDate = () => {
     if (this.props.workflow.scheduledLaunchDate) {
       return format(this.props.workflow.scheduledLaunchDate, 'DD/MM/YYYY');
     }
     return 'Not set';
-  }
+  };
 
   render() {
     const atomType = _.camelCase(this.props.atom.atomType);

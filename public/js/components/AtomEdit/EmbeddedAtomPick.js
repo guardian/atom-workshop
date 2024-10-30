@@ -7,18 +7,18 @@ class EmbeddedAtomPick extends React.Component {
   static propTypes = {
     atom: atomPropType.isRequired,
     publishAtom: PropTypes.func.isRequired
-  }
+  };
 
   triggerEmbedMessage = () => {
     window.parent.postMessage({
       atomId: this.props.atom.id,
       atomType: this.props.atom.atomType
     }, '*');
-  }
+  };
 
   triggerAtomPublished = () => {
     this.props.publishAtom(this.props.atom);
-  }
+  };
 
   atomHasBeenPublished(){
     return !!this.props.atom.contentChangeDetails.published;

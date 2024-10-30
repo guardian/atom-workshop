@@ -21,7 +21,7 @@ class AtomStats extends React.Component {
       composerUrl: PropTypes.string.isRequired,
       viewerUrl: PropTypes.string.isRequired
     }).isRequired
-  }
+  };
 
   UNSAFE_componentWillMount() {
     this.props.atomActions.getAtomUsages(this.props.routeParams.atomType, this.props.routeParams.id);
@@ -54,7 +54,7 @@ class AtomStats extends React.Component {
         </li>
       );
     }
-  }
+  };
 
   renderAtomUsages = () => {
     if (this.props.atomUsages && this.props.atomUsages.length > 0) {
@@ -68,7 +68,7 @@ class AtomStats extends React.Component {
         <div>This atom is not currently used in any content.</div>
       );
     }
-  }
+  };
 
   renderSuggestedContent = () => {
     if (this.props.suggestedContent && this.props.suggestedContent.length > 0) {
@@ -82,7 +82,7 @@ class AtomStats extends React.Component {
         <div>No suggested content for the last 7 days.</div>
       );
     }
-  }
+  };
 
   render() {
     return (

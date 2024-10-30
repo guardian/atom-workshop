@@ -6,7 +6,7 @@ export default class ShowErrors extends React.Component {
 
   static propTypes = {
     errors: PropTypes.arrayOf(errorPropType)
-  }
+  };
 
   renderError = (error, i) => {
     return (
@@ -15,7 +15,7 @@ export default class ShowErrors extends React.Component {
         <p className="form__message__text form__message__text--error">Message: {error.message}</p>
       </div>
     );
-  }
+  };
 
   render() {
     if(this.props.errors && this.props.errors.length) {

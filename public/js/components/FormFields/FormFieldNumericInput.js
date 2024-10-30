@@ -24,7 +24,7 @@ export default class FormFieldNumericInput extends React.Component {
     } else if (value === "") {
       this.props.onUpdateField(undefined);
     }
-  }
+  };
 
   render() {
     return (

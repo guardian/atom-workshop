@@ -12,7 +12,7 @@ export class CommonsDivisionEditor extends React.Component {
     atom: atomPropType.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFormErrorsUpdate: PropTypes.func
-  }
+  };
 
   renderDetails(details) {
     return (

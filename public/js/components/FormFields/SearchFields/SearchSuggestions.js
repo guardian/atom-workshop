@@ -24,18 +24,18 @@ class SearchSuggestions extends React.Component {
   onChange = (query) => {
     this.props.searchActions.update(this.props.id, query);
     this.isTyping();
-  }
+  };
 
   onKey = (key) => {
     if (key === 27) {
       this.reset();
     }
-  }
+  };
 
   onClick = (i) => () => {
     this.props.searchActions.cancel(this.props.id);
     this.props.onSelect(this.props.results[i]);
-  }
+  };
 
   reset = () => {
     if (this.state.timer) {
@@ -44,7 +44,7 @@ class SearchSuggestions extends React.Component {
     }
     
     this.props.searchActions.cancel(this.props.id);
-  }
+  };
 
   isTyping = () => {
     if (this.state.timer) {
@@ -54,7 +54,7 @@ class SearchSuggestions extends React.Component {
     this.setState({
       timer: setTimeout(this.search, 300)
     });
-  }
+  };
 
   search = () => {
     const query = Object.assign({}, this.props.filters, {
@@ -62,7 +62,7 @@ class SearchSuggestions extends React.Component {
     });
 
     this.props.searchActions.search(this.props.id, query);
-  }
+  };
 
   renderResults() {
     if (this.props.results && this.props.queryStr) {

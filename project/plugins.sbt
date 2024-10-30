@@ -4,11 +4,7 @@ libraryDependencies += "org.vafer" % "jdeb" % "1.6" artifacts Artifact("jdeb", "
 
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.2")
 
-addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.1.18")
-
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
-
-addDependencyTreePlugin
 
 /*
    Because scala-xml has not be updated to 2.x in sbt yet but has in sbt-native-packager

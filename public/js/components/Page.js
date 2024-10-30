@@ -14,7 +14,7 @@ class Page extends React.Component {
     }),
     error: PropTypes.string,
     router: routerShape
-  }
+  };
 
   isFindPage() {
     return this.props.router.isActive("/find");

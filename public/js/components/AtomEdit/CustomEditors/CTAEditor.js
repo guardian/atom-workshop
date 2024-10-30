@@ -15,7 +15,7 @@ export class CTAEditor extends React.Component {
     }).isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFormErrorsUpdate: PropTypes.func
-  }
+  };
 
   render () {
 

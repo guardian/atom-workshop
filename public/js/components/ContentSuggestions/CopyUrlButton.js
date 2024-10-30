@@ -10,11 +10,11 @@ class CopyUrlButton extends React.Component {
     config: PropTypes.shape({
       capiLiveUrl: PropTypes.string
     }).isRequired
-  }
+  };
 
   state = {
     copied: false
-  }
+  };
 
   generateEmbedUrl() {
     if (!this.props.atom) {
@@ -33,7 +33,7 @@ class CopyUrlButton extends React.Component {
     setTimeout(() => {
       this.setState({copied: false});
     }, 5000);
-  }
+  };
 
   render() {
     return (

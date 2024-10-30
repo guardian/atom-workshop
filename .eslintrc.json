@@ -6,7 +6,7 @@
             "jsx": true
         }
     },
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "rules": {
         "semi": 2,
         "strict": 0

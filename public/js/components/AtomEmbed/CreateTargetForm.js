@@ -16,13 +16,13 @@ class CreateTargetForm extends React.Component {
     title: PropTypes.string.isRequired,
     triggerTargetFetch: PropTypes.func.isRequired,
     toggleEditMode: PropTypes.func.isRequired
-  }
+  };
 
   state = {
     creating: false,
     currentTarget: {},
     formHasError: true
-  }
+  };
 
 
   UNSAFE_componentWillMount() {
@@ -56,19 +56,19 @@ class CreateTargetForm extends React.Component {
         });
       }
     });
-  }
+  };
 
   updateCurrentTarget = (newTarget) => {
     this.setState({
       currentTarget: newTarget
     });
-  }
+  };
 
   updateFormErrorState = (errorState) => {
     this.setState({
       formHasError: errorState
     });
-  }
+  };
 
   render() {
     return (

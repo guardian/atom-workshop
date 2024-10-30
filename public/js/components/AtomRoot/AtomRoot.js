@@ -29,7 +29,7 @@ class AtomRoot extends React.Component {
       liveCapiUrl: PropTypes.string
     }),
     children: PropTypes.element.isRequired
-  }
+  };
 
 
   UNSAFE_componentWillMount() {
