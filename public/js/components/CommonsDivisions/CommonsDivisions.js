@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {CommonsDivisionResultPropType} from '../../actions/ParliamentActions/getLatestCommonsDivisions.js';
 import CommonsDivision from './CommonsDivision';
 import moment from 'moment';
@@ -11,7 +12,7 @@ class CommonsDivisions extends React.Component {
     }).isRequired
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getLatestCommonsDivisions();
   }
 

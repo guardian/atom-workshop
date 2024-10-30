@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 import {SingleDatePicker} from 'react-dates';
 import format from 'date-fns/format';
@@ -27,7 +28,7 @@ export default class FormFieldDateInput extends React.Component {
 
   onDateChange = (momentDate) => {
     this.props.onUpdateField(momentDate.valueOf());
-  }
+  };
 
   getPlaceholder = () => {
     if (this.props.fieldValue) {
@@ -38,7 +39,7 @@ export default class FormFieldDateInput extends React.Component {
     }
     return 'Pick Expiry Date';
 
-  }
+  };
 
   render() {
     return (

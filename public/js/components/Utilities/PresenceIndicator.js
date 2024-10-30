@@ -1,10 +1,11 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 export default class PresenceIndicator extends React.Component {
 
   static propTypes = {
     presence: PropTypes.object
-  }
+  };
 
   getInitials(firstName, lastName) {
     return `${firstName.slice(0, 1)}${lastName.slice(0,1)}`;

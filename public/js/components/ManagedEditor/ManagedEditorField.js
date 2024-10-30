@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import _get from 'lodash/fp/get';
 import _set from 'lodash/fp/set';
 import validateField from '../../util/validateField';
@@ -32,10 +33,12 @@ export class ManagedField extends React.Component {
   runValidations(data) {
     Promise.resolve(validateField(data, this.props.isRequired, this.props.customValidation))
       .then(fieldErrors => {
-        this.setState({
-          fieldErrors: fieldErrors
-        });
-        this.props.updateFormErrors(fieldErrors, this.props.name);
+        if (this.props.updateFormErrors){
+          this.setState({
+            fieldErrors: fieldErrors
+          });
+          this.props.updateFormErrors(fieldErrors, this.props.name);
+        }
       });
   }
 
@@ -46,7 +49,7 @@ export class ManagedField extends React.Component {
 
     this.runValidations(newValue);
     this.props.updateData(_set(this.props.fieldLocation, newValue, this.props.data));
-  }
+  };
 
   getLabel() {
       const fieldLabel = this.props.label ? this.props.label : this.props.name;

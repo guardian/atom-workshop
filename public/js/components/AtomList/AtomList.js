@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import _isEqual from 'lodash/fp/isEqual';
 
 import {allAtomTypes} from '../../constants/atomData';
@@ -44,7 +45,7 @@ class AtomList extends React.Component {
     this.triggerSearch();
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (!_isEqual(newProps.queryParams, this.props.queryParams)) {
       this.triggerSearch(Object.assign({}, searchParams, newProps.queryParams));
     }

@@ -1,36 +1,46 @@
-exports[`test Should render 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render 1`] = `
 <div
-  className="form__row">
+  className="form__row"
+>
   <label
     className="form__label"
-    htmlFor="test">
+    htmlFor="test"
+  >
     test
   </label>
   <div
-    className="form__group--radio">
+    className="form__group--radio"
+  >
     <input
       checked={false}
       className="form__radio-btn"
       name="test"
       onChange={[Function]}
       type="radio"
-      value="One" />
+      value="One"
+    />
     <span
-      className="form__label form__label--radio">
+      className="form__label form__label--radio"
+    >
       One
     </span>
   </div>
   <div
-    className="form__group--radio">
+    className="form__group--radio"
+  >
     <input
       checked={false}
       className="form__radio-btn"
       name="test"
       onChange={[Function]}
       type="radio"
-      value="Two" />
+      value="Two"
+    />
     <span
-      className="form__label form__label--radio">
+      className="form__label form__label--radio"
+    >
       Two
     </span>
   </div>

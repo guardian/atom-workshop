@@ -1,44 +1,55 @@
 /* global module:false, __dirname:false */
 
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
+    entry: {
+        app: './public/js/app.js'
+    },
+    output: {
+        path:       path.join(__dirname, '../public/build'),
+        filename:   'app.js'
+    },
     module: {
-        loaders: [
+        rules: [
             {
-                test:    /\.js$/,
+                test: /\.m?js$/,
                 exclude: /node_modules/,
-                loaders: ['babel-loader']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: ['@babel/plugin-transform-object-assign']
+                    }
+                }
             },
             {
                 test:    /\.js$/,
                 include: [path.resolve(__dirname, "../node_modules/panda-session")],
-                loaders: ['babel-loader']
+                use: {
+                    loader: 'babel-loader'
+                }
             },
             {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+              },
+              {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader?sourceMap!sass-loader?sourceMap'
-                })
+                use: [
+                  MiniCssExtractPlugin.loader,
+                  {
+                    loader: "css-loader",
+                  },
+                  "sass-loader"
+                ]
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader?sourceMap'
-                })
-            },
-            {
-                test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
-                loader: "url-loader?mimetype=application/font-woff&limit=10000"
-            },
-            {
-                test: /\.(ttf|eot|svg|gif|png)(\?v=[0-9].[0-9].[0-9])?$/,
-                loader: "file-loader?name=[name].[ext]"
+                test: /\.(ttf|eot|svg|gif|png|woff(2))(\?v=[0-9].[0-9].[0-9])?$/,
+                type: 'asset/resource'
             }
         ]
     },
@@ -48,10 +59,8 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin('main.css'),
-        new webpack.ProvidePlugin({
-            'Promise': 'es6-promise',
-            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+        new MiniCssExtractPlugin({
+            filename: 'main.css',
         })
     ]
 };

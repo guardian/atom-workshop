@@ -1,6 +1,7 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import {PropTypes} from "prop-types";
 import { ManagedForm, ManagedField } from "../../../ManagedEditor";
-import FormFieldsScribeEditor from "../../../FormFields/FormFieldScribeEditor";
+import FormFieldsRichTextEditor from "../../../FormFields/FormFieldRichTextEditor";
 import { wordLimits, tooLongMsg } from "../../../../util/wordLimits";
 
 export class QAItem extends React.Component {
@@ -35,7 +36,7 @@ export class QAItem extends React.Component {
           formName="qaEditor"
         >
           <ManagedField fieldLocation="body" name="Answer" isRequired={true}>
-            <FormFieldsScribeEditor
+            <FormFieldsRichTextEditor
               showWordCount={true}
               showToolbar={true}
               suggestedLength={wordLimits.qanda}
