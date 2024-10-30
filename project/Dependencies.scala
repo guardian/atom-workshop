@@ -2,7 +2,7 @@ import play.sbt.PlayImport.ws
 import sbt._
 
 object Dependencies {
-  lazy val awsVersion = "1.11.678"
+  lazy val awsVersion = "1.11.1034"
   lazy val atomLibVersion = "3.0.0"
   lazy val jacksonVersion = "2.13.4"
   lazy val jacksonDatabindVersion = "2.13.4.2"
