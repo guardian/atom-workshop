@@ -57,7 +57,7 @@
     "enzyme-adapter-react-16": "^1.15.7",
     "filesize": "^3.5.4",
     "lodash": "^4.17.21",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "panda-session": "^0.1.6",
     "prop-types": "^15.8.1",
     "react": "16.14.0",
