@@ -29,11 +29,11 @@ export default class FormFieldTagPicker extends React.Component {
       suggestions: null,
       searchText: ""
     });
-  }
+  };
 
   resetTag = () => {
     this.props.onUpdateField(undefined);
-  }
+  };
 
   updateSearchSuggestions = (e) => {
 
@@ -61,7 +61,7 @@ export default class FormFieldTagPicker extends React.Component {
       });
     }
 
-  }
+  };
 
   renderSuggestions() {
     if (!this.state.suggestions) {

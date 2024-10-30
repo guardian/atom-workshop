@@ -29,7 +29,7 @@ export class ManagedForm extends React.Component {
 
     this.props.onFormErrorsUpdate && this.props.onFormErrorsUpdate(formErrors);
     this.props.onFormErrorStateUpdate && this.props.onFormErrorStateUpdate(this.hasFormErrors(formErrors));
-  }
+  };
 
 
   render() {

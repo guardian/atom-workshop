@@ -20,7 +20,7 @@ export default class FormFieldRadioButtons extends React.Component {
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.value);
-  }
+  };
 
   renderButton(value, label, i) {
     return (

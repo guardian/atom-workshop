@@ -18,19 +18,19 @@ export default class FormFieldMultiSelect extends React.Component {
 
   state = {
     showOptions: false
-  }
+  };
 
   showOptions = () => {
     this.setState({showOptions: true});
-  }
+  };
 
   hideOptions = () => {
     this.setState({showOptions: false});
-  }
+  };
 
   isSelected = (selectValue) => {
     return this.props.fieldValue.indexOf(selectValue) !== -1;
-  }
+  };
 
   renderValue = (fieldName, i) => {
 
@@ -44,7 +44,7 @@ export default class FormFieldMultiSelect extends React.Component {
     return (
       <span className="form__field--multiselect__value" key={`${fieldName}-${i}`} onClick={removeFn}>{fieldName} </span>
     );
-  }
+  };
 
   renderOption(fieldName, i) {
 

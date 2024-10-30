@@ -47,7 +47,7 @@ export default class FormFieldSelectBox extends React.Component {
     } else {
       this.props.onUpdateField(e.target.value);
     }
-  }
+  };
 
 
   renderDefaultOption() {

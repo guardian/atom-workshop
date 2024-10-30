@@ -19,7 +19,7 @@ export default class FormFieldCheckboxGroup extends React.Component {
 
   isChecked = (checkValue) => {
     return this.props.fieldValue.indexOf(checkValue) !== -1;
-  }
+  };
 
   renderCheckbox(fieldName, i) {
 

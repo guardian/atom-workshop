@@ -15,15 +15,15 @@ export default class SearchCheckboxGroup extends React.Component {
 
   state = {
     showOptions: false
-  }
+  };
 
   isChecked = (checkValue) => {
     return this.props.fieldValue.indexOf(checkValue) !== -1;
-  }
+  };
 
   toggleOptions = () => {
     this.setState({showOptions: !this.state.showOptions});
-  }
+  };
 
   friendlyFieldValue = () => {
     if(!this.props.fieldValue.length) {
@@ -31,7 +31,7 @@ export default class SearchCheckboxGroup extends React.Component {
     }
 
     return this.props.fieldValue.reduce((acc, curr) => `${acc}, ${curr}`);
-  }
+  };
 
   renderCheckbox(fieldName, displayName, i) {
     const updateFn = (e) => {

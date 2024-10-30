@@ -11,7 +11,7 @@ export class ExplainerEditor extends React.Component {
     atom: atomPropType.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFormErrorsUpdate: PropTypes.func
-  }
+  };
 
   render() {
     return (<ManagedForm data={this.props.atom} updateData={this.props.onUpdate} onFormErrorsUpdate={this.props.onFormErrorsUpdate} formName="explainerEditor">

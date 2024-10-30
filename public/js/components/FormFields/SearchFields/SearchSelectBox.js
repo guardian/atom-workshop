@@ -19,7 +19,7 @@ export default class SearchSelectBox extends React.Component {
 
   onUpdate = (e) => {
     this.props.onUpdateField(e.target.value);
-  }
+  };
 
 
   renderOptions() {
