@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import CopyUrlButton from './CopyUrlButton';
 import {FrontendIcon, ComposerIcon, ViewerIcon} from '../../util/icons.js';
 import {SuggestedAtomsPropType} from '../../actions/AtomActions/getSuggestionsForLatestContent.js';
@@ -15,9 +16,9 @@ class ContentSuggestions extends React.Component {
       viewerUrl: PropTypes.string.isRequired,
       liveCapiUrl: PropTypes.string
     }).isRequired
-  }
+  };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.atomActions.getSuggestionsForLatestContent();
   }
 
@@ -27,14 +28,14 @@ class ContentSuggestions extends React.Component {
       <li className="suggestions-content" key={`suggested-atom-${atom.id}`}>
         <div className="suggestions-atom">
           <div className="suggestions-atom-details">
-            <a className="suggestions-atom-title atom-list__link" href={ workshopUrl } target="_blank">{ atom.title }</a>
+            <a className="suggestions-atom-title atom-list__link" href={ workshopUrl } target="_blank" rel="noreferrer">{ atom.title }</a>
             <span className="suggestions-atom-type">({ atom.atomType.charAt(0) + atom.atomType.slice(1).toLowerCase() } atom)</span>
           </div>
           <CopyUrlButton config={this.props.config} atom={atom}/>
         </div>
       </li>
     );
-  }
+  };
 
   renderContent = content => {
     const composerLink = `${this.props.config.composerUrl}/content/${content.internalComposerCode}`;
@@ -48,19 +49,19 @@ class ContentSuggestions extends React.Component {
         </div>
         <div className="suggestions-list__links">
           <p className="suggestions-list__item__date">
-            <a className="suggestions-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank">
+            <a className="suggestions-list__link" href={websiteLink} title="Open on theguardian.com" target="_blank" rel="noreferrer">
               <FrontendIcon />
             </a>
-            <a className="suggestions-list__link" href={composerLink} title="Open in Composer" target="_blank">
+            <a className="suggestions-list__link" href={composerLink} title="Open in Composer" target="_blank" rel="noreferrer">
               <ComposerIcon />
             </a>
-            <a className="suggestions-list__link" href={viewerLink} title="Open in Viewer" target="_blank">
+            <a className="suggestions-list__link" href={viewerLink} title="Open in Viewer" target="_blank" rel="noreferrer">
               <ViewerIcon />
             </a></p>
         </div>
       </div>
     );
-  }
+  };
 
   renderAtomsArray = (atomsArray) => {
     return (
@@ -71,7 +72,7 @@ class ContentSuggestions extends React.Component {
         </ul>
       </div>
     );
-  }
+  };
 
   renderContentAndSuggestions = (item, i) => {
     return (
@@ -80,7 +81,7 @@ class ContentSuggestions extends React.Component {
         { this.renderAtomsArray(item.atoms) }
       </li>
     );
-  }
+  };
 
   renderSuggestionsForLatestContent() {
     if (this.props.suggestionsForLatestContent) {

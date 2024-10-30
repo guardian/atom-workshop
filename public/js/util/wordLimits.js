@@ -8,7 +8,7 @@ export const wordLimits = {
 export const tooLongMsg = wordLimit => (
   <div>
     Heads up.{" "}
-    <strong>You've exceeded the {wordLimit} word limit for this field.</strong>{" "}
+    <strong>You&apos;ve exceeded the {wordLimit} word limit for this field.</strong>{" "}
     You can still publish it, but bear in mind that atoms should be concise.
   </div>
 );

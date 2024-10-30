@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import SearchTextInput from './SearchTextInput';
 
 class SearchSuggestions extends React.Component {
@@ -23,18 +24,18 @@ class SearchSuggestions extends React.Component {
   onChange = (query) => {
     this.props.searchActions.update(this.props.id, query);
     this.isTyping();
-  }
+  };
 
   onKey = (key) => {
     if (key === 27) {
       this.reset();
     }
-  }
+  };
 
   onClick = (i) => () => {
     this.props.searchActions.cancel(this.props.id);
     this.props.onSelect(this.props.results[i]);
-  }
+  };
 
   reset = () => {
     if (this.state.timer) {
@@ -43,7 +44,7 @@ class SearchSuggestions extends React.Component {
     }
     
     this.props.searchActions.cancel(this.props.id);
-  }
+  };
 
   isTyping = () => {
     if (this.state.timer) {
@@ -53,7 +54,7 @@ class SearchSuggestions extends React.Component {
     this.setState({
       timer: setTimeout(this.search, 300)
     });
-  }
+  };
 
   search = () => {
     const query = Object.assign({}, this.props.filters, {
@@ -61,7 +62,7 @@ class SearchSuggestions extends React.Component {
     });
 
     this.props.searchActions.search(this.props.id, query);
-  }
+  };
 
   renderResults() {
     if (this.props.results && this.props.queryStr) {
@@ -69,7 +70,7 @@ class SearchSuggestions extends React.Component {
         <li onClick={this.onClick(i)} key={result.title}>{result.title}</li>
       );
       const noresult = this.props.results.length === 0 ?
-        <li className="disabled">No snippet found matching the word "{this.props.queryStr}"</li> : null;
+        <li className="disabled">No snippet found matching the word &quot;{this.props.queryStr}&quot;</li> : null;
 
       return (
         <ul>

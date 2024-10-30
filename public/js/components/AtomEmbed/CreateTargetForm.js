@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {createTarget} from '../../services/TargetingApi';
 
 import {ManagedForm, ManagedField} from '../ManagedEditor';
@@ -15,16 +16,16 @@ class CreateTargetForm extends React.Component {
     title: PropTypes.string.isRequired,
     triggerTargetFetch: PropTypes.func.isRequired,
     toggleEditMode: PropTypes.func.isRequired
-  }
+  };
 
   state = {
     creating: false,
     currentTarget: {},
     formHasError: true
-  }
+  };
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
     if (!this.state.currentTarget.title) {
       this.setState({
@@ -55,19 +56,19 @@ class CreateTargetForm extends React.Component {
         });
       }
     });
-  }
+  };
 
   updateCurrentTarget = (newTarget) => {
     this.setState({
       currentTarget: newTarget
     });
-  }
+  };
 
   updateFormErrorState = (errorState) => {
     this.setState({
       formHasError: errorState
     });
-  }
+  };
 
   render() {
     return (

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import {atomPropType} from '../../constants/atomPropType.js';
 import {getAtomEditorUrl} from '../../util/atomDataExtractors';
 import _capitalize from 'lodash/fp/capitalize';
@@ -14,9 +15,9 @@ class ExternalAtom extends React.Component {
     externalAtomActions: PropTypes.shape({
       getExternalAtom: PropTypes.func.isRequired
     })
-  }
+  };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       this.props.externalAtomActions.getExternalAtom(this.props.routeParams.atomType, this.props.routeParams.id);
   }
 
@@ -24,10 +25,10 @@ class ExternalAtom extends React.Component {
     return (
       <div>
         <p>Due to the complexity of this atom, it cannot be created from within the Atom Workshop directly.</p>
-        <a target="_blank" href={getAtomEditorUrl(atom)} className="link">Open dedicated {_capitalize(atom.atomType)} atom editor</a>
+        <a target="_blank" rel="noreferrer" href={getAtomEditorUrl(atom)} className="link">Open dedicated {_capitalize(atom.atomType)} atom editor</a>
       </div>
     );
-  }
+  };
 
   render () {
 

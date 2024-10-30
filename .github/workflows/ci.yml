@@ -1,50 +1,59 @@
-name: CI for sbt-riffraff-artifact
+name: CI
 
 on:
-  pull_request:
-  # Manual invocation.
-  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  deploy:
+    name: Build deployment artifacts
     runs-on: ubuntu-latest
-    # See https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
     permissions:
-      # required by aws-actions/configure-aws-credentials
       id-token: write
       contents: read
+      pull-requests: write
+
     steps:
-    - name: Checkout branch
-      uses: actions/checkout@v2
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-        aws-region: eu-west-1
-    - uses: guardian/actions-setup-node@v2.4.1
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        java-version: 8
-        distribution: adopt
-    - name: Cache SBT
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.ivy2/cache
-          ~/.sbt
-        key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
-    - name: CI yarn
-      shell: bash
-      run: | 
-        yarn install --force --frozen-lockfile
-        yarn lint
-        yarn test
-        yarn build
-    - name: CI for sbt-riffraff-artifact
-      shell: bash
-      run: |
-        FINAL_TEAMCITY_BUILD=1319
-        export GITHUB_RUN_NUMBER=$(( $GITHUB_RUN_NUMBER + $FINAL_TEAMCITY_BUILD ))
-        sbt clean compile riffRaffUpload
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: guardian/setup-scala@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: CI yarn
+        shell: bash
+        run: |
+          yarn install --force --frozen-lockfile
+          yarn lint
+          yarn test
+          yarn build
+
+      - name: CI sbt
+        shell: bash
+        run: |
+          sbt clean compile test Debian/packageBin
+
+      - name: Upload to riff-raff
+        uses: guardian/actions-riff-raff@v4
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+          buildNumberOffset: 1319
+          projectName: editorial-tools:atom-workshop
+          configPath: riff-raff.yaml
+          contentDirectories: |
+            atom-workshop:
+              - target/atom-workshop_1.0_all.deb

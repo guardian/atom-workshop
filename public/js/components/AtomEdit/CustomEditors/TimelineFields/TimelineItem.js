@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 import { ManagedForm, ManagedField } from '../../../ManagedEditor';
 import FormFieldTextInput from '../../../FormFields/FormFieldTextInput';
-import FormFieldsScribeEditor from '../../../FormFields/FormFieldScribeEditor';
+import FormFieldsRichTextEditor from '../../../FormFields/FormFieldRichTextEditor';
 import FormFieldDateTextInput from '../../../FormFields/FormFieldDateTextInput';
 import FormFieldSelectBox from '../../../FormFields/FormFieldSelectBox';
 // import FormFieldRadioButtons from '../../../FormFields/FormFieldRadioButtons';
@@ -135,7 +136,7 @@ export class TimelineItem extends React.Component {
             <FormFieldTextInput />
           </ManagedField>
           <ManagedField fieldLocation="body" name="Body">
-            <FormFieldsScribeEditor
+            <FormFieldsRichTextEditor
               showWordCount={true}
               showToolbar={true}
               suggestedLength={wordLimits.default}

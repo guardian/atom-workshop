@@ -3,7 +3,7 @@ import { uriEncodeParams, sanitiseQuery } from '../util/uriEncodeParams';
 
 export const searchTags = (searchText) => {
   return pandaFetch(
-    `/support/capi/tags?web-title=${searchText}&page-size=100`,
+    `/support/capi/tags?web-title=${searchText}&page-size=200`,
     {
       method: 'get',
       credentials: 'same-origin',

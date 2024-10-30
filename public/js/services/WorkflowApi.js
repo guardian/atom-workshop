@@ -66,7 +66,8 @@ export default {
         mode: 'cors',
         body: JSON.stringify(payload),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Csrf-Token': window.guardian.csrf.token
         }
       }
     );
