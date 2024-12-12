@@ -23,6 +23,9 @@
     ],
     "testEnvironment": "jsdom"
   },
+  "resolutions": {
+    "cheerio": "1.0.0-rc.12"
+  },
   "homepage": "https://github.com/guardian/atom-workshop",
   "devDependencies": {
     "@babel/core": "^7.23.2",
