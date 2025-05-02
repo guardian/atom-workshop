@@ -1,7 +1,5 @@
 package util
 
-import com.gu.contentatom.thrift.AtomData.Chart
-import com.gu.contentatom.thrift.atom.chart._
 import com.gu.contentatom.thrift.atom.cta.CTAAtom
 import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
 import com.gu.contentatom.thrift.atom.profile.ProfileAtom
@@ -50,12 +48,6 @@ object AtomElementBuilders {
       AtomType.Profile -> AtomData.Profile(ProfileAtom(None, None, Nil, None)),
       AtomType.Timeline -> AtomData.Timeline(TimelineAtom()),
       AtomType.Commonsdivision -> AtomData.CommonsDivision(CommonsDivision("-", None, DateTime.now.getMillis, Votes())),
-      AtomType.Chart -> AtomData.Chart(ChartAtom(
-        chartType = ChartType.Bar,
-        furniture = Furniture(headline = "headline", source = "source"),
-        tabularData = TabularData(RowType.String),
-        displaySettings = DisplaySettings(true, true, Some(true), Some(true))
-      )),
       AtomType.Audio -> AtomData.Audio(AudioAtom(
         kicker = title,
         coverUrl = "-",

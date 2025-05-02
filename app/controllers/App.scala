@@ -41,7 +41,7 @@ class App(
   private val previewAtomPublisher = atomPublishers.previewAtomPublisher
   private val liveAtomPublisher = atomPublishers.liveAtomPublisher
 
-  def allowCORSAccess(methods: String, args: Any*) = CORSable(config.workflowUrl, config.visualsUrl) {
+  def allowCORSAccess(methods: String, args: Any*) = CORSable(config.workflowUrl) {
     Action { implicit req =>
       val requestedHeaders = req.headers("Access-Control-Request-Headers")
       NoContent.withHeaders("Access-Control-Allow-Methods" -> methods, "Access-Control-Allow-Headers" -> requestedHeaders)
@@ -65,7 +65,6 @@ class App(
         presenceEnabled = config.presenceEnabled,
         presenceDomain = config.presenceDomain,
         permissions.getAll(req.user.email),
-        visualsUrl = config.visualsUrl,
         stage = config.stage
       )
 
@@ -89,7 +88,7 @@ class App(
       ))
   }
 
-  def getAtom(atomType: String, id: String, version: String) = CORSable(config.visualsUrl){
+  def getAtom(atomType: String, id: String, version: String) = {
     AuthAction {
       APIResponse {
         for {
@@ -129,7 +128,7 @@ class App(
     }
   }
 
-  def updateEntireAtom(atomType: String, id: String) = CORSable(config.visualsUrl) {
+  def updateEntireAtom(atomType: String, id: String) = {
     AuthAction { req =>
       APIResponse {
         for {

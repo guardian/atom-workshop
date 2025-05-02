@@ -67,21 +67,6 @@ class AtomCreateGenericInfo extends React.Component {
 
     return (
       <div className="atom-editor">
-        {this.props.routeParams.atomType === 'chart' && (
-          <div className="banner" style={{
-            backgroundColor: "yellow",
-            color: "black",
-            padding: "10px",
-            textAlign: "center",
-            marginTop: "40px",
-            borderRadius: "5px",
-            fontWeight: "bold",
-          }}>
-            <h2>Important notice</h2>
-            <p>This atom type will be discontinued soon. Please use <a href="https://www.datawrapper.de/">Datawrapper</a> instead for basic graphs.
-              For more information contact the <a href="mailto:articles.and.publishing@theguardian.com">Articles & Publishing team</a></p>
-          </div>
-        )}
         <h1 className="atom-editor__title">{`Create new ${this.props.routeParams.atomType}`}</h1>
         <div className="atom-editor__section">
           <AtomTypeCard atomType={atomType} />

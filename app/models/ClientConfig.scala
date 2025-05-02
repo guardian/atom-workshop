@@ -23,7 +23,6 @@ case class ClientConfig(
                          presenceEnabled: Boolean,
                          presenceDomain: String,
                          permissions: Map[String, Boolean],
-                         visualsUrl: String,
                          stage: String
                        )
 

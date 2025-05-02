@@ -7,14 +7,12 @@ import {ProfileEditor} from './CustomEditors/ProfileEditor';
 import {TimelineEditor} from './CustomEditors/TimelineEditor';
 import {ExplainerEditor} from './CustomEditors/ExplainerEditor';
 import {CommonsDivisionEditor} from './CustomEditors/CommonsDivisionEditor';
-import {ChartEditor} from './CustomEditors/ChartEditor';
 import {AudioEditor} from './CustomEditors/AudioEditor';
 import EmbeddedAtomPick from './EmbeddedAtomPick';
 import {subscribeToPresence, enterPresence} from '../../services/presence';
 import AtomEditHeader from './AtomEditHeader';
 import {atomPropType} from '../../constants/atomPropType';
 import {logError} from '../../util/logger';
-import AtomsApi from '../../services/AtomsApi';
 
 class AtomEdit extends React.Component {
 
@@ -34,7 +32,6 @@ class AtomEdit extends React.Component {
     atom: atomPropType,
     config: PropTypes.shape({
       gridUrl: PropTypes.string,
-      visualsUrl: PropTypes.string,
       embeddedMode: PropTypes.string,
       isEmbedded: PropTypes.bool.isRequired
     })
@@ -51,19 +48,6 @@ class AtomEdit extends React.Component {
         logError(e);
     } finally {
         this.props.atomActions.updateAtom(newAtom);
-    }
-  };
-
-  updateChartAtom = () => {
-    try {
-      enterPresence(this.props.routeParams.atomType, this.props.routeParams.id);
-    } catch (e) {
-      logError(e);
-    } finally {
-      AtomsApi.getAtom(this.props.routeParams.atomType, this.props.routeParams.id)
-    .then(res => res.json()).then(atom => {
-          this.props.atomActions.updateAtom(atom);
-        });
     }
   };
 
@@ -91,8 +75,6 @@ class AtomEdit extends React.Component {
         return <ExplainerEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("commonsdivision"):
         return <CommonsDivisionEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-       case ("chart"):
-        return <ChartEditor atom={this.props.atom} config={this.props.config} onUpdate={this.updateChartAtom} />;
       case ("audio") :
         return <AudioEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
       default:
