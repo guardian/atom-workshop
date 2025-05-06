@@ -24,7 +24,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val viewerUrl = s"https://viewer.$serviceDomain/"
   val targetingUrl = s"https://targeting.$serviceDomain/"
   val workflowUrl = s"https://workflow.$serviceDomain"
-  val visualsUrl = s"https://charts.$domain"
 
   // Panda Auth
   val pandaDomain: String = domain

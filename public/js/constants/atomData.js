@@ -73,12 +73,6 @@ export const commonsDivision = {
   description: 'House of Commons division results',
 };
 
-export const chart = {
-  type: 'chart',
-  fullName: 'Chart',
-  description: 'A simple chart of type bar, column or line',
-};
-
 export const audio = {
   type: 'audio',
   fullName: 'Audio',
@@ -91,7 +85,6 @@ export const allAtomTypes = [
   profile,
   timeline,
   media,
-  chart,
   cta,
   audio,
   quiz,
@@ -105,7 +98,6 @@ export const workshopEditableAtomTypes = [
   timeline,
   explainer,
   commonsDivision,
-  chart,
   cta,
   audio,
 ];
