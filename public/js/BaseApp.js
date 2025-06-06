@@ -22,7 +22,7 @@ export const BaseApp = (props) => {
   React.useEffect(() => {
     const trackPath = loadToolsAuditPixel();
     trackPath(window.location.pathname);
-    props.history.listen((location, _action) => {
+    props.history.listen((location) => {
       trackPath(location.pathname);
     });
   }, []);

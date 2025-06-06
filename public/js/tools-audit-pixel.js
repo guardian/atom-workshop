@@ -4,7 +4,7 @@ export function loadToolsAuditPixel() {
 		if (telemetryUrl) {
 			loadPixel(telemetryUrl, path);
 		}
-    })
+    });
 }
 
 function getUserTelemetryClientUrl(hostname) {
