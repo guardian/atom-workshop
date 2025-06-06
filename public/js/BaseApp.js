@@ -16,15 +16,15 @@ import AtomRoot from './components/AtomRoot/AtomRoot';
 import ContentSuggestions from './components/ContentSuggestions/ContentSuggestions';
 import CommonsDivisions from './components/CommonsDivisions/CommonsDivisions';
 
-import {loadToolsAuditPixel, getUserTelemetryClientUrl} from './tools-audit-pixel';
+import {loadToolsAuditPixel} from './tools-audit-pixel';
 
 export const BaseApp = (props) => {
   React.useEffect(() => {
-    const trackPath = loadToolsAuditPixel()
+    const trackPath = loadToolsAuditPixel();
     trackPath(window.location.pathname);
-    props.history.listen((location, action) => {
+    props.history.listen((location, _action) => {
       trackPath(location.pathname);
-    })
+    });
   }, []);
   return (
     <Provider store={props.store}>
@@ -44,7 +44,7 @@ export const BaseApp = (props) => {
         </Route>
       </Router>
     </Provider>
-  )
+  );
 };
 
 BaseApp.propTypes = {
