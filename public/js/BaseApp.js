@@ -16,26 +16,36 @@ import AtomRoot from './components/AtomRoot/AtomRoot';
 import ContentSuggestions from './components/ContentSuggestions/ContentSuggestions';
 import CommonsDivisions from './components/CommonsDivisions/CommonsDivisions';
 
+import {loadToolsAuditPixel} from './tools-audit-pixel';
 
-export const BaseApp = (props) => (
-  <Provider store={props.store}>
-    <Router history={props.history}>
-      <Route path="/" component={Page}>
-        <Route path="/find" component={AtomList} />
-        <Route path="/create" component={AtomCreateTypeSelect} />
-        <Route path="/create/:atomType" component={AtomCreateGenericInfo} />
-        <Route path="/atoms/:atomType/:id" component={AtomRoot}>
-          <Route path="/atoms/:atomType/:id/edit" component={AtomEdit} />
-          <Route path="/atoms/:atomType/:id/stats" component={AtomStats} />
+export const BaseApp = (props) => {
+  React.useEffect(() => {
+    const trackPath = loadToolsAuditPixel();
+    trackPath(window.location.pathname);
+    props.history.listen((location) => {
+      trackPath(location.pathname);
+    });
+  }, []);
+  return (
+    <Provider store={props.store}>
+      <Router history={props.history}>
+        <Route path="/" component={Page}>
+          <Route path="/find" component={AtomList} />
+          <Route path="/create" component={AtomCreateTypeSelect} />
+          <Route path="/create/:atomType" component={AtomCreateGenericInfo} />
+          <Route path="/atoms/:atomType/:id" component={AtomRoot}>
+            <Route path="/atoms/:atomType/:id/edit" component={AtomEdit} />
+            <Route path="/atoms/:atomType/:id/stats" component={AtomStats} />
+          </Route>
+          <Route path="/external-atoms/:atomType/:id/link" component={ExternalAtom} />
+          <Route path="/suggestions" component={ContentSuggestions} />
+          <Route path="/commonsdivisions" component={CommonsDivisions} />
+          <IndexRedirect to="/find" />
         </Route>
-        <Route path="/external-atoms/:atomType/:id/link" component={ExternalAtom} />
-        <Route path="/suggestions" component={ContentSuggestions} />
-        <Route path="/commonsdivisions" component={CommonsDivisions} />
-        <IndexRedirect to="/find" />
-      </Route>
-    </Router>
-  </Provider>
-);
+      </Router>
+    </Provider>
+  );
+};
 
 BaseApp.propTypes = {
     store: PropTypes.object.isRequired,
