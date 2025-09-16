@@ -1,10 +1,10 @@
 logLevel := Level.Warn
 
-libraryDependencies += "org.vafer" % "jdeb" % "1.6" artifacts Artifact("jdeb", "jar", "jar")
+libraryDependencies += "org.vafer" % "jdeb" % "1.14" artifacts Artifact("jdeb", "jar", "jar")
 
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.2")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.9")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
+addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.4")
 
 /*
    Because scala-xml has not be updated to 2.x in sbt yet but has in sbt-native-packager
