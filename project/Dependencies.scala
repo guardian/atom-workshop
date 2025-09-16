@@ -30,7 +30,7 @@ object Dependencies {
     "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion,
     "com.gu" %% "atom-manager-play" % atomLibVersion,
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
-    "com.gu" %% "editorial-permissions-client" % "2.15",
+    "com.gu" %% "editorial-permissions-client" % "2.16.0",
     "com.gu" %% "simple-configuration-ssm" % "7.0.1",
     "com.gu" %% "fezziwig" % "1.6",
     "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
