@@ -36,7 +36,7 @@ object Dependencies {
     "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
-    "com.gu" %% "content-api-client-aws" % "0.7",
+    "com.gu" %% "content-api-client-aws" % "0.7.7-PREVIEW.vbupdate-aws-sdk-v2.2025-10-13T1851.2761fd0f",
     "com.gu" %% "content-api-client" % "20.0.0"
   )
 }
