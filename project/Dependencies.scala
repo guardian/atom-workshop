@@ -35,7 +35,7 @@ object Dependencies {
     "com.gu" %% "fezziwig" % "1.6",
     "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
     "io.circe" %% "circe-parser" % "0.14.5",
-    "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
+    "net.logstash.logback" % "logstash-logback-encoder" % "9.0",
     "com.gu" %% "content-api-client-aws" % "0.7",
     "com.gu" %% "content-api-client" % "20.0.0"
   )
