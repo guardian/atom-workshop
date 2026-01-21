@@ -1,6 +1,6 @@
 logLevel := Level.Warn
 
-libraryDependencies += "org.vafer" % "jdeb" % "1.6" artifacts Artifact("jdeb", "jar", "jar")
+libraryDependencies += "org.vafer" % "jdeb" % "1.14" artifacts Artifact("jdeb", "jar", "jar")
 
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
