@@ -33,7 +33,7 @@ object Dependencies {
     "com.gu" %% "editorial-permissions-client" % "2.15",
     "com.gu" %% "simple-configuration-ssm" % "7.0.1",
     "com.gu" %% "fezziwig" % "1.6",
-    "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
+    "com.gu" %% "pan-domain-auth-play_3-0" % "11.0.0-PREVIEW.sh-wsyupgrade-aws-sdk-to-2.2025-09-17T1358.a15b1789",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "0.7",
