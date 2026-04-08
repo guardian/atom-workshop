@@ -233,11 +233,12 @@ with dedicated external editors are Video (media) and Quiz.
 
 **Preview**
 : The draft state of an atom, stored in the preview DynamoDB table. Changes saved in the editor are
-written here. Preview atoms are visible to editors but not yet publicly available through CAPI.
+written here. Preview atoms are visible to editors and in preview CAPI but not yet publicly available 
+through live CAPI.
 
 **Live**
 : The published state of an atom, stored in the live DynamoDB table. An atom is promoted from preview to
-live by the publish action, which also emits an event to the live Kinesis stream so CAPI can ingest the
+live by the publish action, which also emits an event to the live Kinesis stream so live CAPI can ingest the
 update.
 
 **Kinesis**
