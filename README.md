@@ -136,7 +136,7 @@ using the `editorial-tools-jammy-java11` recipe.
 
 | Layer | Technology |
 |---|---|
-| Backend | Scala 2.13, [Play Framework](https://www.playframework.com/) 2.8 |
+| Backend | Scala 2.13, [Play Framework 3.0.x](https://www.playframework.com/documentation/3.0.x/Home) |
 | Frontend | React, Redux, webpack, SCSS |
 | Data store | AWS DynamoDB (separate preview and live tables per atom type) |
 | Event streaming | AWS Kinesis |
