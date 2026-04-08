@@ -141,7 +141,7 @@ using the `editorial-tools-jammy-java11` recipe.
 | Data store | AWS DynamoDB (separate preview and live tables per atom type) |
 | Event streaming | AWS Kinesis |
 | Authentication | [Pan-Domain Auth](https://github.com/guardian/pan-domain-authentication) |
-| Authorisation | [Editorial Permissions Client](https://github.com/guardian/editorial-permissions-client) |
+| Authorisation | [Editorial Permissions Client](https://github.com/guardian/permissions) |
 | Atom data model | [content-atom](https://github.com/guardian/content-atom) (Thrift/Scrooge) |
 | Configuration | AWS SSM Parameter Store (via `simple-configuration-ssm`) |
 
