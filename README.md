@@ -213,7 +213,7 @@ public/js/
 - [GitHub repository](https://github.com/guardian/atom-workshop)
 - [Riff-Raff deployment history](https://riffraff.gutools.co.uk/deployment/history?projectName=editorial-tools%3Aatom-workshop)
 - [content-atom Thrift schema](https://github.com/guardian/content-atom) — the data model used for all atoms
-- [atom-manager-play](https://github.com/guardian/atom-manager-play) — Play library providing DynamoDB data stores and reindex controllers
+- [atom-manager-play](https://github.com/guardian/atom-maker?tab=readme-ov-file#atom-manager-play-lib-) — Play library providing DynamoDB data stores and reindex controllers
 - [pan-domain-authentication](https://github.com/guardian/pan-domain-authentication) — shared Guardian SSO library
 - [Composer (flexible-content)](https://github.com/guardian/flexible-content) — the article editor that embeds atoms
 - [Media Atom Maker](https://github.com/guardian/media-atom-maker) — dedicated editor for Video atoms
