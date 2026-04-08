@@ -251,8 +251,8 @@ reindex jobs.
 `*.gutools.co.uk` and `*.dev-gutools.co.uk` subdomains.
 
 **Snippet atom types**
-: The subset of atom types (Q&A, Quick Guide, Profile, Timeline) that require editorial tagging before
-they can be embedded in articles.
+: A subset of atom types (Q&A, Quick Guide, Profile, Timeline) that are designed to give readers the context
+they need to make sense of a complex news story
 
 **Reindex**
 : The process of replaying all atoms from DynamoDB onto the Kinesis reindex stream, allowing downstream
