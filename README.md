@@ -221,21 +221,25 @@ public/js/
 
 ## 5. Terminology
 
+<a id="atom"></a>
 **Atom**
 : A self-contained, reusable interactive content component that can be embedded in one or more Guardian
 articles. Atoms are defined by the [content-atom](https://github.com/guardian/content-atom) Thrift schema
 and have a type (e.g. quiz, guide, media) that determines their structure and behaviour.
 
+<a id="atom-types"></a>
 **Atom types**
 : The set of atom varieties supported by the platform. Those editable directly in Workshop are: Q&A,
 Quick Guide, Profile, Timeline, Call To Action, Audio, Explainer (legacy), and Commons Division. Those
 with dedicated external editors are Video (media) and Quiz.
 
+<a id="preview"></a>
 **Preview**
 : The draft state of an atom, stored in the preview DynamoDB table. Changes saved in the editor are
 written here. Preview atoms are visible to editors and in preview CAPI but not yet publicly available 
 through live CAPI.
 
+<a id="live"></a>
 **Live**
 : The published state of an atom, stored in the live DynamoDB table. An atom is promoted from preview to
 live by the publish action, which also emits an event to the live Kinesis stream so live CAPI can ingest the
