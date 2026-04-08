@@ -178,7 +178,7 @@ within the tool. Explainer atoms are legacy and can be edited but not newly crea
 
 **Thrift data model** — Atom data is serialised using the
 [content-atom](https://github.com/guardian/content-atom) Thrift schema via Scrooge-generated Scala
-classes. The `fezziwig` library bridges between Thrift and Circe JSON for the API layer.
+classes. The [fezziwig](https://github.com/guardian/fezziwig/) library bridges between Thrift and Circe JSON for the API layer.
 
 **Pan-Domain Auth** — All routes (except `/healthcheck`) require a valid Guardian Google OAuth
 session cookie, validated via pan-domain-auth. The callback URL is `/oauthCallback`.
