@@ -217,7 +217,7 @@ public/js/
 - [pan-domain-authentication](https://github.com/guardian/pan-domain-authentication) — shared Guardian SSO library
 - [Composer (flexible-content)](https://github.com/guardian/flexible-content) — the article editor that embeds atoms
 - [Media Atom Maker](https://github.com/guardian/media-atom-maker) — dedicated editor for Video atoms
-- [Quizzes tool](https://github.com/guardian/quizzes) — dedicated editor for Quiz atoms
+- [Quizzes tool](https://github.com/guardian/ten-four_quiz-builder) — dedicated editor for Quiz atoms
 
 ## 5. Terminology
 
