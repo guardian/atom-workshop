@@ -5,6 +5,7 @@ import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
 import software.amazon.awssdk.services.kinesis.KinesisClient
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.sts.StsClient
 import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 
@@ -17,7 +18,7 @@ object AWS {
 
   private[config] def capiPreviewCredentials(roleArn: String): AwsCredentialsProviderChain = AwsCredentialsProviderChain.of(
     ProfileCredentialsProvider.create("capi"),
-    StsAssumeRoleCredentialsProvider.builder().refreshRequest(
+    StsAssumeRoleCredentialsProvider.builder().stsClient(stsClient).refreshRequest(
       AssumeRoleRequest.builder()
         .roleArn(roleArn)
         .roleSessionName("capi-preview")
@@ -36,6 +37,11 @@ object AWS {
     .build()
 
   lazy val s3Client: S3Client = S3Client.builder()
+    .credentialsProvider(credentials)
+    .region(region)
+    .build()
+
+  private lazy val stsClient = StsClient.builder()
     .credentialsProvider(credentials)
     .region(region)
     .build()
