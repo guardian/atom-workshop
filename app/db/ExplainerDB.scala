@@ -1,18 +1,18 @@
 package db
 
-import com.gu.atom.data.DynamoDataStore
+import com.gu.atom.data.DynamoDataStoreV2
 import com.gu.contentatom.thrift.Atom
 import models.{AtomAPIError, ExplainerDynamoDatastoreError}
 import play.api.Logging
 import util.AtomLogic._
 
 trait ExplainerDBAPI {
-  def listAtoms(datastore: DynamoDataStore): Either[AtomAPIError, List[Atom]]
+  def listAtoms(datastore: DynamoDataStoreV2): Either[AtomAPIError, List[Atom]]
 }
 
 class ExplainerDB() extends ExplainerDBAPI with Logging {
 
-  def listAtoms(datastore: DynamoDataStore): Either[AtomAPIError, List[Atom]] = {
+  def listAtoms(datastore: DynamoDataStoreV2): Either[AtomAPIError, List[Atom]] = {
     logger.info(s"Attempting to read all explainers from ${datastore.getClass.getName}")
     try {
       val result = datastore.listAtoms

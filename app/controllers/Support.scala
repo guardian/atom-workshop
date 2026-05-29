@@ -16,7 +16,7 @@ class Support(val controllerComponents: ControllerComponents, val wsClient: WSCl
 
   private val signer = new IAMSigner(
     credentialsProvider = config.capiPreviewCredentials,
-    awsRegion = AWS.region.getName
+    awsRegion = AWS.region.id
   )
 
   private def getHeaders(url: String): Seq[(String,String)] = signer.addIAMHeaders(headers = Map.empty, uri = URI.create(url)).toSeq

@@ -5,10 +5,10 @@ import config.{AWS, Config}
 import controllers.{AssetsComponents, ExplainerReindexController, PanDomainAuthActions}
 import db.{AtomDataStores, AtomWorkshopDB, ExplainerDB}
 import play.api.ApplicationLoader.Context
-import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.mvc.{ControllerComponents, EssentialFilter}
+import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.filters.HttpFiltersComponents
 import router.Routes
 import services.{AtomPublishers, Permissions}
@@ -33,7 +33,7 @@ class AppComponents(context: Context, identity: AppIdentity)
     override val panDomainSettings: PanDomainAuthSettingsRefresher = PanDomainAuthSettingsRefresher(
       domain = config.pandaDomain,
       system = config.pandaSystem,
-      S3BucketLoader.forAwsSdkV1(AWS.S3Client, "pan-domain-auth-settings")
+      S3BucketLoader.forAwsSdkV2(AWS.s3Client, "pan-domain-auth-settings")
     )
 
     override def permissions: Permissions = appPermissions

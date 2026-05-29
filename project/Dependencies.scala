@@ -1,8 +1,8 @@
 import play.sbt.PlayImport.ws
-import sbt._
+import sbt.*
 
 object Dependencies {
-  lazy val awsVersion = "1.12.791"
+  lazy val awsVersion = "2.45.0"
   lazy val atomLibVersion = "11.0.0"
   lazy val jacksonVersion = "2.17.2"
   lazy val jacksonDatabindVersion = "2.17.2"
@@ -22,21 +22,18 @@ object Dependencies {
 
   val dependencies = jacksonOverrides ++ jacksonDatabindOverrides ++ Seq(
     ws,
-    "com.amazonaws" % "aws-java-sdk-core" % awsVersion,
-    "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion,
-    "com.amazonaws" % "aws-java-sdk-lambda" % awsVersion,
-    "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion,
-    "com.amazonaws" % "aws-java-sdk-sts" % awsVersion,
-    "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion,
+    "software.amazon.awssdk" % "dynamodb" % awsVersion,
+    "software.amazon.awssdk" % "kinesis" % awsVersion,
+    "software.amazon.awssdk" % "sts" % awsVersion,
     "com.gu" %% "atom-manager-play" % atomLibVersion,
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
-    "com.gu" %% "editorial-permissions-client" % "2.15",
-    "com.gu" %% "simple-configuration-ssm" % "7.0.1",
+    "com.gu" %% "editorial-permissions-client" % "6.0.3",
+    "com.gu" %% "simple-configuration-ssm" % "10.0.2",
     "com.gu" %% "fezziwig" % "1.6",
-    "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0",
+    "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
-    "com.gu" %% "content-api-client-aws" % "0.7",
+    "com.gu" %% "content-api-client-aws" % "1.0.1",
     "com.gu" %% "content-api-client" % "43.0.0"
   )
 }

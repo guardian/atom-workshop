@@ -1,9 +1,8 @@
 package config
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.amazonaws.auth.{AWSCredentialsProvider, AWSCredentialsProviderChain, STSAssumeRoleSessionCredentialsProvider}
 import com.gu.{AppIdentity, AwsIdentity, DevIdentity}
 import play.api.Configuration
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProviderChain
 
 class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val config = initialConfiguration.underlying
@@ -48,12 +47,7 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val capiPreviewIAMUrl: String = config.getString("capi.previewIAMUrl")
   val capiLiveUrl: String = config.getString("capi.liveUrl")
   val capiPreviewRole: String = config.getString("capi.previewRole")
-  val capiPreviewCredentials: AWSCredentialsProvider = {
-    new AWSCredentialsProviderChain(
-      new ProfileCredentialsProvider("capi"),
-      new STSAssumeRoleSessionCredentialsProvider.Builder(capiPreviewRole, "capi-preview").build()
-    )
-  }
+  val capiPreviewCredentials: AwsCredentialsProviderChain = AWS.capiPreviewCredentials(capiPreviewRole)
 
   // Presence
   val presenceEnabled: Boolean = getOptionalProperty("presence.enabled", config.getBoolean).getOrElse(true)
