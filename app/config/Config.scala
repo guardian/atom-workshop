@@ -39,6 +39,8 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   // DynamoDB
   val previewDynamoTableName: String = config.getString("aws.dynamo.preview.tableName")
   val publishedDynamoTableName: String = config.getString("aws.dynamo.live.tableName")
+  val previewReindexDynamoTableName: String = config.getString("aws.dynamo.preview.reindexTableName")
+  val publishedReindexDynamoTableName: String = config.getString("aws.dynamo.live.reindexTableName")
 
   // CAPI
   val capiApiKey: String = config.getString("capi.apiKey")
@@ -50,8 +52,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   // Presence
   val presenceEnabled: Boolean = getOptionalProperty("presence.enabled", config.getBoolean).getOrElse(true)
   val presenceDomain: String = getPropertyIfEnabled(presenceEnabled, "presence.domain")
-
-  val reindexApiKey: String = config.getString("reindexApiKey")
 
   def getOptionalProperty[T](path: String, getVal: String => T): Option[T] = {
     if (config.hasPath(path)) Some(getVal(path))

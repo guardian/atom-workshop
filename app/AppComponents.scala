@@ -51,12 +51,10 @@ class AppComponents(context: Context, identity: AppIdentity)
   lazy val supportController = new controllers.Support(controllerComponents, wsClient, config, pandaAuthActions)
 
   lazy val reindex = new ReindexController(
-    atomDataStores.previewDataStore,
-    atomDataStores.publishedDataStore,
-    atomDataStores.reindexPreview,
-    atomDataStores.reindexPublished,
-    Configuration(config.config),
-    controllerComponents,
-    actorSystem
+    previewReindexer = atomDataStores.previewReindexer,
+    publishedReindexer = atomDataStores.publishedReindexer,
+    config = Configuration(config.config),
+    controllerComponents = controllerComponents,
+    system = actorSystem
   )
 }
