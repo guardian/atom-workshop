@@ -1,6 +1,6 @@
 package services
 
-import com.gu.atom.publish.{AtomPublisher, LiveKinesisAtomPublisher, PreviewKinesisAtomPublisher}
+import com.gu.atom.publish.{AtomPublisher, LiveKinesisAtomPublisherV2, PreviewKinesisAtomPublisherV2}
 import com.gu.contentatom.thrift.{Atom, ContentAtomEvent, EventType}
 import config.{AWS, Config}
 import models.{AtomAPIError, KinesisPublishingFailed}
@@ -10,8 +10,8 @@ import play.api.Logging
 import scala.util.{Failure, Success}
 
 class AtomPublishers(config: Config) extends Logging {
-  val liveAtomPublisher = new LiveKinesisAtomPublisher(config.liveKinesisStreamName, AWS.kinesisClient)
-  val previewAtomPublisher = new PreviewKinesisAtomPublisher(config.previewKinesisStreamName, AWS.kinesisClient)
+  val liveAtomPublisher = new LiveKinesisAtomPublisherV2(config.liveKinesisStreamName, AWS.kinesisClient)
+  val previewAtomPublisher = new PreviewKinesisAtomPublisherV2(config.previewKinesisStreamName, AWS.kinesisClient)
 
   def sendKinesisEvent(atom: Atom, atomPublisher: AtomPublisher, eventType: EventType): Either[AtomAPIError, Unit] = {
     if (config.kinesisEnabled) {

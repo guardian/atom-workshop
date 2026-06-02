@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.atom.data.DynamoDataStore
+import com.gu.atom.data.DynamoDataStoreV2
 import com.gu.atom.publish.{AtomReindexer, PreviewAtomReindexer, PublishedAtomReindexer}
 import com.gu.contentatom.thrift.{ContentAtomEvent, EventType}
 import config.Config
@@ -16,8 +16,8 @@ import scala.util.{Success, Try}
 class ExplainerReindexController(
   val wsClient: WSClient,
   explainerDB: ExplainerDBAPI,
-  previewDataStore: DynamoDataStore,
-  publishedDataStore: DynamoDataStore,
+  previewDataStore: DynamoDataStoreV2,
+  publishedDataStore: DynamoDataStoreV2,
   previewReindexer: PreviewAtomReindexer,
   publishedReindexer: PublishedAtomReindexer,
   config: Config,
@@ -59,7 +59,7 @@ class ExplainerReindexController(
     }
   }
 
-  private def run(datastore: DynamoDataStore, reindexer: AtomReindexer): Future[Int] = {
+  private def run(datastore: DynamoDataStoreV2, reindexer: AtomReindexer): Future[Int] = {
     explainerDB.listAtoms(datastore).fold(
       apiError => Future.failed(new RuntimeException(apiError.msg)),
       { atoms =>

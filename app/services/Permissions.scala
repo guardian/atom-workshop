@@ -24,7 +24,7 @@ class Permissions(stage: String) {
     permissions.hasPermission(deleteAtom, authedUser.user.email)
   }
 
-  private val permissions: PermissionsProvider = PermissionsProvider(PermissionsConfig(stage, AWS.region.getName, AWS.credentials))
+  private val permissions: PermissionsProvider = PermissionsProvider(PermissionsConfig(stage, AWS.region.id(), AWS.credentials))
 
   def getAll(email: String): Map[String, Boolean] = permissionDefinitions.transform(
     (_, permission) => permissions.hasPermission(permission, email)
