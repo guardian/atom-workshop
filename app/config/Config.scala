@@ -39,8 +39,6 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   // DynamoDB
   val previewDynamoTableName: String = config.getString("aws.dynamo.preview.tableName")
   val publishedDynamoTableName: String = config.getString("aws.dynamo.live.tableName")
-  val explainerPreviewDynamoTableName: String = config.getString("aws.dynamo.explainers.preview.tableName")
-  val explainerPublishedDynamoTableName: String = config.getString("aws.dynamo.explainers.live.tableName")
 
   // CAPI
   val capiApiKey: String = config.getString("capi.apiKey")

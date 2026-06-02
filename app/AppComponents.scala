@@ -2,8 +2,8 @@ import com.gu.AppIdentity
 import com.gu.atom.play.ReindexController
 import com.gu.pandomainauth.{PanDomainAuthSettingsRefresher, S3BucketLoader}
 import config.{AWS, Config}
-import controllers.{AssetsComponents, ExplainerReindexController, PanDomainAuthActions}
-import db.{AtomDataStores, AtomWorkshopDB, ExplainerDB}
+import controllers.{AssetsComponents, PanDomainAuthActions}
+import db.{AtomDataStores, AtomWorkshopDB}
 import play.api.ApplicationLoader.Context
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSComponents
@@ -18,7 +18,7 @@ class AppComponents(context: Context, identity: AppIdentity)
 
   lazy val config = new Config(context.initialConfiguration, identity)
 
-  override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex, explainerReindex)
+  override lazy val router = new Routes(httpErrorHandler, appController, healthcheckController, loginController, assets, supportController, reindex)
   override lazy val httpFilters: Seq[EssentialFilter] = super.httpFilters.filterNot(_ == allowedHostsFilter)
 
   lazy val appPermissions = new Permissions(config.effectiveStage)
@@ -40,7 +40,6 @@ class AppComponents(context: Context, identity: AppIdentity)
   }
 
   lazy val atomWorkshopDB = new AtomWorkshopDB()
-  lazy val explainerDB = new ExplainerDB()
 
   lazy val atomDataStores = new AtomDataStores(config)
   lazy val atomPublishers = new AtomPublishers(config)
@@ -60,15 +59,4 @@ class AppComponents(context: Context, identity: AppIdentity)
     controllerComponents,
     actorSystem
   )
-
-  lazy val explainerReindex = new ExplainerReindexController(
-    wsClient,
-    explainerDB,
-    atomDataStores.explainerPreviewDataStore,
-    atomDataStores.explainerPublishedDataStore,
-    atomDataStores.reindexPreview,
-    atomDataStores.reindexPublished,
-    config,
-    controllerComponents
-  )(actorSystem.dispatcher)
 }

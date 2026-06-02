@@ -14,9 +14,6 @@ class AtomDataStores(config: Config) {
   val previewDataStore = new PreviewDynamoDataStoreV2(AWS.dynamoDbClient, config.previewDynamoTableName)
   val publishedDataStore = new PublishedDynamoDataStoreV2(AWS.dynamoDbClient, config.publishedDynamoTableName)
 
-  val explainerPreviewDataStore = new PreviewDynamoDataStoreV2(AWS.dynamoDbClient, config.explainerPreviewDynamoTableName)
-  val explainerPublishedDataStore = new PublishedDynamoDataStoreV2(AWS.dynamoDbClient, config.explainerPublishedDynamoTableName)
-
   val reindexPreview = new PreviewKinesisAtomReindexerV2(config.previewReindexKinesisStreamName, AWS.kinesisClient)
 
   val reindexPublished = new PublishedKinesisAtomReindexerV2(config.liveReindexKinesisStreamName, AWS.kinesisClient)
