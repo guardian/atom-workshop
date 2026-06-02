@@ -3,7 +3,7 @@ import sbt.*
 
 object Dependencies {
   lazy val awsVersion = "2.45.0"
-  lazy val atomLibVersion = "12.0.0-PREVIEW.anpageable-cancellable-atom-reindex.2026-05-29T1652.35adac95"
+  lazy val atomLibVersion = "12.0.0"
   lazy val jacksonVersion = "2.17.2"
   lazy val jacksonDatabindVersion = "2.17.2"
 
