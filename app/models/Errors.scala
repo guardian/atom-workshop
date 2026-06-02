@@ -13,7 +13,6 @@ case class CreateAtomDynamoError(atomJson: String, message: String) extends Atom
 case class AmazonDynamoError(message: String) extends AtomAPIError(s"Error thrown by Dynamo: $message")
 case class AtomWorkshopDynamoDatastoreError(message: String) extends AtomAPIError(message)
 case object AtomWorkshopDynamoConflictError extends AtomAPIError("Could not apply update due to a version conflict", Conflict)
-case class ExplainerDynamoDatastoreError(message: String) extends AtomAPIError(message)
 case class AtomJsonParsingError(message: String) extends AtomAPIError(s"Failed to parse Json string with error: $message")
 case class AtomThriftDeserialisingError(message: String) extends AtomAPIError(s"Failed to deserialise JSON into thrift with error: $message")
 case object UnexpectedExceptionError extends AtomAPIError("Atom workshop hit an exception it didn't expect. Please try again!")
