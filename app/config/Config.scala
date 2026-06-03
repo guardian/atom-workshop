@@ -39,8 +39,8 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   // DynamoDB
   val previewDynamoTableName: String = config.getString("aws.dynamo.preview.tableName")
   val publishedDynamoTableName: String = config.getString("aws.dynamo.live.tableName")
-  val previewReindexDynamoTableName: String = config.getString("aws.dynamo.preview.reindexTableName")
-  val publishedReindexDynamoTableName: String = config.getString("aws.dynamo.live.reindexTableName")
+  val previewReindexDynamoTableName: String = getPropertyIfEnabled(kinesisEnabled, "aws.dynamo.preview.reindexTableName")
+  val publishedReindexDynamoTableName: String = getPropertyIfEnabled(kinesisEnabled, "aws.dynamo.published.reindexTableName")
 
   // CAPI
   val capiApiKey: String = config.getString("capi.apiKey")
