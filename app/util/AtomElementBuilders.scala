@@ -1,17 +1,17 @@
 package util
 
-import com.gu.contentatom.thrift.atom.cta.CTAAtom
-import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
-import com.gu.contentatom.thrift.atom.profile.ProfileAtom
-import com.gu.contentatom.thrift.atom.guide.GuideAtom
-import com.gu.contentatom.thrift.atom.timeline.TimelineAtom
-import com.gu.contentatom.thrift.atom.explainer.{DisplayType, ExplainerAtom}
+import com.gu.contentatom.thrift.atom.audio.AudioAtom
 import com.gu.contentatom.thrift.atom.commonsdivision.{CommonsDivision, Votes}
-import com.gu.contentatom.thrift.atom.audio.{AudioAtom, OffPlatform}
-import com.gu.contentatom.thrift.{User, _}
+import com.gu.contentatom.thrift.atom.cta.CTAAtom
+import com.gu.contentatom.thrift.atom.explainer.{DisplayType, ExplainerAtom}
+import com.gu.contentatom.thrift.atom.guide.GuideAtom
+import com.gu.contentatom.thrift.atom.profile.ProfileAtom
+import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
+import com.gu.contentatom.thrift.atom.timeline.TimelineAtom
+import com.gu.contentatom.thrift._
 import com.gu.pandomainauth.model.{User => PandaUser}
 import models.CreateAtomFields
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 object AtomElementBuilders {

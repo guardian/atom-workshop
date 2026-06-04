@@ -1,7 +1,6 @@
 package util
 
 import cats.syntax.either._
-import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException
 import com.gu.atom.data.DynamoCompositeKey
 import com.gu.contentatom.thrift._
 import com.gu.contententity.thrift.Entity
@@ -11,6 +10,7 @@ import io.circe.generic.auto._
 import io.circe.{DecodingFailure, ParsingFailure, parser, _}
 import models._
 import play.api.Logging
+import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import util.AtomElementBuilders._
 
 object AtomLogic extends Logging {
@@ -31,7 +31,7 @@ object AtomLogic extends Logging {
     val atomApiError = exception match {
       case e: ParsingFailure => AtomJsonParsingError(e.message)
       case e: DecodingFailure => AtomThriftDeserialisingError(e.message)
-      case e: AmazonDynamoDBException => AmazonDynamoError(e.getMessage)
+      case e: DynamoDbException => AmazonDynamoError(e.getMessage)
       case _ => UnexpectedExceptionError
     }
     logger.error(atomApiError.msg, exception)
@@ -58,7 +58,7 @@ object Parser extends Logging {
   import AtomLogic._
 
   //These implicits speed up compilation
-  private implicit val atomDecoder = {
+  private implicit val atomDecoder: Decoder[Atom] = {
     implicit val entityDecoder = Decoder[Entity]
     implicit val imageAssetDecoder = Decoder[ImageAsset]
     implicit val imageDecoder = Decoder[Image]

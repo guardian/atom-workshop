@@ -3,7 +3,7 @@ import sbt.*
 
 object Dependencies {
   lazy val awsVersion = "2.45.0"
-  lazy val atomLibVersion = "11.0.0"
+  lazy val atomLibVersion = "12.0.0"
   lazy val jacksonVersion = "2.17.2"
   lazy val jacksonDatabindVersion = "2.17.2"
 
@@ -34,6 +34,7 @@ object Dependencies {
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "1.0.1",
-    "com.gu" %% "content-api-client" % "43.0.0"
+    "com.gu" %% "content-api-client" % "43.0.0",
+    "joda-time" % "joda-time" % "2.14.2"
   )
 }

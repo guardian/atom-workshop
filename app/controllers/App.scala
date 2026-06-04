@@ -17,6 +17,8 @@ import com.gu.pandomainauth.model.{User => PandaUser}
 import services.{AtomPublishers, Permissions}
 import views.html.helper.CSRF
 
+import scala.concurrent.ExecutionContext
+
 class App(
            val controllerComponents: ControllerComponents,
            val config: Config,
@@ -33,7 +35,7 @@ class App(
 
   import pandaAuthActions.AuthAction
 
-  implicit val executionContext = controllerComponents.executionContext
+  implicit val executionContext: ExecutionContext = controllerComponents.executionContext
 
   private val previewDataStore = atomDataStores.getDataStore(Preview)
   private val publishedDataStore = atomDataStores.getDataStore(Live)
