@@ -58,7 +58,7 @@ object Parser extends Logging {
   import AtomLogic._
 
   //These implicits speed up compilation
-  private implicit val atomDecoder: Decoder[Atom] = {
+  private implicit val atomDecoder = {
     implicit val entityDecoder = Decoder[Entity]
     implicit val imageAssetDecoder = Decoder[ImageAsset]
     implicit val imageDecoder = Decoder[Image]
