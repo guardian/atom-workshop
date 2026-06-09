@@ -57,18 +57,17 @@ object AtomLogic extends Logging {
 object Parser extends Logging {
   import AtomLogic._
 
-  //These implicits speed up compilation
-  private implicit val atomDecoder = {
-    implicit val entityDecoder = Decoder[Entity]
-    implicit val imageAssetDecoder = Decoder[ImageAsset]
-    implicit val imageDecoder = Decoder[Image]
-    implicit val changeRecord = Decoder[ChangeRecord]
-    implicit val atomDataDecoder = Decoder[AtomData]
-    implicit val flagsDecoder = Decoder[Flags]
+  // These implicits speed up compilation (ie. are required to prevent massive memory usage at compilation)
+  private implicit val atomDecoder: Decoder[Atom] = {
+    implicit val entityDecoder: Decoder[Entity] = decodeThriftStruct[Entity]
+    implicit val imageAssetDecoder: Decoder[ImageAsset] = decodeThriftStruct[ImageAsset]
+    implicit val imageDecoder: Decoder[Image] = decodeThriftStruct[Image]
+    implicit val changeRecord: Decoder[ChangeRecord] = decodeThriftStruct[ChangeRecord]
+    implicit val atomDataDecoder: Decoder[AtomData] = decodeThriftUnion[AtomData]
+    implicit val flagsDecoder: Decoder[Flags] = decodeThriftStruct[Flags]
 
-    Decoder[Atom]
+    decodeThriftStruct[Atom]
   }
-
 
   def stringToAtom(atomString: String): Either[AtomAPIError, Atom] = {
     logger.info(s"Parsing atom json: $atomString")
