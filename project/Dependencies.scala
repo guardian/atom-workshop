@@ -4,8 +4,8 @@ import sbt.*
 object Dependencies {
   lazy val awsVersion = "2.45.0"
   lazy val atomLibVersion = "12.0.0"
-  lazy val jacksonVersion = "2.17.2"
-  lazy val jacksonDatabindVersion = "2.17.2"
+  lazy val jacksonVersion = "2.17.3"
+  lazy val jacksonDatabindVersion = "2.17.3"
 
   // these Jackson dependencies are required to resolve issues in Play 2.8.x https://github.com/orgs/playframework/discussions/11222
   val jacksonOverrides = Seq(
