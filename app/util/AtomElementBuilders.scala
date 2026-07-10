@@ -4,6 +4,8 @@ import com.gu.contentatom.thrift.atom.audio.AudioAtom
 import com.gu.contentatom.thrift.atom.commonsdivision.{CommonsDivision, Votes}
 import com.gu.contentatom.thrift.atom.cta.CTAAtom
 import com.gu.contentatom.thrift.atom.explainer.{DisplayType, ExplainerAtom}
+import com.gu.contentatom.thrift.atom.footballcompetition.FootballCompetitionAtom
+import com.gu.contentatom.thrift.atom.footballcompetition.FootballCompetitionComponentType.Matchday
 import com.gu.contentatom.thrift.atom.guide.GuideAtom
 import com.gu.contentatom.thrift.atom.profile.ProfileAtom
 import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
@@ -55,7 +57,8 @@ object AtomElementBuilders {
         duration = 0,
         contentId = "-",
         offPlatformLinks = None
-      ))
+      )),
+      AtomType.Footballcompetition -> AtomData.FootballCompetition(FootballCompetitionAtom(competitionId = "-", componentType = Matchday)),
     )
 
     Atom(
