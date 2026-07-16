@@ -20,7 +20,7 @@ export class FootballCompetitionEditor extends React.Component {
         formName="footballCompetitionEditor"
       >
         <ManagedField
-          fieldLocation="data.footballCompetition.componentType"
+          fieldLocation="data.tempFootballCompetition.componentType"
           name="Component Type"
         >
           <FormFieldSelectBox
@@ -30,7 +30,7 @@ export class FootballCompetitionEditor extends React.Component {
           />
         </ManagedField>
         <ManagedField
-          fieldLocation="data.footballCompetition.competitionId"
+          fieldLocation="data.tempFootballCompetition.competitionId"
           name="Competition"
         >
           <FormFieldSelectBox

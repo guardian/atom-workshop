@@ -78,7 +78,7 @@ class AtomEdit extends React.Component {
         return <CommonsDivisionEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("audio") :
         return <AudioEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case 'footballcompetition':
+      case 'tempfootballcompetition':
         return (
           <FootballCompetitionEditor
             atom={this.props.atom}

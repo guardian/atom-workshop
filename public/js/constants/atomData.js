@@ -79,8 +79,8 @@ export const audio = {
   description: 'An audio player for clips or full podcasts',
 };
 
-export const footballCompetition = {
-  type: 'footballcompetition',
+export const tempFootballCompetition = {
+  type: 'tempfootballcompetition',
   fullName: 'Football Competition',
   description: 'A quick guide for a football competition',
 };
@@ -96,7 +96,7 @@ export const allAtomTypes = [
   quiz,
   explainer,
   commonsDivision,
-  footballCompetition,
+  tempFootballCompetition,
 ];
 export const workshopEditableAtomTypes = [
   qa,
@@ -107,7 +107,7 @@ export const workshopEditableAtomTypes = [
   commonsDivision,
   cta,
   audio,
-  footballCompetition,
+  tempFootballCompetition,
 ];
 
 export const snippetAtomTypes = [qa, guide, profile, timeline];
