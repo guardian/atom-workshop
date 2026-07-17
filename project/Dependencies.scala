@@ -3,7 +3,7 @@ import sbt.*
 
 object Dependencies {
   lazy val awsVersion = "2.45.0"
-  lazy val atomLibVersion = "14.0.0-PREVIEW.update-content-atom.2026-07-07T1705.a61ec7bf"
+  lazy val atomLibVersion = "14.0.0-PREVIEW.update-content-atom.2026-07-16T1517.3d5b0857"
   lazy val jacksonVersion = "2.17.2"
   lazy val jacksonDatabindVersion = "2.17.2"
 
@@ -34,7 +34,7 @@ object Dependencies {
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "1.0.1",
-    "com.gu" %% "content-api-client" % "45.0.0-PREVIEW.add-football-competition-atom.2026-07-10T1509.202d1e09",
+    "com.gu" %% "content-api-client" % "45.0.0-PREVIEW.add-football-competition-atom.2026-07-16T1458.7529b092",
     "joda-time" % "joda-time" % "2.14.2"
   )
 }
