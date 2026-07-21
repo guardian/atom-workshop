@@ -1,5 +1,7 @@
 package config
 
+import java.net.URI
+
 import software.amazon.awssdk.auth.credentials.{AwsCredentialsProviderChain, DefaultCredentialsProvider, ProfileCredentialsProvider}
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
@@ -11,6 +13,11 @@ import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 
 object AWS {
   lazy val region: Region = Region.EU_WEST_1
+
+  lazy val credentialsLocal: AwsCredentialsProviderChain = AwsCredentialsProviderChain.of(
+    DefaultCredentialsProvider.builder().build(),
+    ProfileCredentialsProvider.create("composer")
+  )
 
   lazy val credentials: DefaultCredentialsProvider = DefaultCredentialsProvider.builder()
     .profileName("composer")
@@ -31,10 +38,15 @@ object AWS {
     .region(region)
     .build()
 
-  lazy val kinesisClient: KinesisClient = KinesisClient.builder()
-    .credentialsProvider(credentials)
-    .region(region)
-    .build()
+  lazy val kinesisClient: KinesisClient = {
+    val builder = KinesisClient.builder()
+      .credentialsProvider(credentialsLocal)
+      .region(region)
+
+    kinesisEndpointOverride.foreach(builder.endpointOverride)
+
+    builder.build()
+  }
 
   lazy val s3Client: S3Client = S3Client.builder()
     .credentialsProvider(credentials)
@@ -45,4 +57,10 @@ object AWS {
     .credentialsProvider(credentials)
     .region(region)
     .build()
+
+  private lazy val kinesisEndpointOverride: Option[URI] =
+    setting("AWS_KINESIS_ENDPOINT").map(URI.create)
+
+  private def setting(name: String): Option[String] =
+    sys.env.get(name).orElse(sys.props.get(name)).filter(_.nonEmpty)
 }
