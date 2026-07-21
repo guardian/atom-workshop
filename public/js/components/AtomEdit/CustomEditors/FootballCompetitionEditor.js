@@ -37,6 +37,7 @@ export class FootballCompetitionEditor extends React.Component {
             selectValues={[
               { id: '-', name: 'Not selected' },
               { id: '100', name: 'Premier League' },
+              { id: '501', name: 'Champions League qualifying' },
               { id: '700', name: 'World Cup' },
             ]}
             optionsAsObject={false} // Use simple values instead
