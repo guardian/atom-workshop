@@ -3,6 +3,7 @@ import {PropTypes} from 'prop-types';
 import {CTAEditor} from './CustomEditors/CTAEditor';
 import {QAndAEditor} from './CustomEditors/QAndAEditor';
 import {GuideEditor} from './CustomEditors/GuideEditor';
+import { FootballCompetitionEditor } from './CustomEditors/FootballCompetitionEditor';
 import {ProfileEditor} from './CustomEditors/ProfileEditor';
 import {TimelineEditor} from './CustomEditors/TimelineEditor';
 import {ExplainerEditor} from './CustomEditors/ExplainerEditor';
@@ -77,6 +78,14 @@ class AtomEdit extends React.Component {
         return <CommonsDivisionEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("audio") :
         return <AudioEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
+      case 'tempfootballcompetition':
+        return (
+          <FootballCompetitionEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
       default:
         return (
           <div>Atom Workshop cannot edit this type of atom currently</div>

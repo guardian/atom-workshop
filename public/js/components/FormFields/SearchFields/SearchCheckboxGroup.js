@@ -13,6 +13,10 @@ export default class SearchCheckboxGroup extends React.Component {
     onUpdateField: PropTypes.func
   };
 
+  deselectAll = () => {
+    this.props.onUpdateField([]);
+  };
+
   state = {
     showOptions: false
   };
@@ -64,6 +68,14 @@ export default class SearchCheckboxGroup extends React.Component {
             <span className="atom-search__dropdown__value">{this.friendlyFieldValue()}</span>
           </div>
           <div className={"atom-search__dropdown__items " + (this.state.showOptions ? "" : "atom-search__dropdown__items--hidden")}>
+            <div className="atom-search__dropdown__actions">
+              <button
+                onClick={this.deselectAll}
+                className="atom-search__dropdown__btn"
+              >
+                Clear All
+              </button>
+            </div>
             {Object.keys(this.props.checkValues).map((fieldName, i) => this.renderCheckbox(fieldName, this.props.checkValues[fieldName], i))}
           </div>
         </div>
