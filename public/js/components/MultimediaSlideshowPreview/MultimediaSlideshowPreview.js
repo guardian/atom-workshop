@@ -39,6 +39,7 @@ class MultimediaSlideshowPreview extends React.Component {
   static propTypes = {
     config: PropTypes.shape({
       gridUrl: PropTypes.string.isRequired,
+      videoBaseUrl: PropTypes.string.isRequired,
       capiLiveUrl: PropTypes.string.isRequired,
       isEmbedded: PropTypes.bool.isRequired,
     }).isRequired,

@@ -15,6 +15,7 @@ export class MultimediaSlideshowEditor extends React.Component {
     onFormErrorsUpdate: PropTypes.func,
     config: PropTypes.shape({
       gridUrl: PropTypes.string.isRequired,
+      videoBaseUrl: PropTypes.string.isRequired,
     }).isRequired,
   };
 
@@ -40,6 +41,7 @@ export class MultimediaSlideshowEditor extends React.Component {
             <FormFieldArrayWrapper maxItems={MAX_SLIDES} numbered={true}>
               <SlideItem
                 gridUrl={this.props.config.gridUrl}
+                videoBaseUrl={this.props.config.videoBaseUrl}
                 onFormErrorsUpdate={this.props.onFormErrorsUpdate}
               />
             </FormFieldArrayWrapper>
