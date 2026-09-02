@@ -15,7 +15,6 @@ import ExternalAtom from './components/ExternalAtom/ExternalAtom';
 import AtomRoot from './components/AtomRoot/AtomRoot';
 import ContentSuggestions from './components/ContentSuggestions/ContentSuggestions';
 import CommonsDivisions from './components/CommonsDivisions/CommonsDivisions';
-import MultimediaSlideshowPreview from './components/MultimediaSlideshowPreview/MultimediaSlideshowPreview';
 
 import {loadToolsAuditPixel} from './tools-audit-pixel';
 
@@ -34,7 +33,6 @@ export const BaseApp = (props) => {
           <Route path="/find" component={AtomList} />
           <Route path="/create" component={AtomCreateTypeSelect} />
           <Route path="/create/:atomType" component={AtomCreateGenericInfo} />
-          <Route path="/preview/multimediaslideshow" component={MultimediaSlideshowPreview} />
           <Route path="/atoms/:atomType/:id" component={AtomRoot}>
             <Route path="/atoms/:atomType/:id/edit" component={AtomEdit} />
             <Route path="/atoms/:atomType/:id/stats" component={AtomStats} />

@@ -9,9 +9,6 @@ GET     /atoms/:placeholder/:placeholder/stats   controllers.App.index(placehold
 GET     /external-atoms/:placeholder/:placeholder/link    controllers.App.index(placeholder)
 GET     /suggestions                             controllers.App.index(placeholder = "")
 
-# Temporary frontend-only preview harness for the multimedia slideshow editor (no backend atom support yet)
-GET     /preview/multimediaslideshow             controllers.App.index(placeholder = "")
-
 OPTIONS /api/preview/*url                        controllers.App.allowCORSAccess(methods = "PUT, POST, DELETE", url: String)
 
 GET  /api/preview/:atomType/:id                  controllers.App.getAtom(atomType: String, id: String, version = "preview")
