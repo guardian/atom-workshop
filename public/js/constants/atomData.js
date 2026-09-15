@@ -79,6 +79,12 @@ export const audio = {
   description: 'An audio player for clips or full podcasts',
 };
 
+export const multimediaSlideshow = {
+  type: 'multimediaslideshow',
+  fullName: 'Multimedia Slideshow',
+  description: 'An ordered slideshow of images (and, in future, videos)',
+};
+
 export const allAtomTypes = [
   qa,
   guide,
@@ -90,6 +96,7 @@ export const allAtomTypes = [
   quiz,
   explainer,
   commonsDivision,
+  multimediaSlideshow,
 ];
 export const workshopEditableAtomTypes = [
   qa,
@@ -100,6 +107,7 @@ export const workshopEditableAtomTypes = [
   commonsDivision,
   cta,
   audio,
+  multimediaSlideshow,
 ];
 
 export const snippetAtomTypes = [qa, guide, profile, timeline];

@@ -61,6 +61,7 @@ class App(
         capiLiveUrl = config.capiLiveUrl,
         targetingUrl = config.targetingUrl,
         workflowUrl = config.workflowUrl,
+        videoBaseUrl = config.videoBaseUrl,
         isEmbedded = req.queryString.get("embeddedMode").isDefined,
         embeddedMode = req.queryString.get("embeddedMode").map(_.head),
         atomEditorGutoolsDomain = config.serviceDomain,
