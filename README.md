@@ -7,6 +7,7 @@ A single tool for creating and managing all [atom](#atom) types.
 - [Introduction](#1-introduction)
 - [Getting Started](#2-getting-started)
 - [How It Works](#3-how-it-works)
+- [Manually removing an interactive atom from CAPI](#manually-removing-an-interactive-atom-from-capi)
 - [Useful Links](#4-useful-links)
 - [Terminology](#5-terminology)
 
@@ -207,6 +208,53 @@ public/js/
   services/     — API client functions
   util/         — Shared frontend utilities
 ```
+
+### Manually removing an interactive atom from CAPI
+
+For a one-off takedown when the normal publishing tool cannot remove an interactive atom, publish a
+`Takedown` event directly to the atom update streams.
+
+1. Copy the exact `id` from the CAPI `/atoms` search result. Do not URL-encode or otherwise change it.
+2. Obtain fresh AWS credentials for the account owning the streams. The client below uses the
+   `composer` profile in `eu-west-1`. 
+3. Run `sbt console` from this repo.
+4. Test with a disposable atom that exists on CODE first. Substitute its ID and the confirmed
+   CODE stream names below. Stream names are configured in `s3://gdn-atom-config/PROD.properties`
+   (`CODE.properties` for testing). Use `aws.kinesis.updateStream.live` and `.preview`, not the reindex
+   streams. This script removes it from live and preview CAPI:
+
+   ```scala
+   import com.gu.atom.publish._
+   import com.gu.contentatom.thrift._
+   import com.gu.contentatom.thrift.atom.interactive.InteractiveAtom
+   import config.AWS
+
+   val id = "<atom ID>"
+   val atom = Atom(id, AtomType.Interactive, Nil, "",
+     AtomData.Interactive(InteractiveAtom("interactive", "", "", "")),
+     ContentChangeDetails(revision = 1L))
+   val event = ContentAtomEvent(atom, EventType.Takedown, System.currentTimeMillis)
+
+   val liveStream = "<live update stream>"
+   val previewStream = "<preview update stream>"
+   new LiveKinesisAtomPublisherV2(liveStream, AWS.kinesisClient).publishAtomEvent(event).get
+   new PreviewKinesisAtomPublisherV2(previewStream, AWS.kinesisClient).publishAtomEvent(event).get
+   ```
+   
+   Note that successful publication means Kinesis accepted the event, not that CAPI has finished
+   processing it.
+
+5. Confirm the test atom disappears from CODE CAPI. Then repeat with the intended atom ID,
+   PROD stream names and credentials, and confirm removal from both live and preview CAPI search.
+6. Prevent republishing. For atoms managed by [interactive-atom-maker](https://github.com/guardian/interactive-atom-maker), 
+   identify and remove the exact atom's S3 `live`/`preview` revision markers. For example:
+   ```
+   s3://<bucket>/atoms/2026/11/bad-atom/default/live
+   s3://<bucket>/atoms/2026/11/bad-atom/default/preview
+   ```
+   The bucket name is configured in `s3://gdn-atom-config/PROD.properties` (`CODE.properties` 
+   for testing) as `aws.s3.atomBucket`. If you don't remove these, a future reindex will restore 
+   the atom.
 
 ## 4. Useful Links
 
