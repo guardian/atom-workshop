@@ -5,6 +5,7 @@ import com.gu.contentatom.thrift.atom.commonsdivision.{CommonsDivision, Votes}
 import com.gu.contentatom.thrift.atom.cta.CTAAtom
 import com.gu.contentatom.thrift.atom.explainer.{DisplayType, ExplainerAtom}
 import com.gu.contentatom.thrift.atom.guide.GuideAtom
+import com.gu.contentatom.thrift.atom.multimediaslideshow.MultimediaSlideshowAtom
 import com.gu.contentatom.thrift.atom.profile.ProfileAtom
 import com.gu.contentatom.thrift.atom.qanda.{QAndAAtom, QAndAItem}
 import com.gu.contentatom.thrift.atom.timeline.TimelineAtom
@@ -55,6 +56,10 @@ object AtomElementBuilders {
         duration = 0,
         contentId = "-",
         offPlatformLinks = None
+      )),
+      AtomType.Multimediaslideshow -> AtomData.MultimediaSlideshow(MultimediaSlideshowAtom(
+        slides = Nil,
+        title = createAtomFields.flatMap(_.title)
       ))
     )
 

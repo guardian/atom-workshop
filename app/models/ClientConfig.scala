@@ -17,6 +17,7 @@ case class ClientConfig(
                          capiLiveUrl: String,
                          targetingUrl: String,
                          workflowUrl: String,
+                         videoBaseUrl: String,
                          isEmbedded: Boolean,
                          embeddedMode: Option[String],
                          atomEditorGutoolsDomain: String,

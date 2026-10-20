@@ -8,6 +8,7 @@ import {TimelineEditor} from './CustomEditors/TimelineEditor';
 import {ExplainerEditor} from './CustomEditors/ExplainerEditor';
 import {CommonsDivisionEditor} from './CustomEditors/CommonsDivisionEditor';
 import {AudioEditor} from './CustomEditors/AudioEditor';
+import {MultimediaSlideshowEditor} from './CustomEditors/MultimediaSlideshowEditor';
 import EmbeddedAtomPick from './EmbeddedAtomPick';
 import {subscribeToPresence, enterPresence} from '../../services/presence';
 import AtomEditHeader from './AtomEditHeader';
@@ -77,6 +78,8 @@ class AtomEdit extends React.Component {
         return <CommonsDivisionEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
       case ("audio") :
         return <AudioEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
+      case ("multimediaslideshow"):
+        return <MultimediaSlideshowEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
       default:
         return (
           <div>Atom Workshop cannot edit this type of atom currently</div>
