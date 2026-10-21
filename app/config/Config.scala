@@ -18,12 +18,13 @@ class Config(initialConfiguration: Configuration, identity: AppIdentity) {
   val serviceDomain: String = domainFromStage(effectiveStage)
 
   // Service URLs
-  val gridUrl = s"https://media.${if (!stage.contentEquals("PROD")) "test.dev-" else ""}gutools.co.uk"
+  // TEMPORARY: Grid and video point at PROD in every stage. Revert to stage-based URLs when done.
+  val gridUrl = "https://media.gutools.co.uk"
   val composerUrl = s"https://composer.$serviceDomain"
   val viewerUrl = s"https://viewer.$serviceDomain/"
   val targetingUrl = s"https://targeting.$serviceDomain/"
   val workflowUrl = s"https://workflow.$serviceDomain"
-  val videoBaseUrl = s"https://video.$serviceDomain"
+  val videoBaseUrl = "https://video.gutools.co.uk"
 
   // Panda Auth
   val pandaDomain: String = domain
