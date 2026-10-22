@@ -34,7 +34,7 @@ object Dependencies {
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "1.0.1",
-    "com.gu" %% "content-api-client" % "43.0.0",
+    "com.gu" %% "content-api-client" % "50.0.0",
     "joda-time" % "joda-time" % "2.14.2"
   )
 }
