@@ -57,6 +57,15 @@ test('slides with media start collapsed, showing a thumbnail and summary', () =>
   );
 });
 
+test('slides whose image has only small assets still render', () => {
+  const smallImage = { ...image, assets: [asset(60, 36), asset(90, 54)] };
+  const slide = renderSlide({ content: { image: smallImage } });
+
+  expect(slide.find('img.slide__thumbnail').prop('src')).toBe(
+    'https://media.test/90.jpg'
+  );
+});
+
 test('slide media can be replaced but not removed', () => {
   [{ image }, video].forEach((content) => {
     const slide = renderSlide({ content });

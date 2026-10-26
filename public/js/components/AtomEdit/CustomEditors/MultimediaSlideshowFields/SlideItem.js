@@ -64,6 +64,19 @@ export class SlideItem extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    // Otherwise a removed slide's "required" error would keep blocking publish.
+    if (this.props.onFormErrorsUpdate) {
+      this.props.onFormErrorsUpdate({
+        [this.formName()]: { Image: [], Video: [] },
+      });
+    }
+  }
+
+  formName() {
+    return `multimediaSlideshowEditor-${this.props.fieldName}`;
+  }
+
   currentSlide() {
     return this.state.draft || this.props.fieldValue || { content: {} };
   }
@@ -184,7 +197,7 @@ export class SlideItem extends React.Component {
               data={value}
               updateData={this.updateSlide}
               onFormErrorsUpdate={this.props.onFormErrorsUpdate}
-              formName="multimediaSlideshowEditor"
+              formName={this.formName()}
             >
               {this.renderContentField(slideType)}
             </ManagedForm>
@@ -194,7 +207,7 @@ export class SlideItem extends React.Component {
               data={value}
               updateData={this.updateSlide}
               onFormErrorsUpdate={this.props.onFormErrorsUpdate}
-              formName="multimediaSlideshowEditor"
+              formName={this.formName()}
             >
               <ManagedField fieldLocation="caption" name="Caption">
                 <FormFieldTextInput />
