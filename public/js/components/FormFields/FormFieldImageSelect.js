@@ -42,6 +42,7 @@ class FormFieldImageSelect extends React.Component {
     formRowClass: PropTypes.string,
     gridUrl: PropTypes.string.isRequired,
     hideSizeAndDimensions: PropTypes.bool,
+    hideRemoveButton: PropTypes.bool,
   };
 
   state = {
@@ -142,13 +143,17 @@ class FormFieldImageSelect extends React.Component {
           >
             Replace Image
           </button>
-          <button
-            className="image-select__remove-button btn--red"
-            type="button"
-            onClick={this.removeImage}
-          >
-            Remove Image
-          </button>
+          {this.props.hideRemoveButton ? (
+            false
+          ) : (
+            <button
+              className="image-select__remove-button btn--red"
+              type="button"
+              onClick={this.removeImage}
+            >
+              Remove Image
+            </button>
+          )}
         </div>
       </div>
     );

@@ -13,6 +13,16 @@ import { VideoThumbnail } from './VideoThumbnail';
 const SLIDE_TYPE_IMAGE = 'image';
 const SLIDE_TYPE_VIDEO = 'video';
 
+function mediaType(content) {
+  if (content.mediaAtom) {
+    return SLIDE_TYPE_VIDEO;
+  }
+  if (content.image) {
+    return SLIDE_TYPE_IMAGE;
+  }
+  return null;
+}
+
 export class SlideItem extends React.Component {
   static propTypes = {
     fieldLabel: PropTypes.string,
@@ -42,39 +52,52 @@ export class SlideItem extends React.Component {
       slideType: content.mediaAtom ? SLIDE_TYPE_VIDEO : SLIDE_TYPE_IMAGE,
       // Slides that already have media start collapsed so the whole list fits on screen.
       expanded: !content.image && !content.mediaAtom,
+      // Edits to a slide that has no media yet, held back until it does.
+      draft: null,
     };
   }
 
-  updateItem = (item) => {
-    this.props.onUpdateField(item);
+  componentDidUpdate(prevProps) {
+    // Slides are index-keyed, so deleting one above hands this component a different slide.
+    if (this.state.draft && prevProps.fieldValue !== this.props.fieldValue) {
+      this.setState({ draft: null });
+    }
+  }
+
+  currentSlide() {
+    return this.state.draft || this.props.fieldValue || { content: {} };
+  }
+
+  // SlideContent is a thrift union, so the API rejects (autosaved) slides without media.
+  updateSlide = (slide) => {
+    if (mediaType(slide.content || {})) {
+      this.setState({ draft: null });
+      this.props.onUpdateField(slide);
+    } else {
+      this.setState({ draft: slide });
+    }
   };
 
   toggleExpanded = () => {
     this.setState((state) => ({ expanded: !state.expanded }));
   };
 
-  // Local state goes stale when a slide above is deleted, so prefer the saved content.
+  // Local state goes stale when a slide above is deleted, so prefer the slide's media.
   getSlideType(content) {
-    if (content.mediaAtom) {
-      return SLIDE_TYPE_VIDEO;
-    }
-    if (content.image) {
-      return SLIDE_TYPE_IMAGE;
-    }
-    return this.state.slideType;
+    return mediaType(content) || this.state.slideType;
   }
 
   changeSlideType = (slideType) => {
-    const content =
-      (this.props.fieldValue && this.props.fieldValue.content) || {};
-    if (slideType === this.getSlideType(content)) {
+    const slide = this.currentSlide();
+    if (slideType === this.getSlideType(slide.content || {})) {
       return;
     }
+    const savedContent =
+      (this.props.fieldValue && this.props.fieldValue.content) || {};
     this.setState({ slideType });
-    // Clear the previous content so a slide never holds both an image and a
-    // media atom reference.
-    const value = this.props.fieldValue || {};
-    this.props.onUpdateField(Object.assign({}, value, { content: {} }));
+    // Switching back to the saved media's type restores it, otherwise wait for new media.
+    const content = mediaType(savedContent) === slideType ? savedContent : {};
+    this.updateSlide(Object.assign({}, slide, { content }));
   };
 
   renderContentField(slideType) {
@@ -98,6 +121,7 @@ export class SlideItem extends React.Component {
         <FormFieldImageSelect
           gridUrl={this.props.gridUrl}
           hideSizeAndDimensions={true}
+          hideRemoveButton={true}
         />
       </ManagedField>
     );
@@ -118,9 +142,7 @@ export class SlideItem extends React.Component {
   }
 
   render() {
-    const value = this.props.fieldValue || {
-      content: {},
-    };
+    const value = this.currentSlide();
     const content = value.content || {};
     const slideType = this.getSlideType(content);
     const expanded = this.state.expanded;
@@ -160,7 +182,7 @@ export class SlideItem extends React.Component {
             />
             <ManagedForm
               data={value}
-              updateData={this.updateItem}
+              updateData={this.updateSlide}
               onFormErrorsUpdate={this.props.onFormErrorsUpdate}
               formName="multimediaSlideshowEditor"
             >
@@ -170,7 +192,7 @@ export class SlideItem extends React.Component {
           <div className="slide__text">
             <ManagedForm
               data={value}
-              updateData={this.updateItem}
+              updateData={this.updateSlide}
               onFormErrorsUpdate={this.props.onFormErrorsUpdate}
               formName="multimediaSlideshowEditor"
             >

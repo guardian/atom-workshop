@@ -1,16 +1,15 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
+import { PropTypes } from 'prop-types';
 import Modal from '../Utilities/Modal';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
-import {logInfo} from '../../util/logger';
+import { logInfo } from '../../util/logger';
 
 const mediaAtomPropType = PropTypes.shape({
-  mediaAtomId: PropTypes.string.isRequired
+  mediaAtomId: PropTypes.string.isRequired,
 });
 
 class FormFieldMediaAtomSelect extends React.Component {
-
   static propTypes = {
     onUpdateField: PropTypes.func,
     fieldValue: mediaAtomPropType,
@@ -18,11 +17,11 @@ class FormFieldMediaAtomSelect extends React.Component {
     fieldLabel: PropTypes.string,
     fieldErrors: PropTypes.arrayOf(errorPropType),
     formRowClass: PropTypes.string,
-    videoBaseUrl: PropTypes.string.isRequired
+    videoBaseUrl: PropTypes.string.isRequired,
   };
 
   state = {
-    modalOpen: false
+    modalOpen: false,
   };
 
   closeModal = () => {
@@ -35,12 +34,7 @@ class FormFieldMediaAtomSelect extends React.Component {
     window.addEventListener('message', this.onMessage, false);
   };
 
-  removeVideo = () => {
-    this.props.onUpdateField(null);
-  };
-
   onMessage = (event) => {
-
     if (event.origin !== this.props.videoBaseUrl) {
       logInfo("didn't come from media atom maker");
       return;
@@ -49,7 +43,7 @@ class FormFieldMediaAtomSelect extends React.Component {
     const data = event.data;
 
     if (!data) {
-      logInfo("got no data...");
+      logInfo('got no data...');
       return;
     }
 
@@ -61,7 +55,7 @@ class FormFieldMediaAtomSelect extends React.Component {
     }
 
     if (!data.atomId) {
-      logInfo("no atomId in message...");
+      logInfo('no atomId in message...');
       return;
     }
 
@@ -71,8 +65,12 @@ class FormFieldMediaAtomSelect extends React.Component {
 
   renderWithoutVideo() {
     return (
-      <button className="image-select__button" type="button" onClick={this.openModal}>
-          + Select Video from Media Atom Maker
+      <button
+        className="image-select__button"
+        type="button"
+        onClick={this.openModal}
+      >
+        + Select Video from Media Atom Maker
       </button>
     );
   }
@@ -83,34 +81,52 @@ class FormFieldMediaAtomSelect extends React.Component {
       <div className="image-select__image-display">
         <div className="image-select__image-details">
           <div className="image-select__image-details__detail">
-            <a target="_blank" rel="noreferrer" href={`${this.props.videoBaseUrl}/videos/${mediaAtomId}`}>View video in Media Atom Maker</a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`${this.props.videoBaseUrl}/videos/${mediaAtomId}`}
+            >
+              View video in Media Atom Maker
+            </a>
           </div>
           <div className="image-select__image-details__detail">
             Atom id: {mediaAtomId}
           </div>
-          <button className="image-select__button image-select__replace-button" type="button" onClick={this.openModal}>
-              Replace Video
-          </button>
-          <button className="image-select__remove-button btn--red" type="button" onClick={this.removeVideo}>
-              Remove Video
+          <button
+            className="image-select__button image-select__replace-button"
+            type="button"
+            onClick={this.openModal}
+          >
+            Replace Video
           </button>
         </div>
       </div>
     );
   }
 
-  render () {
+  render() {
     return (
-      <div className={this.props.formRowClass || "form__row"}>
-        {this.props.fieldLabel ? <label htmlFor={this.props.fieldName} className="form__label">{this.props.fieldLabel}</label> : false}
+      <div className={this.props.formRowClass || 'form__row'}>
+        {this.props.fieldLabel ? (
+          <label htmlFor={this.props.fieldName} className="form__label">
+            {this.props.fieldLabel}
+          </label>
+        ) : (
+          false
+        )}
         <div className="image-select">
-            {this.props.fieldValue ? this.renderWithVideo() : this.renderWithoutVideo()}
+          {this.props.fieldValue
+            ? this.renderWithVideo()
+            : this.renderWithoutVideo()}
 
-            <Modal isOpen={this.state.modalOpen} dismiss={this.closeModal}>
-                <iframe className="image-select__modal" src={`${this.props.videoBaseUrl}/videos?embeddedMode=live`}></iframe>
-            </Modal>
+          <Modal isOpen={this.state.modalOpen} dismiss={this.closeModal}>
+            <iframe
+              className="image-select__modal"
+              src={`${this.props.videoBaseUrl}/videos?embeddedMode=live`}
+            ></iframe>
+          </Modal>
         </div>
-        <ShowErrors errors={this.props.fieldErrors}/>
+        <ShowErrors errors={this.props.fieldErrors} />
       </div>
     );
   }
