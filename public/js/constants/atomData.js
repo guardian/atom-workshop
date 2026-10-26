@@ -82,7 +82,7 @@ export const audio = {
 export const multimediaSlideshow = {
   type: 'multimediaslideshow',
   fullName: 'Multimedia Slideshow',
-  description: 'An ordered slideshow of images (and, in future, videos)',
+  description: 'An ordered slideshow of images and videos',
 };
 
 export const allAtomTypes = [
@@ -115,7 +115,7 @@ export const legacyAtomTypes = [explainer];
 export const experimentalAtomTypes = [commonsDivision];
 
 export function getNonEditableAtomTypes() {
-  return allAtomTypes.filter(atomType => {
+  return allAtomTypes.filter((atomType) => {
     return (
       !workshopEditableAtomTypes.includes(atomType) &&
       !legacyAtomTypes.includes(atomType)
@@ -124,7 +124,7 @@ export function getNonEditableAtomTypes() {
 }
 
 export const editableNonSnippetAtomTypes = workshopEditableAtomTypes.filter(
-  atomType => {
+  (atomType) => {
     return (
       !snippetAtomTypes.includes(atomType) &&
       !legacyAtomTypes.includes(atomType) &&
@@ -135,20 +135,20 @@ export const editableNonSnippetAtomTypes = workshopEditableAtomTypes.filter(
 
 export function getAtomByType(typeString) {
   return allAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
 }
 
 export function isAtomTypeEditable(typeString) {
   const matchingType = workshopEditableAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
   return !!matchingType;
 }
 
 export function doesAtomTypeRequireTagging(typeString) {
   return snippetAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
 }
 
