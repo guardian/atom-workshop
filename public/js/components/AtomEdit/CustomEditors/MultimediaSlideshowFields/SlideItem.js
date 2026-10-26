@@ -95,7 +95,7 @@ export class SlideItem extends React.Component {
         name="Image"
         isRequired={true}
       >
-        <FormFieldImageSelect gridUrl={this.props.gridUrl} />
+        <FormFieldImageSelect gridUrl={this.props.gridUrl} hideSizeAndDimensions={true} />
       </ManagedField>
     );
   }

@@ -37,7 +37,8 @@ class FormFieldImageSelect extends React.Component {
     fieldLabel: PropTypes.string,
     fieldErrors: PropTypes.arrayOf(errorPropType),
     formRowClass: PropTypes.string,
-    gridUrl: PropTypes.string.isRequired
+    gridUrl: PropTypes.string.isRequired,
+    hideSizeAndDimensions: PropTypes.bool
   };
 
   state = {
@@ -93,6 +94,18 @@ class FormFieldImageSelect extends React.Component {
     );
   }
 
+  renderSizeAndDimensions() {
+    const master = this.props.fieldValue.master;
+    return [
+      <div key="size" className="image-select__image-details__detail">
+        Size: {filesize(master.size)}
+      </div>,
+      <div key="dimensions" className="image-select__image-details__detail">
+        Dimensions: {master.dimensions.width} x {master.dimensions.height}
+      </div>
+    ];
+  }
+
   renderWithImage() {
     const thumbnail = findSmallestAssetAboveWidth(this.props.fieldValue.assets, 200);
     return (
@@ -104,12 +117,7 @@ class FormFieldImageSelect extends React.Component {
           <div className="image-select__image-details__detail">
             <a target="_blank" rel="noreferrer" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
           </div>
-          <div className="image-select__image-details__detail">
-            Size: {filesize(this.props.fieldValue.master.size)}
-          </div>
-          <div className="image-select__image-details__detail">
-            Dimensions: {this.props.fieldValue.master.dimensions.width} x {this.props.fieldValue.master.dimensions.height}
-          </div>
+          {this.props.hideSizeAndDimensions ? false : this.renderSizeAndDimensions()}
           <button className="image-select__button image-select__replace-button" type="button" onClick={this.openModal}>
               Replace Image
           </button>
