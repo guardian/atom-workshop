@@ -13,6 +13,7 @@ export default class FormFieldArrayWrapper extends React.Component {
     nested: PropTypes.bool,
     numbered: PropTypes.bool,
     fieldClass: PropTypes.string,
+    maxItems: PropTypes.number,
     children: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.arrayOf(PropTypes.element)
@@ -141,6 +142,7 @@ export default class FormFieldArrayWrapper extends React.Component {
 
   render () {
    const values = (this.props.fieldValue || []).concat(this.state.newItems);
+   const limitReached = typeof this.props.maxItems === 'number' && values.length >= this.props.maxItems;
 
     return (
       <div className={this.props.nested ? 'form__row form__row--nested' : 'form__row'}>
@@ -149,7 +151,9 @@ export default class FormFieldArrayWrapper extends React.Component {
        </div>
           { this.state.childrenVisible ? values.map((value, i) => this.renderValue(value, i)) : false }
         <div className="form__btn-group">
-          <button className="form__btn-heading__btn form__btn-heading__add" type="button" onClick={this.onAddClick}>Add</button>
+          { limitReached
+            ? <span className="form__note">{`Maximum of ${this.props.maxItems} reached`}</span>
+            : <button className="form__btn-heading__btn form__btn-heading__add" type="button" onClick={this.onAddClick}>Add</button> }
         </div>
       </div>
     );

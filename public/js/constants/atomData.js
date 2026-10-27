@@ -79,6 +79,12 @@ export const audio = {
   description: 'An audio player for clips or full podcasts',
 };
 
+export const multimediaSlideshow = {
+  type: 'multimediaslideshow',
+  fullName: 'Multimedia Slideshow',
+  description: 'An ordered slideshow of images and videos',
+};
+
 export const allAtomTypes = [
   qa,
   guide,
@@ -90,6 +96,7 @@ export const allAtomTypes = [
   quiz,
   explainer,
   commonsDivision,
+  multimediaSlideshow,
 ];
 export const workshopEditableAtomTypes = [
   qa,
@@ -100,6 +107,7 @@ export const workshopEditableAtomTypes = [
   commonsDivision,
   cta,
   audio,
+  multimediaSlideshow,
 ];
 
 export const snippetAtomTypes = [qa, guide, profile, timeline];
@@ -107,7 +115,7 @@ export const legacyAtomTypes = [explainer];
 export const experimentalAtomTypes = [commonsDivision];
 
 export function getNonEditableAtomTypes() {
-  return allAtomTypes.filter(atomType => {
+  return allAtomTypes.filter((atomType) => {
     return (
       !workshopEditableAtomTypes.includes(atomType) &&
       !legacyAtomTypes.includes(atomType)
@@ -116,7 +124,7 @@ export function getNonEditableAtomTypes() {
 }
 
 export const editableNonSnippetAtomTypes = workshopEditableAtomTypes.filter(
-  atomType => {
+  (atomType) => {
     return (
       !snippetAtomTypes.includes(atomType) &&
       !legacyAtomTypes.includes(atomType) &&
@@ -127,20 +135,20 @@ export const editableNonSnippetAtomTypes = workshopEditableAtomTypes.filter(
 
 export function getAtomByType(typeString) {
   return allAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
 }
 
 export function isAtomTypeEditable(typeString) {
   const matchingType = workshopEditableAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
   return !!matchingType;
 }
 
 export function doesAtomTypeRequireTagging(typeString) {
   return snippetAtomTypes.find(
-    atomData => atomData.type.toLowerCase() === typeString.toLowerCase()
+    (atomData) => atomData.type.toLowerCase() === typeString.toLowerCase()
   );
 }
 

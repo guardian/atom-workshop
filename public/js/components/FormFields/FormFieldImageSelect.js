@@ -1,35 +1,38 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
+import { PropTypes } from 'prop-types';
 import filesize from 'filesize';
 import Modal from '../Utilities/Modal';
 import ShowErrors from '../Utilities/ShowErrors';
 import { errorPropType } from '../../constants/errorPropType';
-import {parseImageFromGridCrop, findSmallestAssetAboveWidth, gridUrlFromApiUrl} from '../../util/imageHelpers';
-import {logInfo} from '../../util/logger';
+import {
+  parseImageFromGridCrop,
+  findSmallestAssetAboveWidth,
+  gridUrlFromApiUrl,
+} from '../../util/imageHelpers';
+import { logInfo } from '../../util/logger';
 
 const assetPropType = PropTypes.shape({
   mimeType: PropTypes.string.isRequired,
   file: PropTypes.string.isRequired,
   dimensions: PropTypes.shape({
     height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired
+    width: PropTypes.number.isRequired,
   }).isRequired,
   size: PropTypes.number.isRequired,
   credit: PropTypes.string,
   copyright: PropTypes.string,
   source: PropTypes.string,
   photographer: PropTypes.string,
-  suppliersReference: PropTypes.string
+  suppliersReference: PropTypes.string,
 });
 
 const gridImagePropType = PropTypes.shape({
   mediaId: PropTypes.string.isRequired,
   assets: PropTypes.arrayOf(assetPropType).isRequired,
-  master: assetPropType.isRequired
+  master: assetPropType.isRequired,
 });
 
 class FormFieldImageSelect extends React.Component {
-
   static propTypes = {
     onUpdateField: PropTypes.func,
     fieldValue: gridImagePropType,
@@ -37,11 +40,13 @@ class FormFieldImageSelect extends React.Component {
     fieldLabel: PropTypes.string,
     fieldErrors: PropTypes.arrayOf(errorPropType),
     formRowClass: PropTypes.string,
-    gridUrl: PropTypes.string.isRequired
+    gridUrl: PropTypes.string.isRequired,
+    hideSizeAndDimensions: PropTypes.bool,
+    hideRemoveButton: PropTypes.bool,
   };
 
   state = {
-    modalOpen: false
+    modalOpen: false,
   };
 
   closeModal = () => {
@@ -50,8 +55,8 @@ class FormFieldImageSelect extends React.Component {
   };
 
   openModal = () => {
-      this.setState({ modalOpen: true });
-      window.addEventListener('message', this.onMessage, false);
+    this.setState({ modalOpen: true });
+    window.addEventListener('message', this.onMessage, false);
   };
 
   removeImage = () => {
@@ -63,38 +68,56 @@ class FormFieldImageSelect extends React.Component {
   }
 
   onMessage = (event) => {
+    if (event.origin !== this.props.gridUrl) {
+      logInfo("didn't come from the grid");
+      return;
+    }
 
-      if (event.origin !== this.props.gridUrl) {
-          logInfo("didn't come from the grid");
-          return;
-      }
+    const data = event.data;
 
-      const data = event.data;
+    if (!data) {
+      logInfo('got no data...');
+      return;
+    }
 
-      if (!data) {
-          logInfo("got no data...");
-          return;
-      }
+    if (!this.validMessage(data)) {
+      logInfo('not a valid message...');
+      return;
+    }
 
-      if (!this.validMessage(data)) {
-          logInfo("not a valid message...");
-          return;
-      }
-
-      this.closeModal();
-      this.props.onUpdateField(parseImageFromGridCrop(data));
+    this.closeModal();
+    this.props.onUpdateField(parseImageFromGridCrop(data));
   };
 
   renderWithoutImage() {
     return (
-      <button className="image-select__button" type="button" onClick={this.openModal}>
-          + Add Image from Grid
+      <button
+        className="image-select__button"
+        type="button"
+        onClick={this.openModal}
+      >
+        + Add Image from Grid
       </button>
     );
   }
 
+  renderSizeAndDimensions() {
+    const master = this.props.fieldValue.master;
+    return [
+      <div key="size" className="image-select__image-details__detail">
+        Size: {filesize(master.size)}
+      </div>,
+      <div key="dimensions" className="image-select__image-details__detail">
+        Dimensions: {master.dimensions.width} x {master.dimensions.height}
+      </div>,
+    ];
+  }
+
   renderWithImage() {
-    const thumbnail = findSmallestAssetAboveWidth(this.props.fieldValue.assets, 200);
+    const thumbnail = findSmallestAssetAboveWidth(
+      this.props.fieldValue.assets,
+      200
+    );
     return (
       <div className="image-select__image-display">
         <div className="image-select__image">
@@ -102,37 +125,63 @@ class FormFieldImageSelect extends React.Component {
         </div>
         <div className="image-select__image-details">
           <div className="image-select__image-details__detail">
-            <a target="_blank" rel="noreferrer" href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}>View image in the Grid</a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={gridUrlFromApiUrl(this.props.fieldValue.mediaId)}
+            >
+              View image in the Grid
+            </a>
           </div>
-          <div className="image-select__image-details__detail">
-            Size: {filesize(this.props.fieldValue.master.size)}
-          </div>
-          <div className="image-select__image-details__detail">
-            Dimensions: {this.props.fieldValue.master.dimensions.width} x {this.props.fieldValue.master.dimensions.height}
-          </div>
-          <button className="image-select__button image-select__replace-button" type="button" onClick={this.openModal}>
-              Replace Image
+          {this.props.hideSizeAndDimensions
+            ? false
+            : this.renderSizeAndDimensions()}
+          <button
+            className="image-select__button image-select__replace-button"
+            type="button"
+            onClick={this.openModal}
+          >
+            Replace Image
           </button>
-          <button className="image-select__remove-button btn--red" type="button" onClick={this.removeImage}>
+          {this.props.hideRemoveButton ? (
+            false
+          ) : (
+            <button
+              className="image-select__remove-button btn--red"
+              type="button"
+              onClick={this.removeImage}
+            >
               Remove Image
-          </button>
+            </button>
+          )}
         </div>
       </div>
     );
   }
 
-  render () {
+  render() {
     return (
-      <div className={this.props.formRowClass || "form__row"}>
-        {this.props.fieldLabel ? <label htmlFor={this.props.fieldName} className="form__label">{this.props.fieldLabel}</label> : false}
+      <div className={this.props.formRowClass || 'form__row'}>
+        {this.props.fieldLabel ? (
+          <label htmlFor={this.props.fieldName} className="form__label">
+            {this.props.fieldLabel}
+          </label>
+        ) : (
+          false
+        )}
         <div className="image-select">
-            {this.props.fieldValue ? this.renderWithImage() : this.renderWithoutImage()}
+          {this.props.fieldValue
+            ? this.renderWithImage()
+            : this.renderWithoutImage()}
 
-            <Modal isOpen={this.state.modalOpen} dismiss={this.closeModal}>
-                <iframe className="image-select__modal" src={this.props.gridUrl}></iframe>
-            </Modal>
+          <Modal isOpen={this.state.modalOpen} dismiss={this.closeModal}>
+            <iframe
+              className="image-select__modal"
+              src={this.props.gridUrl}
+            ></iframe>
+          </Modal>
         </div>
-        <ShowErrors errors={this.props.fieldErrors}/>
+        <ShowErrors errors={this.props.fieldErrors} />
       </div>
     );
   }

@@ -1,53 +1,56 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
-import {CTAEditor} from './CustomEditors/CTAEditor';
-import {QAndAEditor} from './CustomEditors/QAndAEditor';
-import {GuideEditor} from './CustomEditors/GuideEditor';
-import {ProfileEditor} from './CustomEditors/ProfileEditor';
-import {TimelineEditor} from './CustomEditors/TimelineEditor';
-import {ExplainerEditor} from './CustomEditors/ExplainerEditor';
-import {CommonsDivisionEditor} from './CustomEditors/CommonsDivisionEditor';
-import {AudioEditor} from './CustomEditors/AudioEditor';
+import { PropTypes } from 'prop-types';
+import { CTAEditor } from './CustomEditors/CTAEditor';
+import { QAndAEditor } from './CustomEditors/QAndAEditor';
+import { GuideEditor } from './CustomEditors/GuideEditor';
+import { ProfileEditor } from './CustomEditors/ProfileEditor';
+import { TimelineEditor } from './CustomEditors/TimelineEditor';
+import { ExplainerEditor } from './CustomEditors/ExplainerEditor';
+import { CommonsDivisionEditor } from './CustomEditors/CommonsDivisionEditor';
+import { AudioEditor } from './CustomEditors/AudioEditor';
+import { MultimediaSlideshowEditor } from './CustomEditors/MultimediaSlideshowEditor';
 import EmbeddedAtomPick from './EmbeddedAtomPick';
-import {subscribeToPresence, enterPresence} from '../../services/presence';
+import { subscribeToPresence, enterPresence } from '../../services/presence';
 import AtomEditHeader from './AtomEditHeader';
-import {atomPropType} from '../../constants/atomPropType';
-import {logError} from '../../util/logger';
+import { atomPropType } from '../../constants/atomPropType';
+import { logError } from '../../util/logger';
 
 class AtomEdit extends React.Component {
-
   static propTypes = {
     routeParams: PropTypes.shape({
       atomType: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
-      defaultHtml: PropTypes.string
+      defaultHtml: PropTypes.string,
     }).isRequired,
     atomActions: PropTypes.shape({
       updateAtom: PropTypes.func.isRequired,
-      publishAtom: PropTypes.func.isRequired
+      publishAtom: PropTypes.func.isRequired,
     }).isRequired,
     formErrorActions: PropTypes.shape({
-      updateFormErrors: PropTypes.func
+      updateFormErrors: PropTypes.func,
     }),
     atom: atomPropType,
     config: PropTypes.shape({
       gridUrl: PropTypes.string,
       embeddedMode: PropTypes.string,
-      isEmbedded: PropTypes.bool.isRequired
-    })
+      isEmbedded: PropTypes.bool.isRequired,
+    }),
   };
 
   UNSAFE_componentWillMount() {
-    subscribeToPresence(this.props.routeParams.atomType, this.props.routeParams.id);
+    subscribeToPresence(
+      this.props.routeParams.atomType,
+      this.props.routeParams.id
+    );
   }
 
   updateAtom = (newAtom) => {
     try {
-        enterPresence(this.props.routeParams.atomType, this.props.routeParams.id);
+      enterPresence(this.props.routeParams.atomType, this.props.routeParams.id);
     } catch (e) {
-        logError(e);
+      logError(e);
     } finally {
-        this.props.atomActions.updateAtom(newAtom);
+      this.props.atomActions.updateAtom(newAtom);
     }
   };
 
@@ -55,41 +58,106 @@ class AtomEdit extends React.Component {
     this.props.formErrorActions.updateFormErrors(errors);
   };
 
-  renderSpecificEditor () {
-
+  renderSpecificEditor() {
     //TODO: This is brittle, can we improve?
     const atomType = this.props.atom.atomType.toLowerCase();
 
     switch (atomType) {
-      case ("cta"):
-        return <CTAEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("qanda"):
-        return <QAndAEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("guide"):
-        return <GuideEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("profile"):
-        return <ProfileEditor atom={this.props.atom} onUpdate={this.updateAtom} config={this.props.config} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("timeline"):
-        return <TimelineEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case("explainer"):
-        return <ExplainerEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("commonsdivision"):
-        return <CommonsDivisionEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      case ("audio") :
-        return <AudioEditor atom={this.props.atom} onUpdate={this.updateAtom} onFormErrorsUpdate={this.updateFormErrors} />;
-      default:
+      case 'cta':
         return (
-          <div>Atom Workshop cannot edit this type of atom currently</div>
+          <CTAEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
         );
+      case 'qanda':
+        return (
+          <QAndAEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            config={this.props.config}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'guide':
+        return (
+          <GuideEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            config={this.props.config}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'profile':
+        return (
+          <ProfileEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            config={this.props.config}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'timeline':
+        return (
+          <TimelineEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'explainer':
+        return (
+          <ExplainerEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'commonsdivision':
+        return (
+          <CommonsDivisionEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'audio':
+        return (
+          <AudioEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      case 'multimediaslideshow':
+        return (
+          <MultimediaSlideshowEditor
+            atom={this.props.atom}
+            onUpdate={this.updateAtom}
+            config={this.props.config}
+            onFormErrorsUpdate={this.updateFormErrors}
+          />
+        );
+      default:
+        return <div>Atom Workshop cannot edit this type of atom currently</div>;
     }
   }
 
   renderEmbeddedCreate() {
-    if (!this.props.config.isEmbedded || this.props.config.embeddedMode !== "browse") {
+    if (
+      !this.props.config.isEmbedded ||
+      this.props.config.embeddedMode !== 'browse'
+    ) {
       return false;
     }
 
-    return <EmbeddedAtomPick atom={this.props.atom} publishAtom={this.props.atomActions.publishAtom}/>;
+    return (
+      <EmbeddedAtomPick
+        atom={this.props.atom}
+        publishAtom={this.props.atomActions.publishAtom}
+      />
+    );
   }
 
   render() {
@@ -98,13 +166,13 @@ class AtomEdit extends React.Component {
     }
 
     return (
-        <div className="atom-editor">
-          {this.renderEmbeddedCreate()}
-          <AtomEditHeader atom={this.props.atom} onUpdate={this.updateAtom}/>
-          <form className="atom-editor__form">
-            {this.renderSpecificEditor()}
-          </form>
-        </div>
+      <div
+        className={`atom-editor atom-editor--${this.props.atom.atomType.toLowerCase()}`}
+      >
+        {this.renderEmbeddedCreate()}
+        <AtomEditHeader atom={this.props.atom} onUpdate={this.updateAtom} />
+        <form className="atom-editor__form">{this.renderSpecificEditor()}</form>
+      </div>
     );
   }
 }
@@ -121,14 +189,20 @@ function mapStateToProps(state) {
     config: state.config,
     atom: state.atom,
     presence: state.presence,
-    formErrors: state.formErrors
+    formErrors: state.formErrors,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    atomActions: bindActionCreators(Object.assign({}, updateAtomActions, publishAtomActions), dispatch),
-    formErrorActions: bindActionCreators(Object.assign({}, updateFormErrors), dispatch)
+    atomActions: bindActionCreators(
+      Object.assign({}, updateAtomActions, publishAtomActions),
+      dispatch
+    ),
+    formErrorActions: bindActionCreators(
+      Object.assign({}, updateFormErrors),
+      dispatch
+    ),
   };
 }
 
