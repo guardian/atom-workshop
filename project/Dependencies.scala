@@ -27,14 +27,14 @@ object Dependencies {
     "software.amazon.awssdk" % "sts" % awsVersion,
     "com.gu" %% "atom-manager-play" % atomLibVersion,
     "com.gu" %% "atom-publisher-lib" % atomLibVersion,
-    "com.gu" %% "editorial-permissions-client" % "6.0.3",
-    "com.gu" %% "simple-configuration-ssm" % "10.0.2",
-    "com.gu" %% "fezziwig" % "1.6",
+    "com.gu" %% "editorial-permissions-client" % "8.0.0",
+    "com.gu" %% "simple-configuration-ssm" % "15.0.0",
+    "com.gu" %% "fezziwig" % "1.9.2",
     "com.gu" %% "pan-domain-auth-play_3-0" % "22.2.0",
     "io.circe" %% "circe-parser" % "0.14.5",
     "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
     "com.gu" %% "content-api-client-aws" % "1.0.1",
-    "com.gu" %% "content-api-client" % "49.1.2",
+    "com.gu" %% "content-api-client" % "50.0.0",
     "joda-time" % "joda-time" % "2.14.2"
   )
 }
