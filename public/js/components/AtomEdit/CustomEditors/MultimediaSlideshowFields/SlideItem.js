@@ -174,12 +174,15 @@ export class SlideItem extends React.Component {
           </span>
           {this.renderThumbnail(content, slideType)}
           <span className="slide__summary">
+            {/* Label, credit and video captions are hidden until platforms render them.
             {value.label ? (
               <strong className="slide__label">{value.label}</strong>
             ) : (
               false
             )}
-            {value.caption || <span className="slide__muted">No caption</span>}
+            */}
+            {slideType === SLIDE_TYPE_IMAGE &&
+              (value.caption || <span className="slide__muted">No caption</span>)}
           </span>
         </button>
         <div className="slide__body" hidden={!expanded}>
@@ -202,24 +205,28 @@ export class SlideItem extends React.Component {
               {this.renderContentField(slideType)}
             </ManagedForm>
           </div>
-          <div className="slide__text">
-            <ManagedForm
-              data={value}
-              updateData={this.updateSlide}
-              onFormErrorsUpdate={this.props.onFormErrorsUpdate}
-              formName={this.formName()}
-            >
-              <ManagedField fieldLocation="caption" name="Caption">
-                <FormFieldTextInput />
-              </ManagedField>
-              <ManagedField fieldLocation="label" name="Label">
-                <FormFieldTextInput />
-              </ManagedField>
-              <ManagedField fieldLocation="credit" name="Credit">
-                <FormFieldTextInput />
-              </ManagedField>
-            </ManagedForm>
-          </div>
+          {slideType === SLIDE_TYPE_IMAGE && (
+            <div className="slide__text">
+              <ManagedForm
+                data={value}
+                updateData={this.updateSlide}
+                onFormErrorsUpdate={this.props.onFormErrorsUpdate}
+                formName={this.formName()}
+              >
+                <ManagedField fieldLocation="caption" name="Caption">
+                  <FormFieldTextInput />
+                </ManagedField>
+                {/*
+                <ManagedField fieldLocation="label" name="Label">
+                  <FormFieldTextInput />
+                </ManagedField>
+                <ManagedField fieldLocation="credit" name="Credit">
+                  <FormFieldTextInput />
+                </ManagedField>
+                */}
+              </ManagedForm>
+            </div>
+          )}
           <ShowErrors errors={this.props.fieldErrors} />
         </div>
       </>
