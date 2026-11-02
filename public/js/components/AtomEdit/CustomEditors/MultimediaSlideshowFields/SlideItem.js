@@ -174,13 +174,6 @@ export class SlideItem extends React.Component {
           </span>
           {this.renderThumbnail(content, slideType)}
           <span className="slide__summary">
-            {/* Label, credit and video captions are hidden until platforms render them.
-            {value.label ? (
-              <strong className="slide__label">{value.label}</strong>
-            ) : (
-              false
-            )}
-            */}
             {slideType === SLIDE_TYPE_IMAGE &&
               (value.caption || <span className="slide__muted">No caption</span>)}
           </span>
@@ -216,14 +209,6 @@ export class SlideItem extends React.Component {
                 <ManagedField fieldLocation="caption" name="Caption">
                   <FormFieldTextInput />
                 </ManagedField>
-                {/*
-                <ManagedField fieldLocation="label" name="Label">
-                  <FormFieldTextInput />
-                </ManagedField>
-                <ManagedField fieldLocation="credit" name="Credit">
-                  <FormFieldTextInput />
-                </ManagedField>
-                */}
               </ManagedForm>
             </div>
           )}

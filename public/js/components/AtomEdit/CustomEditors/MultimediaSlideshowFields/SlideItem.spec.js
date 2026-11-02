@@ -50,8 +50,6 @@ test('slides with media start collapsed, showing a thumbnail and summary', () =>
   expect(slide.find('img.slide__thumbnail').prop('src')).toBe(
     'https://media.test/140.jpg'
   );
-  // Label display is hidden for now.
-  // expect(slide.find('.slide__label').text()).toBe('One');
   expect(slide.find('.slide__summary').text()).toContain('First slide');
   expect(slide.find('.image-select__image-details').text()).not.toMatch(
     /Size|Dimensions/
