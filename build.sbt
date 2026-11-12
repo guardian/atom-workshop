@@ -7,6 +7,9 @@ scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
+dependencyOverrides ++= Seq("circe-core", "circe-generic", "circe-parser", "circe-jawn", "circe-numbers")
+  .map("io.circe" %% _ % "0.14.16")
+
 dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
 
 dependencyOverrides ++= Seq(
