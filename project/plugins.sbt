@@ -2,6 +2,9 @@ logLevel := Level.Warn
 
 libraryDependencies += "org.vafer" % "jdeb" % "1.6" artifacts Artifact("jdeb", "jar", "jar")
 
+// jdeb brings a separate build-only copy of Plexus Utils.
+dependencyOverrides += "org.codehaus.plexus" % "plexus-utils" % "3.6.1"
+
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
