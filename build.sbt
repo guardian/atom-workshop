@@ -7,6 +7,8 @@ scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
+dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
+
 routesGenerator := InjectedRoutesGenerator
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")
@@ -27,4 +29,3 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, JDebPackaging, S
 
     pipelineStages := Seq(digest)
   )
-
