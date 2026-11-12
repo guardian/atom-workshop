@@ -9,6 +9,11 @@ libraryDependencies ++= dependencies
 
 dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
 
+dependencyOverrides ++= Seq(
+  "ch.qos.logback" % "logback-core" % "1.5.34",
+  "ch.qos.logback" % "logback-classic" % "1.5.34"
+)
+
 routesGenerator := InjectedRoutesGenerator
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")
