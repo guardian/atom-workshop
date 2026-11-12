@@ -5,6 +5,9 @@ libraryDependencies += "org.vafer" % "jdeb" % "1.6" artifacts Artifact("jdeb", "
 // jdeb brings a separate build-only copy of Plexus Utils.
 dependencyOverrides += "org.codehaus.plexus" % "plexus-utils" % "3.6.1"
 
+// The older digest plugin also resolves Guava in the build's own classpath.
+dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
+
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.3")
