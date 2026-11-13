@@ -7,6 +7,23 @@ scalaVersion := "2.13.12"
 
 libraryDependencies ++= dependencies
 
+// No tests use browser helpers. Keep play-test available for non-browser tests.
+excludeDependencies ++= Seq(
+  ExclusionRule(organization = "io.fluentlenium"),
+  ExclusionRule(organization = "org.seleniumhq.selenium"),
+  ExclusionRule("org.scalatestplus", "selenium-4-12_2.13")
+)
+
+dependencyOverrides ++= Seq("circe-core", "circe-generic", "circe-parser", "circe-jawn", "circe-numbers")
+  .map("io.circe" %% _ % "0.14.16")
+
+dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
+
+dependencyOverrides ++= Seq(
+  "ch.qos.logback" % "logback-core" % "1.5.34",
+  "ch.qos.logback" % "logback-classic" % "1.5.34"
+)
+
 routesGenerator := InjectedRoutesGenerator
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")
@@ -27,4 +44,3 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, JDebPackaging, S
 
     pipelineStages := Seq(digest)
   )
-
