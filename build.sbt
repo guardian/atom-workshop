@@ -17,7 +17,7 @@ excludeDependencies ++= Seq(
 dependencyOverrides ++= Seq("circe-core", "circe-generic", "circe-parser", "circe-jawn", "circe-numbers")
   .map("io.circe" %% _ % "0.14.16")
 
-dependencyOverrides += "com.google.guava" % "guava" % "33.7.2-jre"
+dependencyOverrides += "com.google.guava" % "guava" % "33.8.0-jre"
 
 dependencyOverrides ++= Seq(
   "ch.qos.logback" % "logback-core" % "1.5.34",
