@@ -24,7 +24,8 @@
     "testEnvironment": "jsdom"
   },
   "resolutions": {
-    "cheerio": "1.0.0-rc.12"
+    "cheerio": "1.0.0-rc.12",
+    "prosemirror-view": "^1.43.0"
   },
   "homepage": "https://github.com/guardian/atom-workshop",
   "devDependencies": {
@@ -54,7 +55,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@guardian/prosemirror-editor": "^0.2.0",
+    "@guardian/prosemirror-editor": "^0.3.1",
     "copy-to-clipboard": "^3.3.1",
     "date-fns": "^1.28.0",
     "enzyme-adapter-react-16": "^1.15.7",
