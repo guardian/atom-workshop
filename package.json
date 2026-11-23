@@ -24,7 +24,8 @@
     "testEnvironment": "jsdom"
   },
   "resolutions": {
-    "cheerio": "1.0.0-rc.12"
+    "cheerio": "1.0.0-rc.12",
+    "prosemirror-view": "^1.43.0"
   },
   "homepage": "https://github.com/guardian/atom-workshop",
   "devDependencies": {
